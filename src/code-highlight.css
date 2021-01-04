@@ -1,0 +1,25 @@
+pre {
+    background-color: #f0f0f0;
+}
+
+.token.comment {
+    color: #505050;
+}
+.token.keyword {
+    font-weight: 500;
+    color: #5317ac;
+}
+.token.string {
+    color: #2544bb;
+}
+.token.function {
+    color: #721045;
+}
+.token.variable {
+    color: #00538b;
+}
+/*
+.token.number {
+    color: #00bcff;
+}
+*/
