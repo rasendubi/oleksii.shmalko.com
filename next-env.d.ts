@@ -10,3 +10,8 @@ declare module 'rehype-urls' {
   const urls: any;
   export default urls;
 }
+
+declare module 'rehype-format' {
+  const format: any;
+  export default format;
+}

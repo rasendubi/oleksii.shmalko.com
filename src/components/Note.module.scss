@@ -17,17 +17,23 @@
     font-weight: 700;
     margin-bottom: 8px;
 }
-.note p {
-    margin: 16px 0;
+.note p, .note ul, .note ol {
+    margin-bottom: 16px
 }
-.note p+ul,
-.note p+ol {
-    margin-top: -8px;
+.note li > p, .note li > ul, .note li > ol {
+    margin-bottom: 4px;
+
+    & + ul, & + ol {
+        margin-top: 0px;
+    }
+}
+.note p + ul, .note p + ul {
+    margin-top: -12px;
 }
 
-.note li {
-    margin: 2px 0;
-}
+// .note li {
+//     margin: 2px 0;
+// }
 
 .note blockquote {
     font-style: italic;

@@ -1,18 +1,18 @@
 import unified from 'unified';
-import parse from 'reorg-parse';
-import mutate from 'reorg-rehype';
 import html from 'rehype-stringify';
 import urls from 'rehype-urls';
 import raw from 'rehype-raw';
 import vfile from 'vfile';
 
+import orgParse from '@/org/unified-org-parse';
+import org2rehype from '@/org/unified-org-rehype';
+
 import classes from '@/components/Note.module.scss';
 
 const processor = unified()
-  .use(parse)
+  .use(orgParse)
   .use(saveTitle)
-  .use(removeCards)
-  .use(mutate as any)
+  .use(org2rehype)
   .use(raw)
   .use(urls, removeOrgSuffix)
   .use(html);
@@ -47,7 +47,7 @@ function saveTitle() {
   return transformer;
 
   function transformer(tree: any, file: any) {
-    file.data.title = tree.properties.title || '';
+    file.data.title = tree.properties?.title || '';
   }
 }
 
