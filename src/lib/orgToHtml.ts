@@ -3,6 +3,7 @@ import html from 'rehype-stringify';
 import urls from 'rehype-urls';
 import raw from 'rehype-raw';
 import vfile from 'vfile';
+import { select } from 'unist-util-select';
 
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
@@ -12,6 +13,7 @@ import classes from '@/components/Note.module.scss';
 const processor = unified()
   .use(orgParse)
   .use(saveTitle)
+  .use(removeCards)
   .use(org2rehype)
   .use(raw)
   .use(urls, removeOrgSuffix)
@@ -47,20 +49,19 @@ function saveTitle() {
   return transformer;
 
   function transformer(tree: any, file: any) {
-    file.data.title = tree.properties?.title || '';
+    const title = select('keyword[key=TITLE]', tree);
+    file.data.title = title ? title.value : '';
   }
 }
 
 function removeCards() {
   return transformer;
 
-  function transformer(tree: any, file: any) {
+  function transformer(tree: any) {
     tree.children = tree.children.filter((child: any) => {
       return !(
-        child.type === 'section' &&
-        ((child.children[0]?.type === 'headline' &&
-          (child.children[0]?.content || '').toLowerCase() === 'cards') ||
-          (child.properties?.title || '').toLowerCase() === 'cards')
+        child.type === 'headline' &&
+        child.title[0]?.value.toLowerCase() === 'cards'
       );
     });
   }

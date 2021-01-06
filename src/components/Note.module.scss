@@ -40,6 +40,10 @@
     background-color: #f0f0f0;
     margin: 16px 0 16px 40px;
     padding: 4px;
+
+    & > p:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .note a {
