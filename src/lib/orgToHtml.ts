@@ -35,6 +35,11 @@ export default async function orgToHtml(path: string, org: string) {
 }
 
 function removeOrgSuffix(url: URL, node: any) {
+  if (url.protocol === 'cite:') {
+    const ref = url.hostname;
+    return `/biblio/${ref}`;
+  }
+
   if (url.host) {
     node.properties.className = classes.link_external;
   }
