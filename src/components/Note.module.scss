@@ -1,7 +1,12 @@
+.note_wrapper {
+    padding: 16px;
+}
 .note {
-    margin: 16px;
     font-size: 16px;
     line-height: 1.5;
+
+    max-width: 600px;
+    margin: 0 auto;
 }
 .note code {
     line-height: 1.1;
@@ -10,7 +15,7 @@
 .note h1 {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 .note h2 {
     font-size: 16px;
@@ -30,10 +35,6 @@
 .note p + ul, .note p + ul {
     margin-top: -12px;
 }
-
-// .note li {
-//     margin: 2px 0;
-// }
 
 .note blockquote {
     font-style: italic;

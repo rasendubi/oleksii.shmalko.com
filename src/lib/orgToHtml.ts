@@ -16,27 +16,26 @@ const processor = unified()
   .use(removeCards)
   .use(org2rehype)
   .use(raw)
-  .use(urls, removeOrgSuffix)
+  .use(urls, processUrls)
   .use(html);
 
 export default async function orgToHtml(path: string, org: string) {
-  try {
-    const result = await processor.process(vfile({ path, contents: org }));
-    return {
-      title: (result.data as any).title,
-      html: result.contents,
-    };
-  } catch (e) {
-    console.warn(e);
-    return {
-      title: '',
-      html: 'This page has failed to render.',
-    };
-  }
+  const result = await processor.process(vfile({ path, contents: org }));
+  return {
+    title: (result.data as any).title,
+    html: result.contents,
+  };
 }
 
-function removeOrgSuffix(url: URL, node: any) {
+function processUrls(url: URL, node: any) {
   if (url.protocol === 'cite:') {
+    const child = node.children[0];
+    if (child?.type === 'text' && child.value !== url.href) {
+      // this is an annotated cite in the form of [[cite:some-book][p.11]]
+      // reformat the text to "cite:some-book,p.11"
+      child.value = `${url.href},${child.value}`;
+    }
+
     const ref = url.hostname;
     return `/biblio/${ref}`;
   }

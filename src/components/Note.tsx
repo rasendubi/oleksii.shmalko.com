@@ -9,9 +9,11 @@ export interface NoteProps {
 
 const Note = ({ title, html }: NoteProps) => {
   return (
-    <div className={classes.note}>
-      <h1>{title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+    <div className={classes.note_wrapper}>
+      <div className={classes.note}>
+        <h1>{title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
     </div>
   );
 };
