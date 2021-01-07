@@ -57,3 +57,19 @@ code.inline-verbatim {
   background-color: #f0f0f0;
   color: #61284f;
 }
+
+.todo-keyword {
+  font-family: 'Source Code Pro', monospace;
+}
+.todo-keyword.TODO {
+  color: #1111ee;
+}
+.todo-keyword.DONE {
+  color: #505050;
+}
+.priority {
+  color: #721045;
+}
+.tags {
+  color: #541f4f;
+}
