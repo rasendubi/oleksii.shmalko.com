@@ -1,25 +1,25 @@
 pre {
     background-color: #f0f0f0;
+    overflow: auto;
 }
 
-.token.comment {
+.hljs-comment {
     color: #505050;
 }
-.token.keyword {
-    font-weight: 500;
+.hljs-keyword {
+    font-weight: 700;
     color: #5317ac;
 }
-.token.string {
+.hljs-string {
     color: #2544bb;
 }
-.token.function {
+.hljs-title {
     color: #721045;
+    font-weight: 500;
 }
-.token.variable {
+.hljs-name {
     color: #00538b;
 }
-/*
-.token.number {
-    color: #00bcff;
+.hljs-builtin-name {
+    font-weight: 700;
 }
-*/
