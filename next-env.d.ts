@@ -15,3 +15,13 @@ declare module 'rehype-format' {
   const format: any;
   export default format;
 }
+
+declare module 'rehype-highlight' {
+  const x: any;
+  export default x;
+}
+
+declare module '@mapbox/rehype-prism' {
+  const x: any;
+  export default x;
+}

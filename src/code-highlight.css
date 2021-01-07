@@ -3,23 +3,27 @@ pre {
     overflow: auto;
 }
 
-.hljs-comment {
+.token.comment {
     color: #505050;
 }
-.hljs-keyword {
+.token.keyword {
     font-weight: 700;
     color: #5317ac;
 }
-.hljs-string {
+.token.string {
     color: #2544bb;
 }
-.hljs-title {
+.token.function, .token.variable {
     color: #721045;
     font-weight: 500;
 }
-.hljs-name {
+.token.car {
     color: #00538b;
 }
-.hljs-builtin-name {
-    font-weight: 700;
+.token.builtin {
+    color: #00538b;
+    font-weight: 500;
+}
+.token.punctuation {
+    color: #56576d;
 }

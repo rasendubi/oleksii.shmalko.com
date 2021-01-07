@@ -5,7 +5,7 @@ import raw from 'rehype-raw';
 import vfile from 'vfile';
 import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
-import highlight from 'rehype-highlight';
+import prism from '@mapbox/rehype-prism';
 
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
@@ -20,7 +20,7 @@ const processor = unified()
   .use(raw)
   .use(urls, processUrls)
   .use(demoteHeadings)
-  .use(highlight)
+  .use(prism, { ignoreMissing: true })
   .use(html);
 
 export default async function orgToHtml(path: string, org: string) {
