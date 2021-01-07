@@ -18,7 +18,8 @@
     "sass": "^1.32.0",
     "unified": "^9.2.0",
     "unist-builder": "^2.0.3",
-    "unist-util-select": "^3.0.4"
+    "unist-util-select": "^3.0.4",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.8",

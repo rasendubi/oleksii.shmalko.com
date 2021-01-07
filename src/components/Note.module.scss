@@ -1,5 +1,5 @@
 .note_wrapper {
-    padding: 16px;
+    padding: 0 16px 40px;
 }
 .note {
     font-size: 16px;
@@ -15,11 +15,19 @@
 .note h1 {
     font-size: 20px;
     font-weight: 700;
+    margin-top: 24px;
     margin-bottom: 16px;
 }
 .note h2 {
     font-size: 16px;
     font-weight: 700;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+.note h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 16px;
     margin-bottom: 8px;
 }
 .note p, .note ul, .note ol {
