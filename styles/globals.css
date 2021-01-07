@@ -48,3 +48,12 @@ a:hover {
     background-color: #aecf90;
     color: #282828;
 }
+
+code.inline-code {
+  background-color: #f0f0f0;
+  color: #721045;
+}
+code.inline-verbatim {
+  background-color: #f0f0f0;
+  color: #61284f;
+}

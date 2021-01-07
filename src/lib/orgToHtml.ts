@@ -27,6 +27,7 @@ export default async function orgToHtml(path: string, org: string) {
       html: result.contents,
     };
   } catch (e) {
+    console.warn(e);
     return {
       title: '',
       html: 'This page has failed to render.',
