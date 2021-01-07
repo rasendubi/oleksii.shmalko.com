@@ -73,3 +73,7 @@ code.inline-verbatim {
 .tags {
   color: #541f4f;
 }
+.timestamp {
+  color: #30517f;
+  white-space: nowrap;
+}
