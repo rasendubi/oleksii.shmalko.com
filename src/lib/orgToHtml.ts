@@ -1,6 +1,6 @@
 import unified, { Plugin } from 'unified';
 import html from 'rehype-stringify';
-import urls from 'rehype-urls';
+import inspectUrls from 'rehype-url-inspector';
 import vfile from 'vfile';
 import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
@@ -17,20 +17,27 @@ const processor = unified()
   .use(removeCards)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(org2rehype)
-  .use(urls, processUrls)
+  .use(inspectUrls, {
+    inspectEach: processUrl,
+  })
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(html);
 
-export default async function orgToHtml(path: string, org: string) {
-  const result = await processor.process(vfile({ path, contents: org }));
+export default async function orgToHtml(file: vfile.VFile) {
+  const result = await processor.process(file);
   return {
     title: (result.data as any).title,
     html: result.contents,
   };
 }
 
-function processUrls(url: URL, node: any) {
+function processUrl({ url: urlString, propertyName, node, file }: any) {
+  // next/link does not handle relative urls properly. Use
+  // file.history[0] (the original slug of the file) to normalize link
+  // against.
+  const url = new URL(urlString, 'file://' + file.history[0]);
+
   if (url.protocol === 'cite:') {
     const child = node.children[0];
     if (child?.type === 'text' && child.value !== url.href) {
@@ -39,14 +46,17 @@ function processUrls(url: URL, node: any) {
       child.value = `${url.href},${child.value}`;
     }
 
-    const ref = url.hostname;
-    return `/biblio/${ref}`;
+    const ref = url.pathname;
+    node.properties[propertyName] = `/biblio/${ref}`;
+    return;
   }
 
-  if (url.host === null && url.pathname.match(/\.org$/)) {
-    return url.pathname.replace(/\.org$/, '');
-  } else if (url.host === null) {
-    return encodeURI(url.pathname);
+  if (url.protocol === 'file:') {
+    let href = url.pathname.replace(/\.org$/, '');
+    node.properties[propertyName] = encodeURI(href);
+  } else {
+    node.properties.className = node.properties.className || [];
+    node.properties.className.push('external');
   }
 }
 

@@ -34,3 +34,12 @@ declare module 'retext-smartypants' {
   const x: any;
   export default x;
 }
+declare module 'bibtex-parse' {
+  const x: any;
+  export default x;
+}
+
+declare module 'to-vfile' {
+  const x: any;
+  export default x;
+}

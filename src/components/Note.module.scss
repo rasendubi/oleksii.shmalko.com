@@ -1,67 +1,11 @@
-.note_wrapper {
-    padding: 0 16px 40px;
-}
-.note {
-    font-size: 16px;
-    line-height: 1.5;
-
-    max-width: 600px;
-    margin: 0 auto;
-}
 .note code {
     line-height: 1.1;
-}
-
-.note h1 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-top: 24px;
-    margin-bottom: 16px;
-}
-.note h2 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-top: 24px;
-    margin-bottom: 8px;
-}
-.note h3 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-top: 16px;
-    margin-bottom: 8px;
-}
-.note p, .note ul, .note ol, .note dl, .note table {
-    margin-bottom: 16px
-}
-.note dt {
-    float: left;
-    display: list-item;
-    list-style-type: disc;
-    margin-left: 24px;
-    font-weight: 700;
-    &::after {
-        content: "::";
-        margin: 0 4px;
-    }
-}
-.note dd {
-    margin-left: 24px;
-}
-.note li > p, .note li > ul, .note li > ol, .note li > table {
-    margin-bottom: 4px;
-
-    & + ul, & + ol {
-        margin-top: 0px;
-    }
-}
-.note p + ul, .note p + ul {
-    margin-top: -12px;
 }
 
 .note blockquote {
     font-style: italic;
     background-color: #f0f0f0;
-    margin: 16px 0 16px 40px;
+    margin: 16px 0 16px 16px;
     padding: 4px;
 
     & > p:last-child {

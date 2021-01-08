@@ -1,5 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import vfile from 'to-vfile';
+import { VFile } from 'vfile';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -14,7 +16,7 @@ export function getPostSlugs() {
       const curP = [...p, e.name];
       if (e.isDirectory() && whitelist.has(path.join(...curP))) {
         traverse(curP);
-      } else if (e.isFile() && e.name.match(/\.org$/)) {
+      } else if (e.isFile() && e.name.match(/\.(org|bib)$/)) {
         result.push(curP);
       }
     });
@@ -26,9 +28,19 @@ export function getPostSlugs() {
 
 export function getPostBySlug(slug: string[]) {
   const realSlug = path.join(...slug).replace(/\.org$/, '');
-  const fullPath = path.join(postsDirectory, `${realSlug}.org`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  return { path: fullPath, slug: realSlug, content: fileContents };
+  const type = realSlug.endsWith('.bib') ? 'bib' : 'org';
+  const fullPath =
+    type === 'org'
+      ? path.join(postsDirectory, `${realSlug}.org`)
+      : path.join(postsDirectory, realSlug);
+  const file: VFile = vfile.readSync(
+    {
+      path: fullPath,
+      history: [path.join('/', ...slug)],
+    },
+    'utf8'
+  );
+  return { type, path: fullPath, slug: realSlug, file };
 }
 
 export function getAllPosts() {
