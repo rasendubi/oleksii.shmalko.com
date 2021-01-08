@@ -1,10 +1,12 @@
-import unified from 'unified';
+import unified, { Plugin } from 'unified';
 import html from 'rehype-stringify';
 import urls from 'rehype-urls';
 import vfile from 'vfile';
 import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
+import retext from 'retext';
+import smartypants from 'retext-smartypants';
 
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
@@ -15,6 +17,7 @@ const processor = unified()
   .use(orgParse)
   .use(saveTitle)
   .use(removeCards)
+  .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(org2rehype)
   .use(urls, processUrls)
   .use(demoteHeadings)
@@ -100,6 +103,17 @@ function demoteHeadings() {
           node.tagName = 'p';
           break;
       }
+    });
+  }
+}
+
+function orgSmartypants(options: any) {
+  const processor = retext().use(smartypants, options);
+  return transformer;
+
+  function transformer(tree: any) {
+    visit(tree, 'text', (node) => {
+      node.value = String(processor.processSync(node.value));
     });
   }
 }

@@ -25,3 +25,12 @@ declare module '@mapbox/rehype-prism' {
   const x: any;
   export default x;
 }
+
+declare module 'retext' {
+  const x: any;
+  export default x;
+}
+declare module 'retext-smartypants' {
+  const x: any;
+  export default x;
+}
