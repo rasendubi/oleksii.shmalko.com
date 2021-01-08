@@ -11,8 +11,6 @@ import smartypants from 'retext-smartypants';
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
 
-import classes from '@/components/Note.module.scss';
-
 const processor = unified()
   .use(orgParse)
   .use(saveTitle)
@@ -45,9 +43,6 @@ function processUrls(url: URL, node: any) {
     return `/biblio/${ref}`;
   }
 
-  if (url.host) {
-    node.properties.className = classes.link_external;
-  }
   if (url.host === null && url.pathname.match(/\.org$/)) {
     return url.pathname.replace(/\.org$/, '');
   } else if (url.host === null) {

@@ -40,7 +40,6 @@ export const getStaticProps = async ({ params }: Params) => {
 
   return {
     props: {
-      ...post,
       title,
       html,
     },
