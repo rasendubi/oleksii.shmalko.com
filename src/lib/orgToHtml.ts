@@ -1,7 +1,6 @@
 import unified from 'unified';
 import html from 'rehype-stringify';
 import urls from 'rehype-urls';
-import raw from 'rehype-raw';
 import vfile from 'vfile';
 import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
@@ -17,7 +16,6 @@ const processor = unified()
   .use(saveTitle)
   .use(removeCards)
   .use(org2rehype)
-  .use(raw)
   .use(urls, processUrls)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })

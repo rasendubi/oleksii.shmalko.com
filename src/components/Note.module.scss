@@ -30,7 +30,7 @@
     margin-top: 16px;
     margin-bottom: 8px;
 }
-.note p, .note ul, .note ol, .note dl {
+.note p, .note ul, .note ol, .note dl, .note table {
     margin-bottom: 16px
 }
 .note dt {
@@ -47,7 +47,7 @@
 .note dd {
     margin-left: 24px;
 }
-.note li > p, .note li > ul, .note li > ol {
+.note li > p, .note li > ul, .note li > ol, .note li > table {
     margin-bottom: 4px;
 
     & + ul, & + ol {
@@ -67,6 +67,30 @@
     & > p:last-child {
         margin-bottom: 0;
     }
+}
+
+.note table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+.note th,
+.note td {
+    padding: 12px 15px;
+}
+.note thead, .note tbody {
+    border-bottom: 2px solid #888888;
+}
+.note tbody {
+    border-top: 2px solid #888888;
+}
+.note thead tr {
+    background-color: #e5e5e5;
+    text-align: left;
+    font-weight: 700;
+}
+.note tbody tr {
+    border-bottom: 1px solid #888888;
+    vertical-align: baseline;
 }
 
 .note a {
