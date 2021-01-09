@@ -17,7 +17,7 @@ const Note = ({ title, html, backlinks }: NoteProps) => {
         <h1>{title}</h1>
         <Rehype html={html} />
       </div>
-      {backlinks.length && (
+      {!!backlinks.length && (
         <div style={{ marginTop: 40 }}>
           <h2>{'Backlinks'}</h2>
           <ul className="wide">
