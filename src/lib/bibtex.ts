@@ -2,6 +2,7 @@ import { VFile } from 'vfile';
 import bibtexParse from 'bibtex-parse';
 import u from 'unist-builder';
 import h from 'hastscript';
+import minify from 'rehype-preset-minify';
 
 import unified from 'unified';
 import processUrls from '@/lib/processUrls';
@@ -12,6 +13,7 @@ const processor = unified()
   .use(parseBibtex)
   .use(bibtex2rehype)
   .use(processUrls)
+  .use(minify)
   .use(excerpt)
   .use(toJson);
 

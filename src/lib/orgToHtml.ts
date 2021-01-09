@@ -5,6 +5,7 @@ import visit from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
+import minify from 'rehype-preset-minify';
 
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
@@ -21,6 +22,7 @@ const processor = unified()
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(processUrls)
+  .use(minify)
   .use(toJson)
   .use(excerpt);
 

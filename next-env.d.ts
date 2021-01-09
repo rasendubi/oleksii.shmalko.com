@@ -53,3 +53,8 @@ declare module 'rehype-truncate' {
   const x: any;
   export default x;
 }
+
+declare module 'rehype-preset-minify' {
+  const x: any;
+  export default x;
+}
