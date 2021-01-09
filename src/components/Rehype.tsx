@@ -11,7 +11,7 @@ export interface RehypeProps {
 }
 
 const processor = unified()
-  .use(rehypeParse)
+  .use(rehypeParse, { fragment: true })
   .use(rehype2react, {
     createElement: React.createElement,
     Fragment: React.Fragment,
