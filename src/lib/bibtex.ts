@@ -6,11 +6,13 @@ import h from 'hastscript';
 
 import unified from 'unified';
 import processUrls from './processUrls';
+import excerpt from './excerpt';
 
 const processor = unified()
   .use(parseBibtex)
   .use(bibtex2rehype)
   .use(processUrls)
+  .use(excerpt)
   .use(html);
 
 export function bibtexToHtml(file: VFile) {

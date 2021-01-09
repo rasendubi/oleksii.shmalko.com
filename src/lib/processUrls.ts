@@ -31,7 +31,10 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
     node.properties[propertyName] = encodeURI(href);
 
     const exists = isPostExistsSync(href);
-    if (!exists) {
+    if (exists) {
+      file.data.links = file.data.links || [];
+      file.data.links.push(href);
+    } else {
       node.properties.className = node.properties.className || [];
       node.properties.className.push('broken');
     }

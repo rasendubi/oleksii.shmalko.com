@@ -1,35 +1,35 @@
 import React from 'react';
 
-import unified from 'unified';
-import rehypeParse from 'rehype-parse';
-import rehype2react from 'rehype-react';
-
-import Link from '@/components/Link';
 import classes from './Note.module.scss';
-
-const processor = unified()
-  .use(rehypeParse)
-  .use(rehype2react, {
-    createElement: React.createElement,
-    Fragment: React.Fragment,
-    components: {
-      a: Link,
-    },
-  });
+import Backlink, { BacklinkProps } from './Backlink';
+import Rehype from './Rehype';
 
 export interface NoteProps {
   title: string;
   html: string;
+  backlinks: BacklinkProps[];
 }
 
-const Note = ({ title, html }: NoteProps) => {
+const Note = ({ title, html, backlinks }: NoteProps) => {
   return (
-    <div className={classes.note_wrapper}>
+    <>
       <div className={classes.note}>
         <h1>{title}</h1>
-        {processor.processSync(html).result}
+        <Rehype html={html} />
       </div>
-    </div>
+      {backlinks.length && (
+        <div style={{ marginTop: 40 }}>
+          <h2>{'Backlinks'}</h2>
+          <ul className="wide">
+            {backlinks.map((b) => (
+              <li key={b.slug}>
+                <Backlink {...b} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
   );
 };
 

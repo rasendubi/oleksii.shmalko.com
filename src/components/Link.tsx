@@ -14,7 +14,7 @@ const LinkView = React.forwardRef(
   ({ className, children, ...props }: any, ref) => {
     const external = className && className.includes('external');
     return (
-      <span ref={ref} {...props} className={clsx('root', className)}>
+      <a ref={ref} {...props} className={clsx('root', className)}>
         {children}
         {external && (
           <svg
@@ -73,7 +73,7 @@ const LinkView = React.forwardRef(
             margin-right: -10px;
           }
         `}</style>
-      </span>
+      </a>
     );
   }
 );

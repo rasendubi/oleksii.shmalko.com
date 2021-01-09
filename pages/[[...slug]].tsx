@@ -40,12 +40,19 @@ interface PageParams {
 export const getStaticProps = async ({ params }: PageParams) => {
   const slug = params.slug || ['index'];
   const post = (await getPostBySlug('/' + path.join(...slug)))!;
-  const data = post.data as any;
+  const data = post.data;
+  const backlinks = await Promise.all(data.backlinks.map(getPostBySlug));
   return {
     props: {
       type: data.type,
+      slug: post.path,
       title: data.title as string,
       html: post.contents,
+      backlinks: backlinks.map((b) => ({
+        slug: b!.path,
+        title: b!.data.title,
+        // html: b!.data.excerpt,
+      })),
     },
   };
 };

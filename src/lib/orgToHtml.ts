@@ -10,6 +10,7 @@ import smartypants from 'retext-smartypants';
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
 import processUrls from './processUrls';
+import excerpt from './excerpt';
 
 const processor = unified()
   .use(orgParse)
@@ -17,10 +18,11 @@ const processor = unified()
   .use(removeCards)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(org2rehype)
-  .use(processUrls)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
-  .use(html);
+  .use(processUrls)
+  .use(html)
+  .use(excerpt);
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {
   return await processor.process(file);

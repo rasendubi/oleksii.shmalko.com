@@ -19,6 +19,7 @@
     "rehype-raw": "^5.0.0",
     "rehype-react": "^6.1.0",
     "rehype-stringify": "^8.0.0",
+    "rehype-truncate": "^1.2.2",
     "rehype-url-inspector": "^2.0.2",
     "retext": "^7.0.1",
     "retext-smartypants": "^4.0.0",

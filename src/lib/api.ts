@@ -10,12 +10,15 @@ interface PostData {
   type: 'org' | 'bib';
   title: string;
   slug: string;
-  bibtexEntries?: any[];
+  links: string[];
+  backlinks: string[];
+  excerpt: string;
 }
 type Post = VFile & { data: PostData };
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 const whitelistDirectories = new Set(['.', 'biblio']);
+const withBacklinks = process.env.NODE_ENV === 'production' || true;
 
 const lazy = <T extends (...params: any[]) => any>(
   f: T,
@@ -26,7 +29,7 @@ const lazy = <T extends (...params: any[]) => any>(
     if (
       !result ||
       // trigger re-processing page on page reload in development mode
-      process.env.NODE_ENV !== 'production'
+      (process.env.NODE_ENV !== 'production' && !withBacklinks)
     ) {
       result = { result: f(...params) };
     }
@@ -47,8 +50,18 @@ const getFiles = (root: string, whitelist: Set<string>) =>
         const ext = path.extname(p);
         if (ext === '.org' || ext === '.bib') {
           const slug = '/' + p.replace(/\.org$/, '');
-          (file.data as any).slug = slug;
-          (file.data as any).type = ext === '.org' ? 'org' : 'bib';
+
+          const data: PostData = {
+            slug,
+            type: ext === '.org' ? 'org' : 'bib',
+            title: '',
+            links: [],
+            backlinks: [],
+            excerpt: '',
+          };
+
+          file.data = data;
+
           return true;
         }
       },
@@ -63,6 +76,7 @@ const getFiles = (root: string, whitelist: Set<string>) =>
     );
   });
 
+const backlinks: Record<string, Set<string>> = {};
 const processPost = async (file: VFile) => {
   await toVFile.read(file, 'utf8');
 
@@ -71,6 +85,7 @@ const processPost = async (file: VFile) => {
   rename(file, { path: data.slug });
 
   const type = data.type;
+  data.links = [];
   if (type === 'org') {
     await orgToHtml(file);
   } else if (type === 'bib') {
@@ -79,7 +94,16 @@ const processPost = async (file: VFile) => {
     throw new Error(`unknown post type: ${type}`);
   }
 
+  data.links.forEach((other: string) => {
+    backlinks[other] = backlinks[other] || new Set();
+    backlinks[other].add(data.slug);
+  });
+
   return file;
+};
+const populateBacklinks = async (file: Post) => {
+  const links = backlinks[file.path!] ?? new Set();
+  file.data.backlinks = [...links];
 };
 
 const loadPosts = async (): Promise<
@@ -98,6 +122,13 @@ postsPromise.then((p) => {
   posts = p;
 });
 
+async function postProcess(): Promise<void> {
+  const posts = await postsPromise;
+  const allPosts = await Promise.all(Object.values(posts).map((f) => f!()));
+  allPosts.forEach(populateBacklinks);
+}
+const postProcessing = postProcess();
+
 export async function getAllPaths(): Promise<string[]> {
   const posts = await postsPromise;
   return Object.keys(posts);
@@ -114,5 +145,8 @@ export function isPostExistsSync(slug: string): boolean | null {
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   const posts = await postsPromise;
   const post = await posts[slug]?.();
+  if (withBacklinks) {
+    await postProcessing;
+  }
   return post;
 }
