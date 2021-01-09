@@ -1,7 +1,5 @@
 import * as path from 'path';
 
-import Head from 'next/head';
-
 import { getAllPaths, getPostBySlug } from '@/lib/api';
 import Note, { NoteProps } from '@/components/Note';
 
@@ -10,14 +8,7 @@ interface PostProps extends NoteProps {
 }
 
 const Post = ({ type, ...props }: PostProps) => {
-  return (
-    <>
-      <Head>
-        <title>{props.title}</title>
-      </Head>
-      <Note {...props} />
-    </>
-  );
+  return <Note {...props} />;
 };
 export default Post;
 

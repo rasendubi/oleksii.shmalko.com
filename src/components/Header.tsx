@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Head from 'next/head';
 import Link from 'next/link';
 
 export interface HeaderProps {
@@ -9,6 +10,9 @@ export interface HeaderProps {
 const Header = ({ title }: HeaderProps) => {
   return (
     <div className="root">
+      <Head>
+        <title>{title}</title>
+      </Head>
       <div className="quicklinks">
         <Link href="/">
           <a className="icon-link" aria-label="Home">
