@@ -14,7 +14,7 @@ interface PostData {
   backlinks: string[];
   excerpt: string;
 }
-type Post = VFile & { data: PostData };
+type Post = VFile & { data: PostData; path: string };
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 const whitelistDirectories = new Set(['.', 'biblio']);
@@ -122,31 +122,38 @@ postsPromise.then((p) => {
   posts = p;
 });
 
-async function postProcess(): Promise<void> {
+async function postProcess(): Promise<Post[]> {
   const posts = await postsPromise;
   const allPosts = await Promise.all(Object.values(posts).map((f) => f!()));
   allPosts.forEach(populateBacklinks);
+  return allPosts;
 }
-const postProcessing = postProcess();
+const allPosts = postProcess();
 
 export async function getAllPaths(): Promise<string[]> {
   const posts = await postsPromise;
   return Object.keys(posts);
 }
 
+const specialPages = new Set(['/archive']);
+
 export async function isPostExists(slug: string): Promise<boolean> {
   const posts = await postsPromise;
-  return !!posts[slug];
+  return specialPages.has(slug) || !!posts[slug];
 }
 export function isPostExistsSync(slug: string): boolean | null {
-  return !!posts?.[slug];
+  return specialPages.has(slug) || !!posts?.[slug];
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   const posts = await postsPromise;
   const post = await posts[slug]?.();
   if (withBacklinks) {
-    await postProcessing;
+    await allPosts;
   }
   return post;
+}
+
+export async function getAllPosts(): Promise<Post[]> {
+  return allPosts;
 }
