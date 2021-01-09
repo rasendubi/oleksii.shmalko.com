@@ -1,27 +1,24 @@
 import React from 'react';
 
 import unified from 'unified';
-import rehypeParse from 'rehype-parse';
 import rehype2react from 'rehype-react';
 
 import Link from '@/components/Link';
 
 export interface RehypeProps {
-  html: string;
+  hast: any;
 }
 
-const processor = unified()
-  .use(rehypeParse, { fragment: true })
-  .use(rehype2react, {
-    createElement: React.createElement,
-    Fragment: React.Fragment,
-    components: {
-      a: Link,
-    },
-  });
+const processor = unified().use(rehype2react, {
+  createElement: React.createElement,
+  Fragment: React.Fragment,
+  components: {
+    a: Link,
+  },
+});
 
-const Rehype = ({ html }: RehypeProps) => {
-  return <>{processor.processSync(html).result}</>;
+const Rehype = ({ hast }: RehypeProps) => {
+  return <>{processor.stringify(hast)}</>;
 };
 
 export default Rehype;

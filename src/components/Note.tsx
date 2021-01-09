@@ -7,16 +7,16 @@ import Header from './Header';
 
 export interface NoteProps {
   title: string;
-  html: string;
+  hast: string;
   backlinks: BacklinkProps[];
 }
 
-const Note = ({ title, html, backlinks }: NoteProps) => {
+const Note = ({ title, hast, backlinks }: NoteProps) => {
   return (
     <>
       <Header title={title} />
       <div className={classes.note}>
-        <Rehype html={html} />
+        <Rehype hast={hast} />
       </div>
       {!!backlinks.length && (
         <div style={{ marginTop: 40 }}>

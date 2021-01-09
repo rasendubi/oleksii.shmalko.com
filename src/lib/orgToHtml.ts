@@ -1,5 +1,4 @@
 import unified, { Plugin } from 'unified';
-import html from 'rehype-stringify';
 import { VFile } from 'vfile';
 import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
@@ -9,8 +8,9 @@ import smartypants from 'retext-smartypants';
 
 import orgParse from '@/org/unified-org-parse';
 import org2rehype from '@/org/unified-org-rehype';
-import processUrls from './processUrls';
-import excerpt from './excerpt';
+import processUrls from '@/lib/processUrls';
+import excerpt from '@/lib/excerpt';
+import toJson from '@/lib/rehypeToJson';
 
 const processor = unified()
   .use(orgParse)
@@ -21,7 +21,7 @@ const processor = unified()
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(processUrls)
-  .use(html)
+  .use(toJson)
   .use(excerpt);
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {

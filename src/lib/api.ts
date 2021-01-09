@@ -14,7 +14,7 @@ interface PostData {
   backlinks: string[];
   excerpt: string;
 }
-type Post = VFile & { data: PostData; path: string };
+type Post = VFile & { data: PostData; path: string; result: any };
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 const whitelistDirectories = new Set(['.', 'biblio']);

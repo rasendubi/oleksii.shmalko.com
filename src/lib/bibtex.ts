@@ -1,19 +1,19 @@
 import { VFile } from 'vfile';
 import bibtexParse from 'bibtex-parse';
-import html from 'rehype-stringify';
 import u from 'unist-builder';
 import h from 'hastscript';
 
 import unified from 'unified';
-import processUrls from './processUrls';
-import excerpt from './excerpt';
+import processUrls from '@/lib/processUrls';
+import excerpt from '@/lib/excerpt';
+import toJson from '@/lib/rehypeToJson';
 
 const processor = unified()
   .use(parseBibtex)
   .use(bibtex2rehype)
   .use(processUrls)
   .use(excerpt)
-  .use(html);
+  .use(toJson);
 
 export function bibtexToHtml(file: VFile) {
   return processor.process(file);
