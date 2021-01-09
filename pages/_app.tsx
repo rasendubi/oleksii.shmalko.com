@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
     Fathom.load('NQQXBCQR', {
       includedDomains: ['braindump.rasen.dev'],
+      url: 'https://tahr.rasen.dev/script.js',
     });
     router.events.on('routeChangeComplete', Fathom.trackPageview);
     return () => {
