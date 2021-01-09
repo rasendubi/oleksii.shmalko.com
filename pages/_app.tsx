@@ -62,6 +62,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         table {
           margin-bottom: 16px;
         }
+        table {
+          margin-bottom: 24px;
+        }
         dt {
           float: left;
           display: list-item;
@@ -70,8 +73,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           font-weight: 700;
         }
         dt::after {
-          content: '::';
-          margin: 0 4px;
+          content: ':';
+          margin-right: 4px;
         }
         dd {
           margin-left: 24px;
@@ -79,15 +82,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         li > p,
         li > ul,
         li > ol,
+        li > dl,
         li > table {
           margin-bottom: 4px;
         }
         p + ul,
-        p + ol {
+        p + ol,
+        p + dl {
           margin-top: -12px;
         }
         li > p + ul,
-        li > p + ol {
+        li > p + ol,
+        li > p + dl {
           margin-top: 0px;
         }
         .wide li {
