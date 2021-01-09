@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 const MyLink = ({ href, children, ...props }: any) => {
   return (
-    <NextLink href={href}>
+    <NextLink href={href} passHref={true}>
       <LinkView {...props}>{children}</LinkView>
     </NextLink>
   );
