@@ -1,8 +1,23 @@
+import React from 'react';
+import { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import * as Fathom from 'fathom-client';
+
 import '../styles/globals.css';
 import '@/code-highlight.css';
-import { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  React.useEffect(() => {
+    Fathom.load('NQQXBCQR', {
+      includedDomains: ['braindump.rasen.dev'],
+    });
+    router.events.on('routeChangeComplete', Fathom.trackPageview);
+    return () => {
+      router.events.off('routeChangeComplete', Fathom.trackPageview);
+    };
+  }, []);
+
   return (
     <div className="root">
       <Component {...pageProps} />
@@ -64,10 +79,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         li > ol,
         li > table {
           margin-bottom: 4px;
-
-          // & + ul, & + ol {
-          //     margin-top: 0px;
-          // }
         }
         p + ul,
         p + ol {
