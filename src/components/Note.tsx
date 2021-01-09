@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './Note.module.scss';
 import Backlink, { BacklinkProps } from './Backlink';
 import Rehype from './Rehype';
+import Header from './Header';
 
 export interface NoteProps {
   title: string;
@@ -13,8 +14,8 @@ export interface NoteProps {
 const Note = ({ title, html, backlinks }: NoteProps) => {
   return (
     <>
+      <Header title={title} />
       <div className={classes.note}>
-        <h1>{title}</h1>
         <Rehype html={html} />
       </div>
       {!!backlinks.length && (

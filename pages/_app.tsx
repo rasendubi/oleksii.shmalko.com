@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <style jsx>{`
         .root {
+          position: relative;
           font-size: 16px;
           line-height: 1.5;
           margin-top: 24px;
@@ -38,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         h1 {
           font-size: 20px;
           font-weight: 700;
-          margin-top: 24px;
+          margin-top: 8px;
           margin-bottom: 16px;
         }
         h2 {

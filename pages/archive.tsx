@@ -1,9 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
-
-import Link from '@/components/Link';
-import { getAllPosts } from '@/lib/api';
 import { useDebounce } from 'react-use';
+
+import { getAllPosts } from '@/lib/api';
+import Link from '@/components/Link';
+import Header from '@/components/Header';
 
 type PostInfo = {
   path: string;
@@ -44,9 +45,14 @@ const Archive = ({ posts }: ArchiveProps) => {
 
   return (
     <>
-      <h1>Archive</h1>
+      <Header title={'Archive'} />
       <div className="input-wrapper">
-        <input value={input} placeholder="Search…" onChange={handleChange} />
+        <input
+          aria-label="Search"
+          value={input}
+          placeholder="Search…"
+          onChange={handleChange}
+        />
         <div
           className={clsx('clear', input === '' && 'hidden')}
           onClick={handleClearClick}
