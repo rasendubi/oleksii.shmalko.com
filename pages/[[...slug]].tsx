@@ -1,63 +1,51 @@
-import Bib, { BibProps } from '@/components/Bib';
-import Note, { NoteProps } from '@/components/Note';
-import { getAllPosts, getPostBySlug } from '@/lib/api';
-import { bibEntries } from '@/lib/bib';
-import orgToHtml from '@/lib/orgToHtml';
+import * as path from 'path';
+
 import Head from 'next/head';
 
-type PageProps = ({ type: 'org' } & NoteProps) | ({ type: 'bib' } & BibProps);
+import { getAllPaths, getPostBySlug } from '@/lib/api';
+import Note, { NoteProps } from '@/components/Note';
 
-const Page = ({ type, ...props }: PageProps) => {
-  const Component: any = type === 'org' ? Note : Bib;
+interface PostProps extends NoteProps {
+  type: 'org' | 'bib';
+}
 
+const Post = ({ type, ...props }: PostProps) => {
   return (
     <>
       <Head>
         <title>{props.title}</title>
       </Head>
-      <Component {...props} />
+      <Note {...props} />
     </>
   );
 };
-export default Page;
+export default Post;
 
 export const getStaticPaths = async () => {
-  const res = getAllPosts().map((post) => `/${post.slug}`);
-  res.push('/');
+  const paths = await getAllPaths();
+  paths.push('/');
 
   return {
-    paths: res,
+    paths,
     fallback: false,
   };
 };
 
-interface Params {
+interface PageParams {
   params: {
     slug?: string[];
   };
 }
 
-export const getStaticProps = async ({ params }: Params) => {
-  const slug = params.slug || ['20210108102745'];
-  const post = getPostBySlug(slug);
-  if (post.type === 'org') {
-    const { title, html } = await orgToHtml(post.file);
-    return {
-      props: {
-        type: 'org',
-        title,
-        html,
-      },
-    };
-  } else if (post.type === 'bib') {
-    const entries = bibEntries(post.file);
-    const title = slug[slug.length - 1];
-    return {
-      props: {
-        type: 'bib',
-        title,
-        entries,
-      },
-    };
-  }
+export const getStaticProps = async ({ params }: PageParams) => {
+  const slug = params.slug || ['index'];
+  const post = (await getPostBySlug('/' + path.join(...slug)))!;
+  const data = post.data as any;
+  return {
+    props: {
+      type: data.type,
+      title: data.title as string,
+      html: post.contents,
+    },
+  };
 };

@@ -1,10 +1,20 @@
+import React from 'react';
 import NextLink from 'next/link';
+import clsx from 'clsx';
 
-const Link = ({ href, children, ...props }: any) => {
-  const external = props.className && props.className.includes('external');
+const MyLink = ({ href, children, ...props }: any) => {
   return (
     <NextLink href={href}>
-      <a {...props}>
+      <LinkView {...props}>{children}</LinkView>
+    </NextLink>
+  );
+};
+
+const LinkView = React.forwardRef(
+  ({ className, children, ...props }: any, ref) => {
+    const external = className && className.includes('external');
+    return (
+      <span ref={ref} {...props} className={clsx('root', className)}>
         {children}
         {external && (
           <svg
@@ -22,24 +32,32 @@ const Link = ({ href, children, ...props }: any) => {
         )}
 
         <style jsx>{`
-          a {
+          .root {
             text-decoration: none;
             color: #315b00;
             background-color: #f0f0f0;
           }
-          a:hover {
+          .root:hover {
             background-color: #aecf90;
             color: #282828;
           }
-          a.external {
+          .root.broken {
+            text-decoration: none;
+            color: #972500;
+          }
+          .root.broken:hover {
+            background-color: #f2b0a2;
+            color: #282828;
+          }
+          .root.external {
             color: #2544bb;
             padding-right: 12px;
           }
-          a.external:hover {
+          .root.external:hover {
             background-color: #b5d0ff;
             color: #282828;
           }
-          a.external:hover > .fa-external-link-alt {
+          .root.external:hover > .fa-external-link-alt {
             fill: #282828;
           }
           .fa-external-link-alt {
@@ -55,9 +73,9 @@ const Link = ({ href, children, ...props }: any) => {
             margin-right: -10px;
           }
         `}</style>
-      </a>
-    </NextLink>
-  );
-};
+      </span>
+    );
+  }
+);
 
-export default Link;
+export default MyLink;

@@ -77,6 +77,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         li > p + ol {
           margin-top: 0px;
         }
+        .wide li {
+          margin-top: 8px;
+        }
       `}</style>
     </div>
   );

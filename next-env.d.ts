@@ -43,3 +43,8 @@ declare module 'to-vfile' {
   const x: any;
   export default x;
 }
+
+declare module 'vfile-rename' {
+  const x: any;
+  export default x;
+}
