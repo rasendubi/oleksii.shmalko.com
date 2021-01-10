@@ -79,6 +79,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         dd {
           margin-left: 24px;
         }
+        dd > p:first-child::before {
+          // Add zero-width space to dd, so that dd always occupies
+          // some vertical space. Otherwise, the next dt will collapse
+          // into the previous one if dd has no text.
+          content: '${'\u200b'}';
+        }
         li > p,
         li > ul,
         li > ol,
