@@ -1,16 +1,19 @@
 import React from 'react';
+import clsx from 'clsx';
 import Head from 'next/head';
 import { useDebounced } from '@/useDebounced';
 
 import unified from 'unified';
 import uniorgParse, { parse } from 'uniorg-parse';
 import uniorg2rehype from 'uniorg-rehype';
+import raw from 'rehype-raw';
 import format from 'rehype-format';
 import html from 'rehype-stringify';
 
 const processor = unified()
   .use(uniorgParse)
   .use(uniorg2rehype)
+  .use(raw)
   .use(format)
   .use(html);
 
@@ -28,11 +31,12 @@ some text
     []
   );
 
-  const source = useDebounced(input, 200);
+  const source = useDebounced(input, 100);
   const uniorg = React.useMemo(() => parse(source), [source]);
-  const html = React.useMemo(() => processor.processSync(source).contents, [
-    source,
-  ]);
+  const html = React.useMemo(
+    () => processor.processSync(source).contents as string,
+    [source]
+  );
 
   const [mode, setMode] = React.useState('html');
 
@@ -43,12 +47,17 @@ some text
       </Head>
       <h1>uniorg test</h1>
       <textarea value={input} onChange={handleChange} />
-      <div className="result">
-        {mode === 'html' ? html : JSON.stringify(uniorg, null, 2)}
+      <div className={clsx('result', mode !== 'rendered' && 'pre')}>
+        {mode === 'uniorg' && JSON.stringify(uniorg, null, 2)}
+        {mode === 'html' && html}
+        {mode === 'rendered' && (
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        )}
       </div>
       <div className="buttons">
         <button onClick={() => setMode('uniorg')}>{'uniorg'}</button>
         <button onClick={() => setMode('html')}>{'HTML'}</button>
+        <button onClick={() => setMode('rendered')}>{'rendered'}</button>
       </div>
 
       <style jsx>{`
@@ -64,13 +73,16 @@ some text
           min-height: 30vh;
         }
         .result {
+          padding: 4px;
           background: #fff;
           border: thin solid #888888;
           border-radius: 2px;
-          font-family: 'Source Code Pro', monospace;
-          white-space: pre;
           overflow: auto;
           height: 45vh;
+        }
+        .result.pre {
+          font-family: 'Source Code Pro', monospace;
+          white-space: pre;
         }
         .buttons {
           display: flex;
