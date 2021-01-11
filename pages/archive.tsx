@@ -5,6 +5,7 @@ import { useDebounce } from 'react-use';
 import { getAllPosts } from '@/lib/api';
 import Link from '@/components/Link';
 import Header from '@/components/Header';
+import { useDebounced } from '@/useDebounced';
 
 type PostInfo = {
   path: string;
@@ -14,12 +15,6 @@ type PostInfo = {
 interface ArchiveProps {
   posts: PostInfo[];
 }
-
-const useDebounced = <T extends unknown>(value: T, timeout: number) => {
-  const [debounced, setDebounced] = React.useState(value);
-  useDebounce(() => setDebounced(value), timeout, [value]);
-  return debounced;
-};
 
 const Archive = ({ posts }: ArchiveProps) => {
   const [input, setInput] = React.useState('');

@@ -7,8 +7,8 @@ import retext from 'retext';
 import smartypants from 'retext-smartypants';
 import minify from 'rehype-preset-minify';
 
-import orgParse from '@/org/unified-org-parse';
-import org2rehype from '@/org/unified-org-rehype';
+import orgParse from 'uniorg-parse';
+import org2rehype from 'uniorg-rehype';
 import processUrls from '@/lib/processUrls';
 import excerpt from '@/lib/excerpt';
 import toJson from '@/lib/rehypeToJson';
