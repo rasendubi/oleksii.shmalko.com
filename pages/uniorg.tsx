@@ -1,14 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
-import Head from 'next/head';
 import { useDebounced } from '@/useDebounced';
 
 import unified from 'unified';
-import uniorgParse, { parse } from 'uniorg-parse';
+import uniorgParse from 'uniorg-parse';
+import { parse } from 'uniorg-parse/lib/parser';
 import uniorg2rehype from 'uniorg-rehype';
 import raw from 'rehype-raw';
 import format from 'rehype-format';
 import html from 'rehype-stringify';
+import Header from '@/components/Header';
 
 const processor = unified()
   .use(uniorgParse)
@@ -42,10 +43,7 @@ some text
 
   return (
     <div className="root">
-      <Head>
-        <title>uniorg test</title>
-      </Head>
-      <h1>uniorg test</h1>
+      <Header title="uniorg test" />
       <textarea value={input} onChange={handleChange} />
       <div className={clsx('result', mode !== 'rendered' && 'pre')}>
         {mode === 'uniorg' && JSON.stringify(uniorg, null, 2)}

@@ -1,5 +1,10 @@
 {
   "name": "braindump",
+  "workspaces": [
+    "../uniorg/packages/uniorg",
+    "../uniorg/packages/uniorg-parse",
+    "../uniorg/packages/uniorg-rehype"
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -25,11 +30,11 @@
     "rehype-url-inspector": "^2.0.2",
     "retext": "^7.0.1",
     "retext-smartypants": "^4.0.0",
-    "sass": "^1.32.0",
+    "sass": "^1.32.4",
     "to-vfile": "^6.1.0",
     "unified": "^9.2.0",
-    "uniorg-parse": "^0.1.0",
-    "uniorg-rehype": "^0.1.0",
+    "uniorg-parse": "^0.1.5",
+    "uniorg-rehype": "^0.1.5",
     "unist-builder": "^2.0.3",
     "unist-util-select": "^3.0.4",
     "unist-util-visit": "^2.0.3",
@@ -37,9 +42,9 @@
     "vfile-rename": "^1.0.3"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.8",
-    "@types/jest": "^26.0.19",
-    "@types/node": "^14.14.19",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
     "@types/unist": "^2.0.3",
     "babel": "^6.23.0",
