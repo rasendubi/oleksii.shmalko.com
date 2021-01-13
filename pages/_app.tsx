@@ -34,6 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin: 0 auto;
           margin: 24px auto 40px;
           padding: 0 16px;
+
+          // Allow breaking words if text overflows (very long words
+          // or links)
+          word-wrap: break-word;
+          overflow-wrap: break-word;
         }
       `}</style>
       <style jsx global>{`
