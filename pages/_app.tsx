@@ -110,6 +110,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         .wide li {
           margin-top: 8px;
         }
+        .bibinfo {
+          margin-top: -12px;
+          margin-bottom: 32px;
+        }
       `}</style>
     </div>
   );

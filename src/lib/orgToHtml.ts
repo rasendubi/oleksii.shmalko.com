@@ -1,11 +1,11 @@
 import unified, { Plugin } from 'unified';
 import { VFile } from 'vfile';
-import { select } from 'unist-util-select';
 import visit from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 import minify from 'rehype-preset-minify';
+import h from 'hastscript';
 
 import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
@@ -15,10 +15,11 @@ import toJson from '@/lib/rehypeToJson';
 
 const processor = unified()
   .use(orgParse)
-  .use(saveTitle)
+  .use(saveKeywords)
   .use(removeCards)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(org2rehype)
+  .use(bibtexInfo)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(processUrls)
@@ -30,12 +31,13 @@ export default async function orgToHtml(file: VFile): Promise<VFile> {
   return await processor.process(file);
 }
 
-function saveTitle() {
+function saveKeywords() {
   return transformer;
 
   function transformer(tree: any, file: any) {
-    const title = select('keyword[key=TITLE]', tree);
-    file.data.title = title ? title.value : '';
+    visit(tree, 'keyword', (kw: any) => {
+      file.data[kw.key.toLowerCase()] = kw.value;
+    });
   }
 }
 
@@ -90,5 +92,32 @@ function orgSmartypants(options: any) {
     visit(tree, 'text', (node) => {
       node.value = String(processor.processSync(node.value));
     });
+  }
+}
+
+// fill more information for bibliographic notes.
+function bibtexInfo() {
+  return transformer;
+
+  function transformer(tree: any, file: VFile) {
+    const m = file.path?.match(/\/biblio\/(.*)/);
+    if (!m) return;
+
+    const bib = (file as any).bibliography[m[1]];
+    if (!bib) return;
+
+    if (bib) {
+      if (bib.TITLE) {
+        (file.data as any).title = bib.TITLE;
+      }
+      const author = bib.AUTHOR
+        ? [h('dt', 'authors'), h('dd', bib.AUTHOR)]
+        : [];
+      const year = bib.YEAR ? [h('dt', 'year'), h('dd', '' + bib.YEAR)] : [];
+      const url = bib.URL
+        ? [h('dt', 'url'), h('dd', h('a', { href: bib.URL }, bib.URL))]
+        : [];
+      tree.children.unshift(h('dl.bibinfo', [...author, ...year, ...url]));
+    }
   }
 }

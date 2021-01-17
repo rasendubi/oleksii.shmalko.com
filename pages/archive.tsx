@@ -134,7 +134,7 @@ const PostList = React.memo(({ posts }: ArchiveProps) => {
 
 export const getStaticProps = async () => {
   const allPosts = await getAllPosts();
-  const posts = allPosts
+  const posts = Object.values(allPosts)
     .map((p) => ({ title: p.data.title, path: p.path }))
     .sort((a, b) => {
       // new notes on top, but bibliography on bottom (notes with

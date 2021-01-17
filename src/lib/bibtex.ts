@@ -32,7 +32,8 @@ export function bibtex2rehype() {
   return transformer;
 
   function transformer(node: any, file: VFile) {
-    (file.data as any).title = file.basename;
+    const base = file.basename!.replace(/\.bib$/, '');
+    (file.data as any).title = base[0].toUpperCase() + base.slice(1);
 
     return h(
       'ul.wide',
