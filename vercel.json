@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/biblio/books.bib", "destination": "/biblio/books" },
+    { "source": "/biblio/papers.bib", "destination": "/biblio/papers" },
+    { "source": "/biblio/online.bib", "destination": "/biblio/online" }
+  ]
+}
