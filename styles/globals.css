@@ -68,15 +68,23 @@ code.inline-verbatim {
   white-space: nowrap;
 }
 
-p.verse {
+pre {
+  overflow: auto;
+}
+
+blockquote, pre.verse {
+  font-family: 'Libre Baskerville', serif;
   font-style: italic;
   background-color: #f0f0f0;
-  margin: 16px 0 16px 40px;
+  margin: 16px 0 16px 16px;
   padding: 4px;
 
-  white-space: pre-line;
+  & > p:last-child {
+    margin-bottom: 0;
+  }
 }
-div.center {
+
+.center {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
