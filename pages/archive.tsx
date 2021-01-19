@@ -66,7 +66,7 @@ const Archive = ({ posts }: ArchiveProps) => {
           when notes list gets too short */}
       <style global jsx>{`
         body {
-          overflow: scroll;
+          overflow-y: scroll;
         }
       `}</style>
       <style jsx>{`
