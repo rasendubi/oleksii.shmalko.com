@@ -5,6 +5,7 @@ import * as Fathom from 'fathom-client';
 
 import '../styles/globals.css';
 import '@/code-highlight.css';
+import 'katex/dist/katex.min.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

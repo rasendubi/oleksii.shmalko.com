@@ -64,12 +64,13 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
 
   if (url.protocol === 'file:') {
     let href = url.pathname.replace(/\.(org|bib)$/, '');
-    node.properties[propertyName] = encodeURI(href);
+    node.properties[propertyName] = href;
 
-    const exists = file.pageExists?.(href);
+    const linkFile = decodeURI(href);
+    const exists = file.pageExists?.(linkFile);
     if (exists) {
       file.data.links = file.data.links || [];
-      file.data.links.push(href);
+      file.data.links.push(linkFile);
     } else {
       node.properties.className = node.properties.className || [];
       node.properties.className.push('broken');

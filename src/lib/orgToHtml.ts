@@ -2,6 +2,7 @@ import unified, { Plugin } from 'unified';
 import { VFile } from 'vfile';
 import visit from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
+import katex from 'rehype-katex';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 import minify from 'rehype-preset-minify';
@@ -22,6 +23,7 @@ const processor = unified()
   .use(bibtexInfo)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
+  .use(katex)
   .use(processUrls)
   .use(minify)
   .use(toJson)
