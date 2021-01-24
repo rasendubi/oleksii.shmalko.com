@@ -16,7 +16,7 @@ export interface PageData {
   title: string;
   ids: [string, any][];
   links: string[];
-  backlinks: string[];
+  backlinks: Set<string>;
   excerpt: string;
 }
 export type Page = VFile & { data: PageData; path: string; result: any };
@@ -209,12 +209,7 @@ async function postprocessPages(ctx: BuildCtx): Promise<void> {
     file.pageExists = pageExists;
     file.ids = ids;
 
-    data.links = [];
     postprocessPage(file);
-    data.links.forEach((other: string) => {
-      ctx.backlinks[other] = ctx.backlinks[other] || new Set();
-      ctx.backlinks[other].add(data.slug);
-    });
 
     return file;
   }
@@ -223,9 +218,16 @@ async function postprocessPages(ctx: BuildCtx): Promise<void> {
   }
 }
 
-function populateBacklinks(ctx: BuildCtx): void {
-  Object.values(ctx.pages).forEach((p) => {
-    const links = ctx.backlinks[p.path!] ?? new Set();
-    p.data.backlinks = [...links];
+function populateBacklinks(ctx: BuildCtx) {
+  const backlinks: Record<string, Set<string>> = {};
+  Object.values(ctx.pages).forEach((file) => {
+    file.data.links = file.data.links ?? [];
+    file.data.backlinks = backlinks[file.data.slug] =
+      backlinks[file.data.slug] ?? new Set();
+
+    file.data.links.forEach((other) => {
+      backlinks[other] = backlinks[other] || new Set();
+      backlinks[other].add(file.data.slug);
+    });
   });
 }
