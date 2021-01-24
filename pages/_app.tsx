@@ -91,6 +91,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           // into the previous one if dd has no text.
           content: '${'\u200b'}';
         }
+        dd > p,
+        dd > ul,
+        dd > ol,
+        dd > dl,
+        dd > table,
         li > p,
         li > ul,
         li > ol,
@@ -110,10 +115,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
         .wide li {
           margin-top: 8px;
-        }
-        .bibinfo {
-          margin-top: -12px;
-          margin-bottom: 32px;
         }
       `}</style>
     </div>
