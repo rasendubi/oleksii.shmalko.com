@@ -90,7 +90,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
             title: '',
             ids: [],
             links: [],
-            backlinks: [],
+            backlinks: new Set(),
             excerpt: '',
           };
           file.data = data;
