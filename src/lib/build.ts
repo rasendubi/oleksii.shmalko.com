@@ -8,11 +8,13 @@ import bibtexParse from 'bibtex-parse';
 
 import orgToHtml from './orgToHtml';
 import bibtexToHtml from './bibtex';
+import postprocessPage from './postprocess';
 
 export interface PageData {
   type: 'org' | 'bib';
-  title: string;
   slug: string;
+  title: string;
+  ids: [string, any][];
   links: string[];
   backlinks: string[];
   excerpt: string;
@@ -44,7 +46,8 @@ const process = trough()
   .use(collectFiles)
   .use(collectBibliography)
   .use(populateBibliographyPages)
-  .use(processPages)
+  .use(preprocessPages)
+  .use(postprocessPages)
   .use(populateBacklinks);
 
 export const build = async (
@@ -85,6 +88,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
             slug,
             type: ext === '.org' ? 'org' : 'bib',
             title: '',
+            ids: [],
             links: [],
             backlinks: [],
             excerpt: '',
@@ -159,6 +163,7 @@ function populateBibliographyPages(ctx: BuildCtx): void {
         slug: path,
         type: 'org',
         title: '',
+        ids: [],
         links: [],
         backlinks: [],
         excerpt: '',
@@ -167,17 +172,14 @@ function populateBibliographyPages(ctx: BuildCtx): void {
   });
 }
 
-async function processPages(ctx: BuildCtx): Promise<void> {
+// Convert page to rehype, save page titles and ids.
+async function preprocessPages(ctx: BuildCtx): Promise<void> {
   await Promise.all(Object.values(ctx.pages).map(processPage));
 
   async function processPage(file: Page): Promise<Page> {
     const data = file.data;
 
-    file.bibliography = ctx.bibliography;
-    file.pageExists = pageExists;
-
     const type = data.type;
-    data.links = [];
     if (type === 'org') {
       await orgToHtml(file);
     } else if (type === 'bib') {
@@ -186,6 +188,29 @@ async function processPages(ctx: BuildCtx): Promise<void> {
       throw new Error(`unknown page type: ${type}`);
     }
 
+    return file;
+  }
+}
+
+async function postprocessPages(ctx: BuildCtx): Promise<void> {
+  const ids: Record</* id: */ string, /* slug: */ string> = {};
+  Object.values(ctx.pages).forEach((p) => {
+    p.data.ids?.forEach(([id, _target]: [string, any]) => {
+      ids[id] = p.path;
+    });
+  });
+
+  await Promise.all(Object.values(ctx.pages).map(processPage));
+
+  async function processPage(file: Page): Promise<Page> {
+    const data = file.data;
+
+    file.bibliography = ctx.bibliography;
+    file.pageExists = pageExists;
+    file.ids = ids;
+
+    data.links = [];
+    postprocessPage(file);
     data.links.forEach((other: string) => {
       ctx.backlinks[other] = ctx.backlinks[other] || new Set();
       ctx.backlinks[other].add(data.slug);

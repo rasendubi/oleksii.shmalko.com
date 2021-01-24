@@ -62,6 +62,14 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
     url = new URL(`file:///biblio/${ref}`);
   }
 
+  if (url.protocol === 'id:') {
+    const id = url.pathname;
+    const ref = file.ids[id];
+    if (ref) {
+      url = new URL(`file://${ref}`);
+    }
+  }
+
   if (url.protocol === 'file:') {
     let href = url.pathname.replace(/\.(org|bib)$/, '');
     node.properties[propertyName] = href;
