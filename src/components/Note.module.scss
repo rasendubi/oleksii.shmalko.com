@@ -6,17 +6,6 @@
     line-height: 1.1;
 }
 
-.note blockquote {
-    font-style: italic;
-    background-color: #f0f0f0;
-    margin: 16px 0 16px 16px;
-    padding: 4px;
-
-    & > p:last-child {
-        margin-bottom: 0;
-    }
-}
-
 .note table {
     display: block;
     border-collapse: collapse;

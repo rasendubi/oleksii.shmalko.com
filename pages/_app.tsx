@@ -65,8 +65,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         ul,
         ol,
         dl,
-        table {
-          margin-bottom: 16px;
+        table,
+        blockquote,
+        pre.verse,
+        .math-display {
+          margin: 0 0 16px 0;
         }
         table {
           margin-bottom: 24px;
