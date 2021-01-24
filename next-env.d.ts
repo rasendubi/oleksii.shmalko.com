@@ -58,3 +58,8 @@ declare module 'rehype-preset-minify' {
   const x: any;
   export default x;
 }
+
+declare module 'trough' {
+  const x: any;
+  export default x;
+}

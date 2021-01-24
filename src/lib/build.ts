@@ -1,4 +1,5 @@
 import * as path from 'path';
+import trough from 'trough';
 import toVFile from 'to-vfile';
 import { VFile } from 'vfile';
 import findDown from 'vfile-find-down';
@@ -32,109 +33,89 @@ export interface BraindumpOptions {
   specialPages: Set<string>;
 }
 
-export class Braindump {
-  private readonly options: BraindumpOptions;
+export interface BuildCtx {
+  options: BraindumpOptions;
+  bibliography: Record<string, BibtexEntry>;
+  pages: Record<string, Page>;
+  backlinks: Record<string, Set<string>>;
+}
 
-  private readonly pages: Promise<Record<string, Page>>;
-  private readonly backlinks: Record<string, Set<string>> = {};
+const process = trough()
+  .use(collectFiles)
+  .use(collectBibliography)
+  .use(populateBibliographyPages)
+  .use(processPages)
+  .use(populateBacklinks);
 
-  private bibliography!: Record<string, BibtexEntry>;
+export const build = async (
+  options: BraindumpOptions
+): Promise<Record<string, Page>> => {
+  console.time('process');
+  const result = await new Promise<Record<string, Page>>((resolve, reject) => {
+    process.run({ options, backlinks: {} }, (err: any, ctx: BuildCtx) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(ctx.pages!);
+      }
+    });
+  });
+  console.timeEnd('process');
+  return result;
+};
 
-  private paths: Set<string> = new Set();
+async function collectFiles(ctx: BuildCtx): Promise<void> {
+  const files = await new Promise<Page[]>((resolve, reject) => {
+    findDown.all(
+      (file, stats) => {
+        const p = path.relative(ctx.options.root, file.path!);
+        if (stats.isDirectory()) {
+          if (!p || ctx.options.whitelistDirectories.has(p)) {
+            return;
+          } else {
+            return findDown.SKIP;
+          }
+        }
 
-  public constructor(options: BraindumpOptions) {
-    this.options = options;
-    this.pages = this.processAll();
-  }
+        const ext = path.extname(p);
+        if (ext === '.org' || ext === '.bib') {
+          const slug = '/' + p.replace(/\.(org|bib)$/, '');
 
-  public getPages(): Promise<Record<string, Page>> {
-    return this.pages;
-  }
-
-  private pageExists = (slug: string): boolean => {
-    return this.paths.has(slug) || this.options.specialPages.has(slug);
-  };
-
-  private processAll = async (): Promise<Record<string, Page>> => {
-    console.time('process');
-    this.bibliography = await collectBibliography(this.options.root);
-
-    const pages = await getFiles(
-      this.options.root,
-      this.options.whitelistDirectories
-    );
-    this.paths = new Set(pages.map((p) => p.data.slug));
-
-    await Promise.all(pages.map((file) => toVFile.read(file, 'utf8')));
-
-    // create pages for all bib references
-    Object.values(this.bibliography).forEach((b) => {
-      const path = '/biblio/' + b.key;
-      if (this.paths.has(path)) return;
-      this.paths.add(path);
-
-      pages.push(
-        toVFile({
-          path,
-          contents: '',
-          data: {
-            slug: path,
-            type: 'org',
+          const data: PageData = {
+            slug,
+            type: ext === '.org' ? 'org' : 'bib',
             title: '',
             links: [],
             backlinks: [],
             excerpt: '',
-          },
-        })
-      );
-    });
+          };
+          file.data = data;
 
-    await Promise.all(pages.map(this.processPage));
-    // populateBacklinks must be called after processing of all pages
-    // have finished.
-    pages.forEach(this.populateBacklinks);
-    const result = Object.fromEntries(pages.map((p) => [p.data.slug, p]));
-    console.timeEnd('process');
-    return result;
-  };
-
-  private processPage = async (file: Page): Promise<Page> => {
-    const data = file.data;
-
-    rename(file, { path: data.slug });
-
-    file.bibliography = this.bibliography;
-    file.pageExists = this.pageExists;
-
-    const type = data.type;
-    data.links = [];
-    if (type === 'org') {
-      await orgToHtml(file);
-    } else if (type === 'bib') {
-      await bibtexToHtml(file);
-    } else {
-      throw new Error(`unknown page type: ${type}`);
-    }
-
-    data.links.forEach((other: string) => {
-      this.backlinks[other] = this.backlinks[other] || new Set();
-      this.backlinks[other].add(data.slug);
-    });
-
-    return file;
-  };
-
-  private populateBacklinks = async (file: Page) => {
-    const links = this.backlinks[file.path!] ?? new Set();
-    file.data.backlinks = [...links];
-  };
+          return true;
+        }
+      },
+      ctx.options.root,
+      (err, files) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(files as Page[]);
+        }
+      }
+    );
+  });
+  const pages = await Promise.all(
+    files.map(async (f) => {
+      await toVFile.read(f, 'utf8');
+      return rename(f, { path: f.data.slug });
+    })
+  );
+  ctx.pages = Object.fromEntries(pages.map((p) => [p.data.slug, p]));
 }
 
-const collectBibliography = async (
-  root: string
-): Promise<Record<string, BibtexEntry>> => {
+async function collectBibliography(ctx: BuildCtx): Promise<void> {
   const files = await new Promise<VFile[]>((resolve, reject) => {
-    findDown.all('.bib', root, (err, files) => {
+    findDown.all('.bib', ctx.options.root, (err, files) => {
       if (err) {
         reject(err);
       } else {
@@ -161,44 +142,65 @@ const collectBibliography = async (
     });
     return acc;
   }, {});
-  return entries;
-};
 
-const getFiles = (root: string, whitelist: Set<string>) =>
-  new Promise<Page[]>((resolve, reject) => {
-    findDown.all(
-      (file) => {
-        const p = path.relative(root, file.path!);
-        const dir = path.dirname(p);
-        if (!whitelist.has(dir)) {
-          return findDown.SKIP;
-        }
+  ctx.bibliography = entries;
+}
 
-        const ext = path.extname(p);
-        if (ext === '.org' || ext === '.bib') {
-          const slug = '/' + p.replace(/\.(org|bib)$/, '');
+// Create pages for all bibliography references
+function populateBibliographyPages(ctx: BuildCtx): void {
+  Object.values(ctx.bibliography).forEach((b) => {
+    const path = '/biblio/' + b.key;
+    if (path in ctx.pages) return;
 
-          const data: PageData = {
-            slug,
-            type: ext === '.org' ? 'org' : 'bib',
-            title: '',
-            links: [],
-            backlinks: [],
-            excerpt: '',
-          };
-
-          file.data = data;
-
-          return true;
-        }
+    ctx.pages[path] = toVFile({
+      path,
+      contents: '',
+      data: {
+        slug: path,
+        type: 'org',
+        title: '',
+        links: [],
+        backlinks: [],
+        excerpt: '',
       },
-      root,
-      (err, files) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(files as Page[]);
-        }
-      }
-    );
+    });
   });
+}
+
+async function processPages(ctx: BuildCtx): Promise<void> {
+  await Promise.all(Object.values(ctx.pages).map(processPage));
+
+  async function processPage(file: Page): Promise<Page> {
+    const data = file.data;
+
+    file.bibliography = ctx.bibliography;
+    file.pageExists = pageExists;
+
+    const type = data.type;
+    data.links = [];
+    if (type === 'org') {
+      await orgToHtml(file);
+    } else if (type === 'bib') {
+      await bibtexToHtml(file);
+    } else {
+      throw new Error(`unknown page type: ${type}`);
+    }
+
+    data.links.forEach((other: string) => {
+      ctx.backlinks[other] = ctx.backlinks[other] || new Set();
+      ctx.backlinks[other].add(data.slug);
+    });
+
+    return file;
+  }
+  function pageExists(slug: string) {
+    return ctx.options.specialPages.has(slug) || slug in ctx.pages;
+  }
+}
+
+function populateBacklinks(ctx: BuildCtx): void {
+  Object.values(ctx.pages).forEach((p) => {
+    const links = ctx.backlinks[p.path!] ?? new Set();
+    p.data.backlinks = [...links];
+  });
+}

@@ -33,6 +33,7 @@
     "retext-smartypants": "^4.0.0",
     "sass": "^1.32.5",
     "to-vfile": "^6.1.0",
+    "trough": "^1.0.5",
     "unified": "^9.2.0",
     "uniorg-parse": "^0.1.12",
     "uniorg-rehype": "^0.1.12",
