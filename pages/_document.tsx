@@ -9,7 +9,7 @@ import Document, {
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" prefix="og: https://ogp.me/ns#">
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link

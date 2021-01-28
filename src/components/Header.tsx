@@ -2,14 +2,28 @@ import React from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 
 export interface HeaderProps {
+  slug: string;
   title: string;
 }
 
-const Header = ({ title }: HeaderProps) => {
+const Header = ({ slug, title }: HeaderProps) => {
+  const url = `https://braindump.rasen.dev${slug}`;
   return (
     <div className="root">
+      <NextSeo
+        title={title}
+        canonical={url}
+        openGraph={{
+          type: 'website',
+          locale: 'en_US',
+          title,
+          url,
+          site_name: "Alexey Shmalko's notes",
+        }}
+      />
       <Head>
         <title>{title}</title>
       </Head>

@@ -2,6 +2,7 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
+import { DefaultSeo } from 'next-seo';
 
 import '../styles/globals.css';
 import '@/code-highlight.css';
@@ -22,6 +23,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className="root">
+      <DefaultSeo
+        openGraph={{
+          type: 'website',
+          locale: 'en_US',
+          url: 'https://braindump.rasen.dev',
+          site_name: "Alexey Shmalko's notes",
+        }}
+      />
       <Component {...pageProps} />
 
       <style jsx>{`

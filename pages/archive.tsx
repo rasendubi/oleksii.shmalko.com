@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import { useDebounce } from 'react-use';
 
 import { getAllPosts } from '@/lib/api';
 import Link from '@/components/Link';
@@ -40,7 +39,7 @@ const Archive = ({ posts }: ArchiveProps) => {
 
   return (
     <>
-      <Header title={'Archive'} />
+      <Header slug="/archive" title={'Archive'} />
       <div className="input-wrapper">
         <input
           aria-label="Search"

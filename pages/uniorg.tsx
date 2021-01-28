@@ -43,7 +43,7 @@ some text
 
   return (
     <div className="root">
-      <Header title="uniorg test" />
+      <Header slug="/uniorg" title="uniorg test" />
       <textarea value={input} onChange={handleChange} />
       <div className={clsx('result', mode !== 'rendered' && 'pre')}>
         {mode === 'uniorg' && JSON.stringify(uniorg, null, 2)}

@@ -6,15 +6,16 @@ import Rehype from './Rehype';
 import Header from './Header';
 
 export interface NoteProps {
+  slug: string;
   title: string;
   hast: string;
   backlinks: BacklinkProps[];
 }
 
-const Note = ({ title, hast, backlinks }: NoteProps) => {
+const Note = ({ slug, title, hast, backlinks }: NoteProps) => {
   return (
     <>
-      <Header title={title} />
+      <Header slug={slug} title={title} />
       <div className={classes.note}>
         <Rehype hast={hast} />
       </div>
