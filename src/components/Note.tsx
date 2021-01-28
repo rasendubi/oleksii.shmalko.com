@@ -8,14 +8,15 @@ import Header from './Header';
 export interface NoteProps {
   slug: string;
   title: string;
+  images: Array<{ src: string; alt: string }>;
   hast: string;
   backlinks: BacklinkProps[];
 }
 
-const Note = ({ slug, title, hast, backlinks }: NoteProps) => {
+const Note = ({ slug, title, images, hast, backlinks }: NoteProps) => {
   return (
     <>
-      <Header slug={slug} title={title} />
+      <Header slug={slug} title={title} images={images} />
       <div className={classes.note}>
         <Rehype hast={hast} />
       </div>

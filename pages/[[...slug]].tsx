@@ -37,7 +37,8 @@ export const getStaticProps = async ({ params }: PageParams) => {
     props: {
       type: data.type,
       slug: post.path,
-      title: data.title as string,
+      title: data.title,
+      images: data.images,
       hast: post.result,
       backlinks: backlinks.map((b) => ({
         slug: b!.path,

@@ -7,10 +7,12 @@ import { NextSeo } from 'next-seo';
 export interface HeaderProps {
   slug: string;
   title: string;
+  images?: Array<{ src: string; alt?: string }>;
 }
 
-const Header = ({ slug, title }: HeaderProps) => {
+const Header = ({ slug, title, images }: HeaderProps) => {
   const url = `https://braindump.rasen.dev${slug}`;
+  const image = images?.[0] ?? { src: '/gravatar.png' };
   return (
     <div className="root">
       <NextSeo
@@ -22,6 +24,7 @@ const Header = ({ slug, title }: HeaderProps) => {
           title,
           url,
           site_name: "Alexey Shmalko's notes",
+          images: [{ url: 'https://braindump.rasen.dev' + image.src }],
         }}
       />
       <Head>

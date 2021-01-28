@@ -15,6 +15,7 @@ const processor = json()
   .use(prism, { ignoreMissing: true })
   .use(katex)
   .use(processUrls)
+  .use(extractImages)
   .use(minify)
   .use(excerpt);
 
@@ -76,5 +77,17 @@ function bibtexInfo() {
         : [];
       tree.children.unshift(h('dl.bibinfo', [...author, ...year, ...url]));
     }
+  }
+}
+
+function extractImages() {
+  return transformer;
+
+  function transformer(tree: any, file: any) {
+    visit(tree, { type: 'element', tagName: 'img' }, (img: any) => {
+      let url = new URL(img.properties.src, 'file://' + file.path);
+      const images = file.data.images || (file.data.images = []);
+      images.push({ src: url.pathname, alt: img.properties.alt || '' });
+    });
   }
 }

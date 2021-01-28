@@ -14,6 +14,7 @@ export interface PageData {
   type: 'org' | 'bib';
   slug: string;
   title: string;
+  images: Array<{ src: string; alt: string }>;
   ids: [string, any][];
   links: string[];
   backlinks: Set<string>;
@@ -88,6 +89,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
             slug,
             type: ext === '.org' ? 'org' : 'bib',
             title: '',
+            images: [],
             ids: [],
             links: [],
             backlinks: new Set(),
@@ -163,6 +165,7 @@ function populateBibliographyPages(ctx: BuildCtx): void {
         slug: path,
         type: 'org',
         title: '',
+        images: [],
         ids: [],
         links: [],
         backlinks: [],
