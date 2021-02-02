@@ -103,7 +103,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           // into the previous one if dd has no text.
           content: '${'\u200b'}';
         }
-        dd > p,
+        // For dd, use larger padding if first child is not the only
+        // child. So that next element is properly wrapped to the next
+        // line and is not affected by dt's float:left. (Happens when
+        // tag contains a list.)
+        dd > p:only-child,
+        dd > p:not(:first-child),
         dd > ul,
         dd > ol,
         dd > dl,
