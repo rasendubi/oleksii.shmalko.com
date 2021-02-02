@@ -39,7 +39,7 @@ const Archive = ({ posts }: ArchiveProps) => {
 
   return (
     <>
-      <Header slug="/archive" title={'Archive'} />
+      <Header slug="/archive" title={'§ Archive'} />
       <div className="input-wrapper">
         <input
           aria-label="Search"
