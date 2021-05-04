@@ -113,11 +113,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         dd > ol,
         dd > dl,
         dd > table,
+        dd > blockquote,
+        dd > pre,
         li > p,
         li > ul,
         li > ol,
         li > dl,
-        li > table {
+        li > table,
+        li > blockquote,
+        li > pre {
           margin-bottom: 4px;
         }
         p + ul,
