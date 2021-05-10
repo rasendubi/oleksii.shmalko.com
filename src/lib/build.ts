@@ -7,11 +7,14 @@ import rename from 'vfile-rename';
 import bibtexParse from 'bibtex-parse';
 
 import orgToHtml from './orgToHtml';
+import mdToHtml from './mdToHtml';
 import bibtexToHtml from './bibtex';
 import postprocessPage from './postprocess';
+import rewritePath from './rewrite-path';
 
 export interface PageData {
-  type: 'org' | 'bib';
+  type: '.org' | '.md' | '.bib';
+  pageType: 'note' | 'post' | 'biblio';
   slug: string;
   title: string;
   images: Array<{ src: string; alt: string }>;
@@ -19,6 +22,7 @@ export interface PageData {
   links: string[];
   backlinks: Set<string>;
   excerpt: string;
+  date?: string;
 }
 export type Page = VFile & { data: PageData; path: string; result: any };
 
@@ -32,7 +36,7 @@ type BibtexEntry = {
 
 export interface BraindumpOptions {
   root: string;
-  whitelistDirectories: Set<string>;
+  blacklistedDirectories: Set<string>;
   specialPages: Set<string>;
 }
 
@@ -42,6 +46,12 @@ export interface BuildCtx {
   pages: Record<string, Page>;
   backlinks: Record<string, Set<string>>;
 }
+
+const pageType = (path: string): 'note' | 'post' | 'biblio' => {
+  if (path.startsWith('biblio')) return 'biblio';
+  if (path.startsWith('posts')) return 'post';
+  return 'note';
+};
 
 const process = trough()
   .use(collectFiles)
@@ -74,20 +84,22 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
       (file, stats) => {
         const p = path.relative(ctx.options.root, file.path!);
         if (stats.isDirectory()) {
-          if (!p || ctx.options.whitelistDirectories.has(p)) {
-            return;
-          } else {
+          if (ctx.options.blacklistedDirectories.has(p)) {
             return findDown.SKIP;
+          } else {
+            return;
           }
         }
 
         const ext = path.extname(p);
-        if (ext === '.org' || ext === '.bib') {
-          const slug = '/' + p.replace(/\.(org|bib)$/, '');
+        if (ext === '.org' || ext === '.bib' || ext === '.md') {
+          const slug = rewritePath(p);
+          const type = pageType(p);
 
           const data: PageData = {
             slug,
-            type: ext === '.org' ? 'org' : 'bib',
+            type: ext,
+            pageType: type,
             title: '',
             images: [],
             ids: [],
@@ -113,7 +125,10 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
   const pages = await Promise.all(
     files.map(async (f) => {
       await toVFile.read(f, 'utf8');
-      return rename(f, { path: f.data.slug });
+      return rename(
+        rename(f, { path: path.relative(ctx.options.root, f.path) }),
+        { path: f.data.slug }
+      );
     })
   );
   ctx.pages = Object.fromEntries(pages.map((p) => [p.data.slug, p]));
@@ -155,7 +170,7 @@ async function collectBibliography(ctx: BuildCtx): Promise<void> {
 // Create pages for all bibliography references
 function populateBibliographyPages(ctx: BuildCtx): void {
   Object.values(ctx.bibliography).forEach((b) => {
-    const path = '/biblio/' + b.key;
+    const path = '/biblio/' + b.key + '/';
     if (path in ctx.pages) return;
 
     ctx.pages[path] = toVFile({
@@ -163,7 +178,8 @@ function populateBibliographyPages(ctx: BuildCtx): void {
       contents: '',
       data: {
         slug: path,
-        type: 'org',
+        type: '.org',
+        pageType: 'biblio',
         title: '',
         images: [],
         ids: [],
@@ -179,16 +195,26 @@ function populateBibliographyPages(ctx: BuildCtx): void {
 async function preprocessPages(ctx: BuildCtx): Promise<void> {
   await Promise.all(Object.values(ctx.pages).map(processPage));
 
-  async function processPage(file: Page): Promise<Page> {
+  async function processPage(file: Page): Promise<Page | null> {
     const data = file.data;
 
     const type = data.type;
-    if (type === 'org') {
+    if (type === '.org') {
       await orgToHtml(file);
-    } else if (type === 'bib') {
+    } else if (type === '.md') {
+      await mdToHtml(file);
+    } else if (type === '.bib') {
       await bibtexToHtml(file);
     } else {
       throw new Error(`unknown page type: ${type}`);
+    }
+
+    const published = (file.data as any).published;
+    if (published && (published !== 'true' || published !== 'yes')) {
+      // TODO: refactor this, so it does less mutation
+      if (process.env.NODE_ENV !== 'development') {
+        delete ctx.pages[file.data.slug];
+      }
     }
 
     return file;
@@ -228,9 +254,11 @@ function populateBacklinks(ctx: BuildCtx) {
     file.data.backlinks = backlinks[file.data.slug] =
       backlinks[file.data.slug] ?? new Set();
 
-    file.data.links.forEach((other) => {
-      backlinks[other] = backlinks[other] || new Set();
-      backlinks[other].add(file.data.slug);
-    });
+    file.data.links
+      .filter((l) => l !== file.data.slug)
+      .forEach((other) => {
+        backlinks[other] = backlinks[other] || new Set();
+        backlinks[other].add(file.data.slug);
+      });
   });
 }

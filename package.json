@@ -1,23 +1,26 @@
 {
-  "name": "braindump",
-  "workspaces": [
-    "../uniorg/packages/uniorg",
-    "../uniorg/packages/uniorg-parse",
-    "../uniorg/packages/uniorg-rehype"
-  ],
+  "name": "www.alexeyshmalko.com",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "next build && next export && npm run deploy:s3 && npm run deploy:invalidate",
+    "deploy:s3": "aws s3 sync ./out/ s3://www.alexeyshmalko.com",
+    "deploy:invalidate": "aws cloudfront create-invalidation --distribution-id E3N6CBELFVQGVA --paths '/*'"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.5.0",
+    "@silvenon/remark-smartypants": "^1.0.0",
     "bibtex-parse": "^2.1.0",
     "clsx": "^1.1.1",
     "fathom-client": "^3.0.0",
+    "file-loader": "^6.2.0",
+    "hast-util-select": "^4.0.2",
     "hastscript": "^6.0.0",
+    "ignore-loader": "^0.1.2",
+    "moment": "^2.29.1",
     "next": "10.0.4",
     "next-seo": "^4.24.0",
     "react": "17.0.1",
@@ -30,6 +33,12 @@
     "rehype-stringify": "^8.0.0",
     "rehype-truncate": "^1.2.2",
     "rehype-url-inspector": "^2.0.2",
+    "remark-extract-frontmatter": "^3.1.0",
+    "remark-footnotes": "^3.0.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-gfm": "^1.0.0",
+    "remark-parse": "^9.0.0",
+    "remark-rehype": "^8.1.0",
     "retext": "^7.0.1",
     "retext-smartypants": "^4.0.0",
     "sass": "^1.32.12",
@@ -43,12 +52,13 @@
     "unist-util-visit": "^2.0.3",
     "unist-util-visit-parents": "^3.1.1",
     "vfile-find-down": "^5.0.1",
-    "vfile-rename": "^1.1.0"
+    "vfile-rename": "^1.1.0",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.12.0",
     "@types/jest": "^26.0.23",
-    "@types/node": "^14.14.43",
+    "@types/node": "^14.14.44",
     "@types/react": "^17.0.5",
     "@types/unist": "^2.0.3",
     "babel": "^6.23.0",

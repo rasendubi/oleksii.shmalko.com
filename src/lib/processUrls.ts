@@ -1,5 +1,10 @@
 import inspectUrls from 'rehype-url-inspector';
 import h from 'hastscript';
+import rewritePath from './rewrite-path';
+import { isResource } from './resource';
+
+// should match the test in next.config.js
+const resourceTest = /\.(svg|png|jpe?g|gif|mp4|pdf|txt|sh|zip)$/i;
 
 function processUrls(this: any) {
   this.use(inspectUrls, { inspectEach: processUrl });
@@ -29,9 +34,11 @@ const formatBib = (bib: any) => {
 };
 
 function processUrl({ url: urlString, propertyName, node, file }: any) {
-  // next/link does not handle relative urls properly. Use file.path
-  // (the slug of the file) to normalize link against.
-  let url = new URL(urlString, 'file://' + file.path);
+  // next/link does not handle relative urls properly.
+  //
+  // file.history[1] is file path relative to root of content. Use it
+  // to normalize link against.
+  let url = new URL(urlString, 'file:///' + file.history[1]);
 
   if (url.protocol === 'cite:') {
     const child = node.children[0];
@@ -58,7 +65,7 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
       node.children = [...cite];
     }
 
-    const ref = url.pathname;
+    const ref = url.pathname + url.hash;
     url = new URL(`file:///biblio/${ref}`);
   }
 
@@ -66,25 +73,28 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
     const id = url.pathname;
     const ref = file.ids[id];
     if (ref) {
-      url = new URL(`file://${ref}`);
+      url = new URL(`file://${ref}${url.hash}`);
     }
   }
 
+  node.properties.className = node.properties.className || [];
   if (url.protocol === 'file:') {
-    let href = url.pathname.replace(/\.(org|bib)$/, '');
-    node.properties[propertyName] = href;
+    let pathname = rewritePath(url.pathname);
+    node.properties[propertyName] = pathname + url.hash;
 
-    const linkFile = decodeURI(href);
+    const linkFile = decodeURI(pathname);
     const exists = file.pageExists?.(linkFile);
     if (exists) {
       file.data.links = file.data.links || [];
       file.data.links.push(linkFile);
     } else {
-      node.properties.className = node.properties.className || [];
-      node.properties.className.push('broken');
+      if (isResource(pathname)) {
+        node.properties.className.push('resource');
+      } else {
+        node.properties.className.push('broken');
+      }
     }
   } else {
-    node.properties.className = node.properties.className || [];
     node.properties.className.push('external');
   }
 }

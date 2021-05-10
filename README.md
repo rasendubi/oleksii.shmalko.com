@@ -1,4 +1,4 @@
-This is the source of [my braindump](https://braindump.rasen.dev).
+This is the source of [my website](https://www.alexeyshmalko.com).
 
 It uses [uniorg](https://github.com/rasendubi/uniorg) org-mode parser and Next.js.
 

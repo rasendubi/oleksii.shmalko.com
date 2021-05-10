@@ -6,22 +6,41 @@ import Rehype from './Rehype';
 import Header from './Header';
 
 export interface NoteProps {
+  pageType: string;
   slug: string;
   title: string;
+  isodate?: string;
+  date?: string;
   images: Array<{ src: string; alt: string }>;
   hast: string;
   backlinks: BacklinkProps[];
 }
 
-const Note = ({ slug, title, images, hast, backlinks }: NoteProps) => {
+const Note = ({
+  pageType,
+  slug,
+  title,
+  isodate,
+  date,
+  images,
+  hast,
+  backlinks,
+}: NoteProps) => {
   return (
     <>
-      <Header slug={slug} title={title} images={images} />
+      <Header
+        pageType={pageType}
+        slug={slug}
+        title={title}
+        isodate={isodate}
+        date={date}
+        images={images}
+      />
       <div className={classes.note}>
         <Rehype hast={hast} />
       </div>
       {!!backlinks.length && (
-        <div style={{ marginTop: 40 }}>
+        <div style={{ marginTop: 24 }}>
           <h2>{'Backlinks'}</h2>
           <ul className="wide">
             {backlinks.map((b) => (

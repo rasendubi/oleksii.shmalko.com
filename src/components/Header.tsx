@@ -3,15 +3,27 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
+import pageSymbol from '@/lib/pageSymbol';
+import { websiteUrl } from '@/config';
 
 export interface HeaderProps {
   slug: string;
+  pageType?: string;
   title: string;
+  isodate?: string;
+  date?: string;
   images?: Array<{ src: string; alt?: string }>;
 }
 
-const Header = ({ slug, title, images }: HeaderProps) => {
-  const url = `https://braindump.rasen.dev${slug}`;
+const Header = ({
+  slug,
+  title,
+  pageType,
+  isodate,
+  date,
+  images,
+}: HeaderProps) => {
+  const url = websiteUrl + slug;
   const image = images?.[0] ?? { src: '/gravatar.png' };
   return (
     <div className="root">
@@ -23,38 +35,59 @@ const Header = ({ slug, title, images }: HeaderProps) => {
           locale: 'en_US',
           title,
           url,
-          site_name: "Alexey Shmalko's notes",
-          images: [{ url: 'https://braindump.rasen.dev' + image.src }],
+          site_name: 'Alexey Shmalko',
+          images: [{ url: websiteUrl + image.src }],
         }}
       />
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="quicklinks">
-        <Link href="/">
-          <a className="icon-link" aria-label="Home">
-            <HomeIcon />
-          </a>
-        </Link>
-        <Link href="/archive">
-          <a className="icon-link" aria-label="Search">
-            <SearchIcon width={24} height={24} />
-          </a>
-        </Link>
+      <div className="homerow">
+        <div className="quicklinks">
+          <Link href="/">
+            <a className="icon-link" aria-label="Home">
+              <HomeIcon />
+            </a>
+          </Link>
+          <Link href="/archive">
+            <a className="icon-link" aria-label="Search">
+              <SearchIcon width={24} height={24} />
+            </a>
+          </Link>
+        </div>
+        <h1>
+          <span className="page-symbol">{pageSymbol(pageType)}</span>
+          {title}
+        </h1>
       </div>
-      <h1>{title}</h1>
+      {isodate && date && <time dateTime={isodate}>{date}</time>}
 
       <style jsx>{`
         .root {
+          margin-top: 8px;
+          margin-bottom: 16px;
+        }
+        .homerow {
           display: flex;
           flex-wrap: wrap;
           flex-direction: row-reverse;
+        }
+        .page-symbol {
+          margin-right: 8px;
         }
         h1 {
           flex-shrink: 0;
           flex-grow: 1;
           justify-self: stretch;
           max-width: 100%;
+          margin-bottom: 0px;
+        }
+        time {
+          display: inline-block;
+          // margin-top: 4px;
+          color: #444;
+          font-style: italic;
+          font-size: 13px;
         }
         .quicklinks {
           display: inline-flex;
@@ -66,8 +99,14 @@ const Header = ({ slug, title, images }: HeaderProps) => {
           justify-content: center;
           align-items: center;
           padding: 12px;
+          padding-bottom: 0px;
         }
-        @media (min-width: 800px) {
+        @media (min-width: 900px) {
+          .page-symbol {
+            position: absolute;
+            right: 100%;
+            margin-right: 0;
+          }
           .quicklinks {
             position: absolute;
             left: 100%;

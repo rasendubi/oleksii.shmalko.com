@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
 import { DefaultSeo } from 'next-seo';
 
+import { domain, websiteUrl, siteName } from '@/config';
+
 import '../styles/globals.css';
 import '@/code-highlight.css';
 import 'katex/dist/katex.min.css';
@@ -11,8 +13,8 @@ import 'katex/dist/katex.min.css';
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   React.useEffect(() => {
-    Fathom.load('NQQXBCQR', {
-      includedDomains: ['braindump.rasen.dev'],
+    Fathom.load('PCSQWUMO', {
+      includedDomains: [domain],
       url: 'https://tahr.rasen.dev/script.js',
     });
     router.events.on('routeChangeComplete', Fathom.trackPageview);
@@ -27,8 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         openGraph={{
           type: 'website',
           locale: 'en_US',
-          url: 'https://braindump.rasen.dev',
-          site_name: "Alexey Shmalko's notes",
+          url: websiteUrl,
+          site_name: siteName,
         }}
       />
       <Component {...pageProps} />
@@ -36,14 +38,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       <style jsx>{`
         .root {
           position: relative;
-          font-size: 16px;
-          line-height: 1.5;
-          margin-top: 24px;
+          display: flex;
+          flex-direction: column;
 
-          max-width: 600px;
+          font-size: 16px;
+          line-height: 1.6;
+
+          max-width: 700px;
+          height: 100%;
           margin: 0 auto;
-          margin: 24px auto 40px;
-          padding: 0 16px;
+          padding: 24px 16px 80px;
 
           // Allow breaking words if text overflows (very long words
           // or links)
@@ -59,13 +63,20 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin-bottom: 16px;
         }
         h2 {
-          font-size: 16px;
+          // text-transform: uppercase;
+          font-size: 18px;
           font-weight: 700;
-          margin-top: 24px;
+          margin-top: 40px;
           margin-bottom: 8px;
         }
         h3 {
           font-size: 14px;
+          font-weight: 700;
+          margin-top: 16px;
+          margin-bottom: 8px;
+        }
+        h4 {
+          font-size: 12px;
           font-weight: 700;
           margin-top: 16px;
           margin-bottom: 8px;
@@ -77,6 +88,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         table,
         blockquote,
         pre.verse,
+        .block,
         .math-display {
           margin: 0 0 16px 0;
         }
@@ -87,7 +99,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           float: left;
           display: list-item;
           list-style-type: disc;
-          margin-left: 24px;
+          margin-left: 32px;
           font-weight: 700;
         }
         dt::after {
@@ -114,6 +126,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         dd > dl,
         dd > table,
         dd > blockquote,
+        dd > .block,
         dd > pre,
         li > p,
         li > ul,
@@ -121,13 +134,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         li > dl,
         li > table,
         li > blockquote,
+        li > .block,
         li > pre {
           margin-bottom: 4px;
         }
         p + ul,
         p + ol,
         p + dl {
-          margin-top: -12px;
+          margin-top: -8px;
         }
         li > p + ul,
         li > p + ol,
@@ -136,6 +150,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
         .wide li {
           margin-top: 8px;
+        }
+        .footnotes {
+          display: flex;
+          flex-direction: column;
         }
       `}</style>
     </div>

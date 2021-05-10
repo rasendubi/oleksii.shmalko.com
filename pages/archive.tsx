@@ -1,14 +1,17 @@
 import React from 'react';
 import clsx from 'clsx';
+import moment from 'moment';
 
 import { getAllPosts } from '@/lib/api';
 import Link from '@/components/Link';
 import Header from '@/components/Header';
 import { useDebounced } from '@/useDebounced';
+import pageSymbol from '@/lib/pageSymbol';
 
 type PostInfo = {
   path: string;
   title: string;
+  pageType: string;
 };
 
 interface ArchiveProps {
@@ -59,10 +62,10 @@ const Archive = ({ posts }: ArchiveProps) => {
           </svg>
         </div>
       </div>
-      <div className="notes-counter">{`${searchResult.length} notes`}</div>
+      <div className="pages-counter">{`${searchResult.length} pages`}</div>
       <PostList posts={searchResult} />
       {/* always show scroll on this page, so the layout is stable
-          when notes list gets too short */}
+          when pages list gets too short */}
       <style global jsx>{`
         body {
           overflow-y: scroll;
@@ -104,7 +107,7 @@ const Archive = ({ posts }: ArchiveProps) => {
           height: 12px;
           fill: #888888;
         }
-        .notes-counter {
+        .pages-counter {
           font-size: 0.8em;
           line-height: 1;
           color: #282828;
@@ -124,7 +127,7 @@ const PostList = React.memo(({ posts }: ArchiveProps) => {
     <ul className="wide">
       {posts.map((p) => (
         <li key={p.path}>
-          <Link href={p.path}>{p.title}</Link>
+          {pageSymbol(p.pageType)} <Link href={p.path}>{p.title}</Link>
         </li>
       ))}
     </ul>
@@ -134,22 +137,36 @@ const PostList = React.memo(({ posts }: ArchiveProps) => {
 export const getStaticProps = async () => {
   const allPosts = await getAllPosts();
   const posts = Object.values(allPosts)
-    .map((p) => ({ title: p.data.title, path: p.path }))
     .sort((a, b) => {
       // new notes on top, but bibliography on bottom (notes with
       // non-numeric path)
 
-      // .slice(1) to skip leading slash.
-      const aNumeric = !a.path.slice(1).match(/\D/);
-      const bNumeric = !b.path.slice(1).match(/\D/);
-      if (aNumeric < bNumeric) {
-        return 1;
-      } else if (aNumeric > bNumeric) {
-        return -1;
+      const aIsodate = a.data.date
+        ? moment(a.data.date).format('YYYYMMDD')
+        : null;
+      const bIsodate = b.data.date
+        ? moment(b.data.date).format('YYYYMMDD')
+        : null;
+
+      const aNumeric = !!a.path.match(/^\/\d/) || !!aIsodate;
+      const bNumeric = !!b.path.match(/^\/\d/) || !!bIsodate;
+      if (aNumeric != bNumeric) {
+        return aNumeric < bNumeric ? 1 : -1;
       }
 
-      return a.path < b.path ? 1 : -1;
-    });
+      if (!aNumeric) {
+        return a.path < b.path ? -1 : 1;
+      }
+
+      return (aIsodate || a.path.slice(1)) < (bIsodate || b.path.slice(1))
+        ? 1
+        : -1;
+    })
+    .map((p) => ({
+      title: p.data.title,
+      path: p.path,
+      pageType: p.data.pageType ?? null,
+    }));
 
   const props: ArchiveProps = {
     posts,

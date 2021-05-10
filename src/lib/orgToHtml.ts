@@ -63,7 +63,7 @@ function removeCards() {
     tree.children = tree.children.filter((child: any) => {
       return !(
         child.type === 'headline' &&
-        child.title[0]?.value.toLowerCase() === 'cards'
+        child.title[0]?.value?.toLowerCase() === 'cards'
       );
     });
   }

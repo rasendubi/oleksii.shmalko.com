@@ -2,6 +2,8 @@ import React from 'react';
 import NextLink from 'next/link';
 import clsx from 'clsx';
 
+import { loadResource } from '@/lib/resource';
+
 const MyLink = ({ href, children, ...props }: any) => {
   return (
     <NextLink href={href} passHref={true}>
@@ -11,10 +13,15 @@ const MyLink = ({ href, children, ...props }: any) => {
 };
 
 const LinkView = React.forwardRef(
-  ({ className, children, ...props }: any, ref) => {
+  ({ className, children, href, ...props }: any, ref) => {
     const external = className && className.includes('external');
+    const isResource = className && className.includes('resource');
+    let url = href;
+    if (isResource) {
+      url = loadResource(url);
+    }
     return (
-      <a ref={ref} {...props} className={clsx('root', className)}>
+      <a ref={ref} {...props} href={url} className={clsx('root', className)}>
         {children}
         {external && (
           <svg
@@ -70,7 +77,7 @@ const LinkView = React.forwardRef(
 
             // Use negative margin to prevent wrapping the icon alone:
             // https://stackoverflow.com/a/25857961
-            margin-right: -10px;
+            margin-right: -12px;
           }
         `}</style>
       </a>

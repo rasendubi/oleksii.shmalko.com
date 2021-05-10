@@ -3,12 +3,12 @@ import * as path from 'path';
 import { build, Page } from './build';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
-const whitelistDirectories = new Set(['', 'biblio']);
-const specialPages = new Set(['/archive']);
+const blacklistedDirectories = new Set(['life', 'ring']);
+const specialPages = new Set(['/', '/uniorg/', '/archive/']);
 
 const dump = build({
   root: postsDirectory,
-  whitelistDirectories,
+  blacklistedDirectories,
   specialPages,
 });
 

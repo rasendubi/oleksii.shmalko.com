@@ -58,7 +58,7 @@ function bibtexInfo() {
   return transformer;
 
   function transformer(tree: any, file: VFile) {
-    const m = file.path?.match(/\/biblio\/(.*)/);
+    const m = file.path?.match(/\/biblio\/(.*)\//);
     if (!m) return;
 
     const bib = (file as any).bibliography[m[1]];

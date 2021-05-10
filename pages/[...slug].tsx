@@ -1,20 +1,18 @@
 import * as path from 'path';
+import moment from 'moment';
 
 import { getAllPaths, getPostBySlug } from '@/lib/api';
 import Note, { NoteProps } from '@/components/Note';
 
-interface PostProps extends NoteProps {
-  type: 'org' | 'bib';
-}
+interface PostProps extends NoteProps {}
 
-const Post = ({ type, ...props }: PostProps) => {
+const Post = ({ ...props }: PostProps) => {
   return <Note {...props} />;
 };
 export default Post;
 
 export const getStaticPaths = async () => {
   const paths = await getAllPaths();
-  paths.push('/');
 
   return {
     paths,
@@ -24,20 +22,23 @@ export const getStaticPaths = async () => {
 
 interface PageParams {
   params: {
-    slug?: string[];
+    slug: string[];
   };
 }
 
 export const getStaticProps = async ({ params }: PageParams) => {
-  const slug = params.slug || ['index'];
-  const post = (await getPostBySlug('/' + path.join(...slug)))!;
+  const slug = params.slug;
+  const post = (await getPostBySlug('/' + path.join(...slug) + '/'))!;
   const data = post.data;
   const backlinks = await Promise.all([...data.backlinks].map(getPostBySlug));
+  // console.log(post.result);
   return {
     props: {
-      type: data.type,
+      pageType: data.pageType,
       slug: post.path,
       title: data.title,
+      isodate: data.date ? moment(data.date).format('YYYY-MM-DD') : null,
+      date: data.date ? moment(data.date).format('MMMM D, YYYY') : null,
       images: data.images,
       hast: post.result,
       backlinks: backlinks.map((b) => ({
