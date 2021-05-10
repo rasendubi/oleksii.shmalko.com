@@ -58,7 +58,7 @@ const LinkView = React.forwardRef(
           }
           .root.external {
             color: #2544bb;
-            padding-right: 12px;
+            padding-right: 0.75em;
           }
           .root.external:hover {
             background-color: #b5d0ff;
@@ -71,13 +71,13 @@ const LinkView = React.forwardRef(
             display: inline-block;
             vertical-align: super;
             fill: #2544bb;
-            width: 12px;
-            height: 10px;
-            padding-left: 2px;
+            height: 0.625em;
+            width: 0.625em;
+            margin-left: 0.125em;
 
             // Use negative margin to prevent wrapping the icon alone:
             // https://stackoverflow.com/a/25857961
-            margin-right: -12px;
+            margin-right: -0.75em;
           }
         `}</style>
       </a>
