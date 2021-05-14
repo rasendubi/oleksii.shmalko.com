@@ -2,6 +2,7 @@ import { VFile } from 'vfile';
 import visit from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
 import katex from 'rehype-katex';
+import 'katex/dist/contrib/mhchem';
 import minify from 'rehype-preset-minify';
 import h from 'hastscript';
 
