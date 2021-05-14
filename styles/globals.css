@@ -25,7 +25,13 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
 }
 
 ul, ol {
-  padding-left: 32px;
+  padding-left: 24px;
+}
+ul, ol, dl {
+  margin-top: 4px;
+}
+li::marker, dt::marker {
+  font-size: 14px;
 }
 ul {
   list-style: disc;
@@ -83,7 +89,7 @@ blockquote, pre.verse, .block {
   border-left: 4px solid #222;
   padding-left: 12px;
 }
-blockquote > p:last-child, .block > p:last-child{
+blockquote > :last-child, .block > :last-child {
   margin-bottom: 0;
 }
 
@@ -91,4 +97,18 @@ blockquote > p:last-child, .block > p:last-child{
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (min-width: 900px) {
+  div > ul,
+  div > ol,
+  div > dl > dt,
+  div > dl > dd,
+  section > ul,
+  section > ol,
+  section > dl > dt,
+  section > dl > dd {
+    margin-left: 0px;
+    padding-left: 0px;
+  }
 }

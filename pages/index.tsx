@@ -186,16 +186,27 @@ const Index = () => {
       </p>
 
       <style jsx>{`
+        .root {
+          display: flex;
+          flex-direction: column;
+        }
         .categories {
           display: flex;
           flex-wrap: wrap;
           margin-bottom: 32px;
         }
         section {
-          margin-right: 32px;
+          margin-right: 48px;
         }
         li {
           margin-top: 4px;
+        }
+        @media (min-width: 900px) {
+          .categories {
+            width: calc(100vw - (100vw - 700px) / 2 - 32px);
+            max-width: 960px;
+            align-self: flex-start;
+          }
         }
       `}</style>
     </div>

@@ -12,6 +12,7 @@ import json from '@/lib/unified-json';
 
 const processor = json()
   .use(bibtexInfo)
+  .use(compactLists)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(katex)
@@ -90,5 +91,34 @@ function extractImages() {
       const images = file.data.images || (file.data.images = []);
       images.push({ src: url.pathname, alt: img.properties.alt || '' });
     });
+  }
+}
+
+// If list item starts with a paragraph and that is the only paragraph
+// in the item, drop the paragraph tag (lifting up its children).
+//
+// This compacts the list, as paragraphs have additional spacing which
+// becomes too much in dense lists.
+function compactLists() {
+  return transformer;
+
+  function transformer(tree: any) {
+    visit(
+      tree,
+      (node: any) =>
+        node.type === 'element' &&
+        (node.tagName === 'li' || node.tagName === 'dd') &&
+        node.children?.[0]?.type === 'element' &&
+        node.children[0].tagName === 'p' &&
+        node.children.filter(
+          (n: any) => n.type === 'element' && n.tagName === 'p'
+        ).length === 1,
+      (node: any) => {
+        node.children = [
+          ...node.children[0].children,
+          ...node.children.slice(1),
+        ];
+      }
+    );
   }
 }

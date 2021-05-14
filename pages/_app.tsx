@@ -63,7 +63,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin-bottom: 16px;
         }
         h2 {
-          // text-transform: uppercase;
           font-size: 18px;
           font-weight: 700;
           margin-top: 40px;
@@ -99,13 +98,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           float: left;
           display: list-item;
           list-style-type: disc;
-          margin-left: 32px;
           font-weight: 700;
         }
         dt::after {
           content: ':';
           margin-right: 4px;
         }
+        dt,
         dd {
           margin-left: 24px;
         }
@@ -136,7 +135,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         li > blockquote,
         li > .block,
         li > pre {
-          margin-bottom: 4px;
+          margin-bottom: 8px;
+        }
+        li {
+          margin-top: 4px;
         }
         p + ul,
         p + ol,

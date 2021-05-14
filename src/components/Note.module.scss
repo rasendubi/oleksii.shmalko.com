@@ -1,4 +1,4 @@
-.note > div {
+.note, .note > div {
     display: flex;
     flex-direction: column;
 }
@@ -9,7 +9,7 @@
     font-size: 0.9em;
     overflow-x: auto;
 }
-.note > div > table {
+.note > table, .note > div > table {
     // allow top-level tables to grow
     max-width: calc(100vw - 32px);
     align-self: center;
