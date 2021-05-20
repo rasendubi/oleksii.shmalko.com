@@ -11,31 +11,17 @@ export interface NoteProps {
   title: string;
   isodate?: string;
   date?: string;
+  lastModifiedIso?: string;
+  lastModified?: string;
   images: Array<{ src: string; alt: string }>;
   hast: string;
   backlinks: BacklinkProps[];
 }
 
-const Note = ({
-  pageType,
-  slug,
-  title,
-  isodate,
-  date,
-  images,
-  hast,
-  backlinks,
-}: NoteProps) => {
+const Note = ({ hast, backlinks, ...props }: NoteProps) => {
   return (
     <>
-      <Header
-        pageType={pageType}
-        slug={slug}
-        title={title}
-        isodate={isodate}
-        date={date}
-        images={images}
-      />
+      <Header {...props} />
       <div className={classes.note}>
         <Rehype hast={hast} />
       </div>

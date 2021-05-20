@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
 
-import { getAllPosts } from '@/lib/api';
+import { getAllPosts, Page } from '@/lib/api';
 import Link from '@/components/Link';
 import Header from '@/components/Header';
 import { useDebounced } from '@/useDebounced';
@@ -141,12 +141,20 @@ export const getStaticProps = async () => {
       // new notes on top, but bibliography on bottom (notes with
       // non-numeric path)
 
-      const aIsodate = a.data.date
-        ? moment(a.data.date).format('YYYYMMDD')
-        : null;
-      const bIsodate = b.data.date
-        ? moment(b.data.date).format('YYYYMMDD')
-        : null;
+      const isodate = (p: Page) => {
+        const format = (s: string) => moment(s).format('YYYYMMDD');
+
+        if (p.data.last_modified) {
+          return format(p.data.last_modified);
+        }
+        if (p.data.date) {
+          return format(p.data.date);
+        }
+        return null;
+      };
+
+      const aIsodate = isodate(a);
+      const bIsodate = isodate(b);
 
       const aNumeric = !!a.path.match(/^\/\d/) || !!aIsodate;
       const bNumeric = !!b.path.match(/^\/\d/) || !!bIsodate;

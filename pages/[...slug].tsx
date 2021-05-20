@@ -39,6 +39,12 @@ export const getStaticProps = async ({ params }: PageParams) => {
       title: data.title,
       isodate: data.date ? moment(data.date).format('YYYY-MM-DD') : null,
       date: data.date ? moment(data.date).format('MMMM D, YYYY') : null,
+      lastModifiedIso: data.last_modified
+        ? moment(data.last_modified).format('YYYY-MM-DD')
+        : null,
+      lastModified: data.last_modified
+        ? moment(data.last_modified).format('MMMM D, YYYY')
+        : null,
       images: data.images,
       hast: post.result,
       backlinks: backlinks.map((b) => ({

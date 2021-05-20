@@ -2,6 +2,8 @@ import * as path from 'path';
 
 import { build, Page } from './build';
 
+export type { Page };
+
 const postsDirectory = path.join(process.cwd(), 'posts');
 const blacklistedDirectories = new Set(['life', 'ring']);
 const specialPages = new Set(['/', '/uniorg/', '/archive/']);

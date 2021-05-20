@@ -23,6 +23,7 @@ export interface PageData {
   backlinks: Set<string>;
   excerpt: string;
   date?: string;
+  last_modified?: string;
 }
 export type Page = VFile & { data: PageData; path: string; result: any };
 

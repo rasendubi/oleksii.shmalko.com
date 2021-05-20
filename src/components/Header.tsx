@@ -12,6 +12,8 @@ export interface HeaderProps {
   title: string;
   isodate?: string;
   date?: string;
+  lastModified?: string;
+  lastModifiedIso?: string;
   images?: Array<{ src: string; alt?: string }>;
 }
 
@@ -21,6 +23,8 @@ const Header = ({
   pageType,
   isodate,
   date,
+  lastModified,
+  lastModifiedIso,
   images,
 }: HeaderProps) => {
   const url = websiteUrl + slug;
@@ -60,7 +64,15 @@ const Header = ({
           {title}
         </h1>
       </div>
-      {isodate && date && <time dateTime={isodate}>{date}</time>}
+      {date || lastModified ? (
+        <div className="time">
+          {isodate && date && <time dateTime={isodate}>{date}</time>}
+          {date && lastModified && '–'}
+          {lastModified && lastModifiedIso && (
+            <time dateTime={lastModifiedIso}>{lastModified}</time>
+          )}
+        </div>
+      ) : null}
 
       <style jsx>{`
         .root {
@@ -82,7 +94,7 @@ const Header = ({
           max-width: 100%;
           margin-bottom: 0px;
         }
-        time {
+        .time {
           display: inline-block;
           // margin-top: 4px;
           color: #444;
