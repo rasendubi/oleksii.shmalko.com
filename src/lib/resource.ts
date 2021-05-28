@@ -12,9 +12,24 @@ export function isResource(path: string): boolean {
 export function loadResource(path: string): string {
   let url = decodeURIComponent(path);
   try {
-    url = require('../../posts' + url).default;
+    url = require('../../posts' + url);
   } catch (e) {
     console.log('failed to load resource', path, e);
   }
+
   return encodeURI(url);
+}
+
+/**
+ * This function must be called on the client side so that webpack
+ * bundles all resources for the web.
+ */
+export function bundleResources(): void {
+  // It is a no-op, but importing this module forces webpack to
+  // prepare for dynamically requiring any file from `posts` directory
+  // and bundle all resources.
+  //
+  // Even though require() is never called dynamically on the client
+  // side, the resources are still exported and can be accessed by
+  // urls (generated server-side).
 }

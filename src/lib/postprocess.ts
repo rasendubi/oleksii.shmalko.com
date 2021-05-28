@@ -5,18 +5,23 @@ import katex from 'rehype-katex';
 import 'katex/dist/contrib/mhchem';
 import minify from 'rehype-preset-minify';
 import h from 'hastscript';
+import rehypeRaw from 'rehype-raw';
+import inspectUrls from 'rehype-url-inspector';
+import sizeOf from 'image-size';
 
-import processUrls from '@/lib/processUrls';
+import processUrl from '@/lib/processUrls';
 import excerpt from '@/lib/excerpt';
 import json from '@/lib/unified-json';
 
 const processor = json()
+  .use(rehypeRaw)
   .use(bibtexInfo)
   .use(compactLists)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(katex)
-  .use(processUrls)
+  .use(sizeImages)
+  .use(inspectUrls, { inspectEach: processUrl })
   .use(extractImages)
   .use(minify)
   .use(excerpt);
@@ -82,14 +87,29 @@ function bibtexInfo() {
   }
 }
 
+function sizeImages() {
+  return transformer;
+
+  function transformer(tree: any, file: any) {
+    visit(tree, { type: 'element', tagName: 'img' }, (img: any) => {
+      if (img.properties.src) {
+        const url = new URL(img.properties.src, 'file:///' + file.history[1]);
+        const f = './posts' + decodeURIComponent(url.pathname);
+        const { height, width } = sizeOf(f);
+        img.properties.height = height;
+        img.properties.width = width;
+      }
+    });
+  }
+}
+
 function extractImages() {
   return transformer;
 
   function transformer(tree: any, file: any) {
     visit(tree, { type: 'element', tagName: 'img' }, (img: any) => {
-      let url = new URL(img.properties.src, 'file://' + file.path);
       const images = file.data.images || (file.data.images = []);
-      images.push({ src: url.pathname, alt: img.properties.alt || '' });
+      images.push({ src: img.properties.src, alt: img.properties.alt || '' });
     });
   }
 }

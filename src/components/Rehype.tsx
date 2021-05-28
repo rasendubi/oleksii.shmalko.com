@@ -1,17 +1,22 @@
 import React from 'react';
+import { useAmp } from 'next/amp';
 
 import unified from 'unified';
 import rehype2react from 'rehype-react';
 
 import Link from '@/components/Link';
-import { loadResource } from '@/lib/resource';
 
 export interface RehypeProps {
   hast: any;
 }
 
-const Img = ({ src, alt }: any) => {
-  return <img alt={alt} src={loadResource(src)} />;
+const Img = ({ className, ...props }: any) => {
+  const isAmp = useAmp();
+  return isAmp ? (
+    <amp-img {...props} layout="responsive" />
+  ) : (
+    <img className={className} {...props} />
+  );
 };
 
 const processor = unified().use(rehype2react, {

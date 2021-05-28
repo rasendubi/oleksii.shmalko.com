@@ -6,11 +6,13 @@ import { DefaultSeo } from 'next-seo';
 
 import { domain, websiteUrl, siteName } from '@/config';
 
-import '../styles/globals.css';
-import '@/code-highlight.css';
 import 'katex/dist/katex.min.css';
 
+import { bundleResources } from '@/lib/resource';
+
 function MyApp({ Component, pageProps }: AppProps) {
+  bundleResources();
+
   const router = useRouter();
   React.useEffect(() => {
     Fathom.load('PCSQWUMO', {
@@ -56,6 +58,148 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: 'Libre Baskerville', serif;
+        }
+
+        code {
+          font-family: 'Source Code Pro', monospace;
+        }
+
+        html {
+          box-sizing: border-box;
+          font-size: 16px;
+        }
+
+        *,
+        *:before,
+        *:after {
+          box-sizing: inherit;
+        }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        ul,
+        ol,
+        dl {
+          margin: 0;
+          padding: 0;
+          font-weight: normal;
+        }
+
+        ul,
+        ol {
+          padding-left: 24px;
+        }
+        ul,
+        ol,
+        dl {
+          margin-top: 4px;
+        }
+        li::marker,
+        dt::marker {
+          font-size: 14px;
+        }
+        ul {
+          list-style: disc;
+        }
+        ol {
+          list-style: decimal;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        code.inline-code {
+          background-color: #f0f0f0;
+          color: #721045;
+        }
+        code.inline-verbatim {
+          background-color: #f0f0f0;
+          color: #61284f;
+        }
+
+        .todo-keyword {
+          font-family: 'Source Code Pro', monospace;
+        }
+        .todo-keyword.TODO {
+          color: #1111ee;
+        }
+        .todo-keyword.DONE {
+          color: #505050;
+        }
+        .priority {
+          color: #721045;
+        }
+        .tags {
+          color: #541f4f;
+        }
+        .timestamp {
+          color: #30517f;
+          white-space: nowrap;
+        }
+
+        pre {
+          overflow: auto;
+          line-height: 1.3;
+          /* background-color: #f0f0f0; */
+        }
+
+        blockquote,
+        pre.verse,
+        .block {
+          display: block;
+          font-family: 'Libre Baskerville', serif;
+          font-style: italic;
+          /* background-color: #f8f8f8; */
+          background-color: #f2eff3;
+          padding: 8px;
+          border-left: 4px solid #222;
+          padding-left: 12px;
+        }
+        blockquote > :last-child,
+        .block > :last-child {
+          margin-bottom: 0;
+        }
+        @media (min-width: 900px) {
+          div > blockquote,
+          div > pre.verse,
+          div > .block {
+            margin-left: -16px;
+            margin-right: -32px;
+          }
+        }
+
+        .center {
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media (min-width: 900px) {
+          div > ul,
+          div > ol,
+          div > dl > dt,
+          div > dl > dd,
+          section > ul,
+          section > ol,
+          section > dl > dt,
+          section > dl > dd {
+            margin-left: 0px;
+            padding-left: 0px;
+          }
+        }
         h1 {
           font-size: 20px;
           font-weight: 700;

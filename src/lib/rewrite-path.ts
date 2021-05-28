@@ -1,7 +1,12 @@
 import path from 'path';
+import { isResource, loadResource } from './resource';
 
 export default function rewritePath(p: string): string {
   let result = '/' + p.replace(/^\//, '');
+
+  if (isResource(p)) {
+    return loadResource(p);
+  }
 
   const ext = path.extname(p);
   if (ext === '' || ext === '.org' || ext === '.bib' || ext === '.md') {

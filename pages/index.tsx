@@ -29,6 +29,12 @@ const Index = () => {
           <ul>
             <li>
               {'🖋 '}
+              <Link href="/two-roads-to-success/">
+                {'Two roads to success'}
+              </Link>
+            </li>
+            <li>
+              {'🖋 '}
               <Link href="/merging-my-websites/">
                 {'I’m merging my websites'}
               </Link>
@@ -214,3 +220,7 @@ const Index = () => {
 };
 
 export default Index;
+
+export const config = {
+  amp: 'hybrid',
+};

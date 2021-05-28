@@ -1,15 +1,8 @@
-import inspectUrls from 'rehype-url-inspector';
 import h from 'hastscript';
 import rewritePath from './rewrite-path';
 import { isResource } from './resource';
 
-// should match the test in next.config.js
-const resourceTest = /\.(svg|png|jpe?g|gif|mp4|pdf|txt|sh|zip)$/i;
-
-function processUrls(this: any) {
-  this.use(inspectUrls, { inspectEach: processUrl });
-}
-export default processUrls;
+export default processUrl;
 
 const formatBib = (bib: any) => {
   if (!bib) return null;
@@ -88,8 +81,8 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
       file.data.links = file.data.links || [];
       file.data.links.push(linkFile);
     } else {
-      if (isResource(pathname)) {
-        node.properties.className.push('resource');
+      if (isResource(url.pathname)) {
+        // node.properties.className.push('resource');
       } else {
         node.properties.className.push('broken');
       }

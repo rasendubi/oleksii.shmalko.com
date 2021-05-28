@@ -84,13 +84,20 @@ blockquote, pre.verse, .block {
   display: block;
   font-family: 'Libre Baskerville', serif;
   font-style: italic;
-  background-color: #f0f0f0;
+  /* background-color: #f8f8f8; */
+  background-color: #f2eff3;
   padding: 8px;
   border-left: 4px solid #222;
   padding-left: 12px;
 }
 blockquote > :last-child, .block > :last-child {
   margin-bottom: 0;
+}
+@media (min-width: 900px) {
+  div > blockquote, div > pre.verse, div > .block {
+    margin-left: -16px;
+    margin-right: -32px;
+  }
 }
 
 .center {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import pageSymbol from '@/lib/pageSymbol';
 import { websiteUrl } from '@/config';
+import { loadResource } from '@/lib/resource';
 
 export interface HeaderProps {
   slug: string;
@@ -28,7 +29,7 @@ const Header = ({
   images,
 }: HeaderProps) => {
   const url = websiteUrl + slug;
-  const image = images?.[0] ?? { src: '/gravatar.png' };
+  const image = images?.[0]?.src ?? '/gravatar.png';
   return (
     <div className="root">
       <NextSeo
@@ -40,7 +41,7 @@ const Header = ({
           title,
           url,
           site_name: 'Alexey Shmalko',
-          images: [{ url: websiteUrl + image.src }],
+          images: [{ url: websiteUrl + image }],
         }}
       />
       <Head>

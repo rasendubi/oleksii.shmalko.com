@@ -8,7 +8,6 @@ import remarkSmartypants from '@silvenon/remark-smartypants';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkExtractFrontmatter from 'remark-extract-frontmatter';
 import { parse as yamlParse } from 'yaml';
-import rehypeRaw from 'rehype-raw';
 import remarkFootnotes from 'remark-footnotes';
 import { matches, select } from 'hast-util-select';
 
@@ -22,7 +21,6 @@ const processor = json()
   .use(remarkFootnotes)
   .use(remarkSmartypants, { dashes: 'oldschool' })
   .use(remark2rehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
   .use(reformatFootnotesBlock);
 
 export default async function mdToHtml(file: VFile): Promise<VFile> {
