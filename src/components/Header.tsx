@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import pageSymbol from '@/lib/pageSymbol';
 import { websiteUrl } from '@/config';
-import { loadResource } from '@/lib/resource';
 
 export interface HeaderProps {
   slug: string;
@@ -31,7 +30,7 @@ const Header = ({
   const url = websiteUrl + slug;
   const image = images?.[0]?.src ?? '/gravatar.png';
   return (
-    <div className="root">
+    <header className="root">
       <NextSeo
         title={title}
         canonical={url}
@@ -48,7 +47,7 @@ const Header = ({
         <title>{title}</title>
       </Head>
       <div className="homerow">
-        <div className="quicklinks">
+        <nav className="quicklinks">
           <Link href="/">
             <a className="icon-link" aria-label="Home">
               <HomeIcon />
@@ -59,7 +58,7 @@ const Header = ({
               <SearchIcon width={24} height={24} />
             </a>
           </Link>
-        </div>
+        </nav>
         <h1>
           <span className="page-symbol">{pageSymbol(pageType)}</span>
           {title}
@@ -129,7 +128,7 @@ const Header = ({
           }
         }
       `}</style>
-    </div>
+    </header>
   );
 };
 

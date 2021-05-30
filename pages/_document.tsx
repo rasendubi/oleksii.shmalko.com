@@ -18,6 +18,8 @@ class MyDocument extends Document {
           />
 
           <link rel="icon" type="image/svg" href="/favicon.svg" />
+
+          <meta name="telegram:channel" content="@dev_rasen" />
         </Head>
         <body>
           <Main />

@@ -19,7 +19,7 @@ export interface NoteProps {
 
 const Note = ({ hast, backlinks, ...props }: NoteProps) => {
   return (
-    <>
+    <article>
       <Header {...props} />
       <div className="note">
         <Rehype hast={hast} />
@@ -107,7 +107,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
         `}</style>
       </div>
       {!!backlinks.length && (
-        <div style={{ marginTop: 24 }}>
+        <section style={{ marginTop: 24 }}>
           <h2>{'Backlinks'}</h2>
           <ul className="wide">
             {backlinks.map((b) => (
@@ -116,9 +116,9 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       )}
-    </>
+    </article>
   );
 };
 

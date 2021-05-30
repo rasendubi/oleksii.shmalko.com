@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <div className="root">
+    <main className="root">
       <DefaultSeo
         openGraph={{
           type: 'website',
@@ -302,7 +302,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           flex-direction: column;
         }
       `}</style>
-    </div>
+    </main>
   );
 }
 
