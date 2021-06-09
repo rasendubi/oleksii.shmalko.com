@@ -282,20 +282,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin-bottom: 8px;
         }
         li {
-          margin-top: 4px;
-        }
-        p + ul,
-        p + ol,
-        p + dl {
-          margin-top: -8px;
-        }
-        li > p + ul,
-        li > p + ol,
-        li > p + dl {
-          margin-top: 0px;
+          margin-bottom: 4px;
         }
         .wide li {
-          margin-top: 8px;
+          margin-bottom: 8px;
         }
         .footnotes {
           display: flex;
