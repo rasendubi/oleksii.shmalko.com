@@ -54,6 +54,27 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           .token.punctuation {
             color: #56576d;
           }
+
+          // make top-level images slightly wider
+          .note > p > img:only-child,
+          .note > div > p > img:only-child {
+            margin-left: -16px;
+            margin-right: -16px;
+            max-width: calc(100% + 32px);
+          }
+
+          // allow top-level quotes to be slightly wider
+          .note > blockquote,
+          .note > div > blockquote,
+          .note > pre.verse,
+          .note > div > pre.verse,
+          .note > .block,
+          .note > div > .block {
+            margin-left: -16px;
+            margin-right: -16px;
+            padding-left: 16px;
+            padding-right: 16px;
+          }
         `}</style>
         <style jsx>{`
           .note,
