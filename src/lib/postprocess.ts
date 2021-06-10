@@ -8,6 +8,8 @@ import h from 'hastscript';
 import rehypeRaw from 'rehype-raw';
 import inspectUrls from 'rehype-url-inspector';
 import sizeOf from 'image-size';
+import toString from 'hast-util-to-string';
+import { matches, selectAll } from 'hast-util-select';
 
 import processUrl from '@/lib/processUrls';
 import excerpt from '@/lib/excerpt';
@@ -16,7 +18,6 @@ import json from '@/lib/unified-json';
 const processor = json()
   .use(rehypeRaw)
   .use(bibtexInfo)
-  .use(compactLists)
   .use(demoteHeadings)
   .use(prism, { ignoreMissing: true })
   .use(katex)
@@ -24,6 +25,13 @@ const processor = json()
   .use(inspectUrls, { inspectEach: processUrl })
   .use(extractImages)
   .use(minify)
+  // minify removes extra spaces within paragraphs, so description
+  // should preferrably be used after minify.
+  //
+  // compactLists removes some p's, so description misses them. Use
+  // description before compactLists.
+  .use(description)
+  .use(compactLists)
   .use(excerpt);
 
 export default async function postprocessRehype(file: VFile): Promise<VFile> {
@@ -140,5 +148,33 @@ function compactLists() {
         ];
       }
     );
+  }
+}
+
+// Extract description from the first paragraph.
+function description() {
+  return transformer;
+
+  function transformer(node: any, file: VFile) {
+    const data: any = file.data;
+    if (data.description) {
+      return;
+    }
+
+    const fakeRoot = h('div', { class: 'root' }, node.children);
+    const p = selectAll(
+      '.root > p, .root > ul > li > p, .root > ol > li > p',
+      fakeRoot
+    ).filter(
+      // filter out image-only elements
+      (p: any) => p.children.filter((c: any) => !matches('img', c)).length
+    )[0];
+
+    if (p) {
+      const description = toString(p);
+      // console.log(file.path, description);
+
+      data.description = description;
+    }
   }
 }

@@ -24,6 +24,7 @@ export interface PageData {
   excerpt: string;
   date?: string;
   last_modified?: string;
+  description?: string;
 }
 export type Page = VFile & { data: PageData; path: string; result: any };
 

@@ -15,6 +15,7 @@ export interface HeaderProps {
   lastModified?: string;
   lastModifiedIso?: string;
   images?: Array<{ src: string; alt?: string }>;
+  description?: string | null;
 }
 
 const Header = ({
@@ -26,6 +27,7 @@ const Header = ({
   lastModified,
   lastModifiedIso,
   images,
+  description,
 }: HeaderProps) => {
   const url = websiteUrl + slug;
   const image = images?.[0]?.src ?? '/gravatar.png';
@@ -33,6 +35,7 @@ const Header = ({
     <header className="root">
       <NextSeo
         title={title}
+        description={description || undefined}
         canonical={url}
         openGraph={{
           type: 'website',

@@ -6,7 +6,12 @@ import Link from '@/components/Link';
 const Index = () => {
   return (
     <div className="root">
-      <Header slug="/" title="Welcome!" pageType={'hello'} />
+      <Header
+        slug="/"
+        title="Welcome!"
+        pageType={'hello'}
+        description="My name is Alexey Shmalko. I love exploring life, humans, and myself. I create software products for a living."
+      />
       <div>
         <p>
           {'My name is '}

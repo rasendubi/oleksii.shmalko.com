@@ -15,6 +15,7 @@ export interface NoteProps {
   images: Array<{ src: string; alt: string }>;
   hast: string;
   backlinks: BacklinkProps[];
+  description: string | null;
 }
 
 const Note = ({ hast, backlinks, ...props }: NoteProps) => {

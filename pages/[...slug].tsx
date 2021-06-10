@@ -52,6 +52,7 @@ export const getStaticProps = async ({ params }: PageParams) => {
         title: b!.data.title,
         // html: b!.data.excerpt,
       })),
+      description: data.description || null,
     },
   };
 };
