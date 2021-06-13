@@ -34,6 +34,10 @@ const Index = () => {
           <ul>
             <li>
               {'🖋 '}
+              <Link href="/how-i-note/">{'How I note'}</Link>
+            </li>
+            <li>
+              {'🖋 '}
               <Link href="/two-roads-to-success/">
                 {'Two roads to success'}
               </Link>
