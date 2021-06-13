@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <main className="root">
+    <main>
       <DefaultSeo
         openGraph={{
           type: 'website',
@@ -37,8 +37,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <Component {...pageProps} />
 
-      <style jsx>{`
-        .root {
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: 'Libre Baskerville', serif;
+        }
+
+        main {
           position: relative;
           display: flex;
           flex-direction: column;
@@ -55,14 +62,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           // or links)
           word-wrap: break-word;
           overflow-wrap: break-word;
-        }
-      `}</style>
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: 'Libre Baskerville', serif;
         }
 
         code {
@@ -167,6 +166,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           padding: 8px;
           border-left: 4px solid #222;
           padding-left: 12px;
+          border-radius: 2px;
         }
         blockquote > :last-child,
         .block > :last-child {
@@ -233,10 +233,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         pre.verse,
         .block,
         .math-display {
-          margin: 0 0 16px 0;
+          margin: 0 0 25.6px 0;
         }
         table {
-          margin-bottom: 24px;
+          margin-bottom: 25.6px;
         }
         dt {
           float: left;
@@ -290,6 +290,52 @@ function MyApp({ Component, pageProps }: AppProps) {
         .footnotes {
           display: flex;
           flex-direction: column;
+        }
+
+        // asides
+        .block-clearfix {
+          position: relative;
+        }
+        aside {
+          background-color: #f2eff3;
+          border-radius: 2px;
+          padding: 8px;
+          margin-bottom: 25.6px;
+        }
+        aside > *:last-child {
+          margin-bottom: 0px;
+        }
+        // more space for top-level aside
+        .note > aside,
+        .note > div > aside,
+        .note > .block-clearfix > aside,
+        .note > div > .block-clearfix > aside {
+          margin-left: -16px;
+          margin-right: -16px;
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        @media (min-width: 1280px) {
+          aside {
+            position: absolute;
+            left: 100%;
+            width: calc((100vw - 700px) / 2 - 32px);
+            max-width: 300px;
+            margin-top: -8px;
+          }
+          .block-clearfix > aside {
+            top: 0px;
+          }
+          .note > aside,
+          .note > div > aside {
+            margin-left: 0;
+            margin-right: 0;
+          }
+          .note > .block-clearfix > aside,
+          .note > div > .block-clearfix > aside {
+            margin-left: 16px;
+            margin-right: 16px;
+          }
         }
       `}</style>
     </main>
