@@ -172,14 +172,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         .block > :last-child {
           margin-bottom: 0;
         }
-        @media (min-width: 900px) {
-          div > blockquote,
-          div > pre.verse,
-          div > .block {
-            margin-left: -16px;
-            margin-right: -32px;
-          }
-        }
 
         .center {
           text-align: center;
@@ -188,10 +180,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
 
         @media (min-width: 900px) {
-          div > ul,
-          div > ol,
-          div > dl > dt,
-          div > dl > dd,
+          .note > ul,
+          .note > ol,
+          .note > dl > dt,
+          .note > dl > dd,
           section > ul,
           section > ol,
           section > dl > dt,
@@ -200,6 +192,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             padding-left: 0px;
           }
         }
+
         h1 {
           font-size: 20px;
           font-weight: 700;
@@ -290,52 +283,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         .footnotes {
           display: flex;
           flex-direction: column;
-        }
-
-        // asides
-        .block-clearfix {
-          position: relative;
-        }
-        aside {
-          background-color: #f2eff3;
-          border-radius: 2px;
-          padding: 8px;
-          margin-bottom: 25.6px;
-        }
-        aside > *:last-child {
-          margin-bottom: 0px;
-        }
-        // more space for top-level aside
-        .note > aside,
-        .note > div > aside,
-        .note > .block-clearfix > aside,
-        .note > div > .block-clearfix > aside {
-          margin-left: -16px;
-          margin-right: -16px;
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        @media (min-width: 1280px) {
-          aside {
-            position: absolute;
-            left: 100%;
-            width: calc((100vw - 700px) / 2 - 32px);
-            max-width: 300px;
-            margin-top: -8px;
-          }
-          .block-clearfix > aside {
-            top: 0px;
-          }
-          .note > aside,
-          .note > div > aside {
-            margin-left: 0;
-            margin-right: 0;
-          }
-          .note > .block-clearfix > aside,
-          .note > div > .block-clearfix > aside {
-            margin-left: 16px;
-            margin-right: 16px;
-          }
         }
       `}</style>
     </main>

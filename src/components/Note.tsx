@@ -57,8 +57,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           }
 
           // make top-level images slightly wider
-          .note > p > img:only-child,
-          .note > div > p > img:only-child {
+          .note > p > img:only-child {
             margin-left: -16px;
             margin-right: -16px;
             max-width: calc(100% + 32px);
@@ -66,22 +65,18 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
 
           // allow top-level quotes to be slightly wider
           .note > blockquote,
-          .note > div > blockquote,
           .note > pre.verse,
-          .note > div > pre.verse,
-          .note > .block,
-          .note > div > .block {
+          .note > .block {
             margin-left: -16px;
             margin-right: -16px;
             padding-left: 16px;
             padding-right: 16px;
           }
-        `}</style>
-        <style jsx>{`
-          .note,
-          .note > div {
+
+          .note {
             display: flex;
             flex-direction: column;
+            position: relative;
           }
 
           .note table {
@@ -90,8 +85,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
             font-size: 0.9em;
             overflow-x: auto;
           }
-          .note > table,
-          .note > div > table {
+          .note > table {
             // allow top-level tables to grow
             max-width: calc(100vw - 32px);
             align-self: center;
@@ -122,9 +116,50 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           // closer to the title. It is either my custom metadata list (tags,
           // source, etc.) or an auto-generated from bibtex file (authors, year,
           // etc.)
-          .note > div:first-child > dl:first-child {
+          .note > dl:first-child {
             margin-top: -8px;
             margin-bottom: 24px;
+          }
+
+          // asides
+          .block-clearfix {
+            position: relative;
+          }
+          aside {
+            background-color: #f2eff3;
+            border-radius: 2px;
+            padding: 8px 16px;
+            margin-bottom: 25.6px;
+          }
+          aside > *:last-child {
+            margin-bottom: 0px;
+          }
+          // more space for top-level asides
+          .note > aside,
+          .note > .block-clearfix > aside {
+            margin-left: -16px;
+            margin-right: -16px;
+          }
+          // asides are moving to the right
+          @media (min-width: 1280px) {
+            aside {
+              position: absolute;
+              // .note and .block-clearfix are narrower than
+              // main. Compensate for main's padding.
+              left: calc(100% + 16px);
+              width: calc((100vw - 700px) / 2 - 32px);
+              max-width: 300px;
+              margin-top: -8px;
+            }
+            .block-clearfix aside {
+              top: 0px;
+            }
+            .note aside,
+            .note > aside,
+            .note > .block-clearfix > aside {
+              margin-left: 16px;
+              margin-right: 16px;
+            }
           }
         `}</style>
       </div>
