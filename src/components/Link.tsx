@@ -44,6 +44,27 @@ const LinkView = React.forwardRef(
             background-color: #aecf90;
             color: #282828;
           }
+
+          // heading autolinks
+          :global(h1) > .root,
+          :global(h2) > .root,
+          :global(h3) > .root,
+          :global(h4) > .root,
+          :global(h5) > .root,
+          :global(h6) > .root {
+            color: inherit;
+            background-color: inherit;
+          }
+          :global(h1) > .root:hover,
+          :global(h2) > .root:hover,
+          :global(h3) > .root:hover,
+          :global(h4) > .root:hover,
+          :global(h5) > .root:hover,
+          :global(h6) > .root:hover {
+            background-color: #f0f0f0;
+            color: inherit;
+          }
+
           .root.broken {
             text-decoration: none;
             color: #972500;

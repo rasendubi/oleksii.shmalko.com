@@ -7,12 +7,12 @@ import minify from 'rehype-preset-minify';
 import h from 'hastscript';
 import rehypeRaw from 'rehype-raw';
 import inspectUrls from 'rehype-url-inspector';
+import link from 'rehype-autolink-headings';
 import sizeOf from 'image-size';
 import toString from 'hast-util-to-string';
 import { matches, selectAll } from 'hast-util-select';
 
 import processUrl from '@/lib/processUrls';
-import excerpt from '@/lib/excerpt';
 import json from '@/lib/unified-json';
 
 const processor = json()
@@ -24,6 +24,7 @@ const processor = json()
   .use(sizeImages)
   .use(inspectUrls, { inspectEach: processUrl })
   .use(extractImages)
+  .use(link, { behavior: 'wrap' })
   .use(minify)
   // minify removes extra spaces within paragraphs, so description
   // should preferrably be used after minify.
@@ -31,8 +32,7 @@ const processor = json()
   // compactLists removes some p's, so description misses them. Use
   // description before compactLists.
   .use(description)
-  .use(compactLists)
-  .use(excerpt);
+  .use(compactLists);
 
 export default async function postprocessRehype(file: VFile): Promise<VFile> {
   return await processor.process(file);

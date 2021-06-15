@@ -7,6 +7,7 @@ import smartypants from 'retext-smartypants';
 
 import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
+import { uniorgSlug } from 'uniorg-slug';
 import json from '@/lib/unified-json';
 
 const processor = json()
@@ -15,6 +16,7 @@ const processor = json()
   .use(removeCards)
   .use(saveIds)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
+  .use(uniorgSlug)
   .use(org2rehype);
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {
