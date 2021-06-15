@@ -114,7 +114,17 @@ const Header = ({
           justify-content: center;
           align-items: center;
           padding: 12px;
-          padding-bottom: 0px;
+          margin-bottom: -12px;
+
+          border-radius: 50%;
+          transition: color 0.05s ease-in-out,
+            background-color 0.05s ease-in-out;
+        }
+        .icon-link:hover {
+          background-color: #f0f0f0;
+        }
+        .icon-link:active {
+          background-color: #d7d7d7;
         }
         @media (min-width: 900px) {
           .page-symbol {

@@ -36,6 +36,9 @@ const LinkView = React.forwardRef(
             text-decoration: none;
             color: #315b00;
             background-color: #f0f0f0;
+
+            transition: color 0.05s ease-in-out,
+              background-color 0.05s ease-in-out;
           }
           .root:hover {
             background-color: #aecf90;
