@@ -11,7 +11,7 @@ import pageSymbol from '@/lib/pageSymbol';
 type PostInfo = {
   path: string;
   title: string;
-  pageType: string;
+  icon: string | null;
 };
 
 interface ArchiveProps {
@@ -127,7 +127,7 @@ const PostList = React.memo(({ posts }: ArchiveProps) => {
     <ul className="wide">
       {posts.map((p) => (
         <li key={p.path}>
-          {pageSymbol(p.pageType)} <Link href={p.path}>{p.title}</Link>
+          {p.icon} <Link href={p.path}>{p.title}</Link>
         </li>
       ))}
     </ul>
@@ -173,7 +173,7 @@ export const getStaticProps = async () => {
     .map((p) => ({
       title: p.data.title,
       path: p.path,
-      pageType: p.data.pageType ?? null,
+      icon: p.data.icon ?? pageSymbol(p.data.pageType) ?? null,
     }));
 
   const props: ArchiveProps = {

@@ -3,12 +3,11 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
-import pageSymbol from '@/lib/pageSymbol';
 import { websiteUrl } from '@/config';
 
 export interface HeaderProps {
   slug: string;
-  pageType?: string;
+  icon?: string | null;
   title: string;
   isodate?: string;
   date?: string;
@@ -21,7 +20,7 @@ export interface HeaderProps {
 const Header = ({
   slug,
   title,
-  pageType,
+  icon,
   isodate,
   date,
   lastModified,
@@ -63,7 +62,7 @@ const Header = ({
           </Link>
         </nav>
         <h1>
-          <span className="page-symbol">{pageSymbol(pageType)}</span>
+          <span className="page-symbol">{icon}</span>
           {title}
         </h1>
       </div>

@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { getAllPaths, getPostBySlug } from '@/lib/api';
 import Note, { NoteProps } from '@/components/Note';
+import pageSymbol from '@/lib/pageSymbol';
 
 interface PostProps extends NoteProps {}
 
@@ -22,20 +23,20 @@ export const getStaticPaths = async () => {
 
 interface PageParams {
   params: {
-    slug: string[];
+    slug?: string[];
   };
 }
 
 export const getStaticProps = async ({ params }: PageParams) => {
-  const slug = params.slug;
-  const post = (await getPostBySlug('/' + path.join(...slug) + '/'))!;
+  const slug = params.slug ? '/' + path.join(...params.slug) + '/' : '/';
+  const post = (await getPostBySlug(slug))!;
   const data = post.data;
   const backlinks = await Promise.all([...data.backlinks].map(getPostBySlug));
   // console.log(post.result);
   return {
     props: {
-      pageType: data.pageType,
       slug: post.path,
+      icon: data.icon ?? pageSymbol(data.pageType),
       title: data.title,
       isodate: data.date ? moment(data.date).format('YYYY-MM-DD') : null,
       date: data.date ? moment(data.date).format('MMMM D, YYYY') : null,

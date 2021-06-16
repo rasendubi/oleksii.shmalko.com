@@ -16,6 +16,7 @@ export interface NoteProps {
   hast: string;
   backlinks: BacklinkProps[];
   description: string | null;
+  icon: string;
 }
 
 const Note = ({ hast, backlinks, ...props }: NoteProps) => {
@@ -160,6 +161,29 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
               margin-left: 16px;
               margin-right: 16px;
             }
+          }
+
+          // front-page
+          .block-categories {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+          }
+          .block-categories > section {
+            margin-right: 48px;
+          }
+          .block-categories li {
+            margin-top: 4px;
+          }
+          @media (min-width: 900px) {
+            .block-categories {
+              width: calc(100vw - (100vw - 700px) / 2 - 32px);
+              max-width: 960px;
+              align-self: flex-start;
+            }
+          }
+          .block-small {
+            font-size: 14px;
           }
         `}</style>
       </div>
