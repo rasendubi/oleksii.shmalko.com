@@ -66,7 +66,7 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
     const id = url.pathname;
     const ref = file.ids[id];
     if (ref) {
-      url = new URL(`file://${ref}${url.hash}`);
+      url = new URL(`file://${ref.path}${url.hash || ref.anchor}`);
     }
   }
 

@@ -1,7 +1,6 @@
 import { Plugin } from 'unified';
 import { VFile } from 'vfile';
 import visit from 'unist-util-visit';
-import visitParents from 'unist-util-visit-parents';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 
@@ -9,14 +8,15 @@ import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
 import { uniorgSlug } from 'uniorg-slug';
 import json from '@/lib/unified-json';
+import { visitIds } from 'orgast-util-visit-ids';
 
 const processor = json()
   .use(orgParse)
   .use(saveKeywords)
   .use(removeCards)
-  .use(saveIds)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(uniorgSlug)
+  .use(saveIds)
   .use(org2rehype);
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {
@@ -27,24 +27,26 @@ function saveIds() {
   return transformer;
 
   function transformer(tree: any, file: any) {
-    visitParents(
-      tree,
-      { type: 'node-property', key: 'ID' },
-      (property, ancestors) => {
-        let parent = ancestors.pop();
-        while (
-          parent &&
-          parent.type !== 'headline' &&
-          parent.type !== 'org-data'
-        ) {
-          parent = ancestors.pop();
+    const data = file.data || (file.data = {});
+    const ids = data.ids || (data.ids = {});
+
+    visitIds(tree, (id, node) => {
+      if (node.type === 'org-data') {
+        ids[id] = '';
+      } else if (node.type === 'headline') {
+        if (!node.data?.hProperties?.id) {
+          // The headline doesn't have an html id assigned.
+          //
+          // Assign an html id property based on org id property, so
+          // the links won't be broken.
+          node.data = node.data || {};
+          node.data.hProperties = node.data.hProperties || {};
+          node.data.hProperties.id = id;
         }
 
-        const id: string = (property as any).value;
-        file.data.ids = file.data.ids ?? [];
-        file.data.ids.push([id, parent!]);
+        ids[id] = '#' + node.data?.hProperties?.id;
       }
-    );
+    });
   }
 }
 

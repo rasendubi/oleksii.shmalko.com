@@ -18,7 +18,7 @@ export interface PageData {
   slug: string;
   title: string;
   images: Array<{ src: string; alt: string }>;
-  ids: [string, any][];
+  ids: Record</* id: */ string, /* anchor: */ string>;
   links: string[];
   backlinks: Set<string>;
   excerpt: string;
@@ -104,7 +104,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
             pageType: type,
             title: '',
             images: [],
-            ids: [],
+            ids: {},
             links: [],
             backlinks: new Set(),
             excerpt: '',
@@ -184,7 +184,7 @@ function populateBibliographyPages(ctx: BuildCtx): void {
         pageType: 'biblio',
         title: '',
         images: [],
-        ids: [],
+        ids: {},
         links: [],
         backlinks: [],
         excerpt: '',
@@ -224,10 +224,10 @@ async function preprocessPages(ctx: BuildCtx): Promise<void> {
 }
 
 async function postprocessPages(ctx: BuildCtx): Promise<void> {
-  const ids: Record</* id: */ string, /* slug: */ string> = {};
+  const ids: Record</* id: */ string, { path: string; anchor: string }> = {};
   Object.values(ctx.pages).forEach((p) => {
-    p.data.ids?.forEach(([id, _target]: [string, any]) => {
-      ids[id] = p.path;
+    Object.entries(p.data.ids).forEach(([id, anchor]: [string, string]) => {
+      ids[id] = { path: p.path, anchor };
     });
   });
 
