@@ -136,6 +136,7 @@ function compactLists() {
       (node: any) =>
         node.type === 'element' &&
         (node.tagName === 'li' || node.tagName === 'dd') &&
+        node.children?.length === 1 &&
         node.children?.[0]?.type === 'element' &&
         node.children[0].tagName === 'p' &&
         node.children.filter(

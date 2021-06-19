@@ -149,30 +149,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           white-space: nowrap;
         }
 
-        pre {
-          overflow: auto;
-          line-height: 1.3;
-          /* background-color: #f0f0f0; */
-        }
-
-        blockquote,
-        pre.verse,
-        .block {
-          display: block;
-          font-family: 'Libre Baskerville', serif;
-          font-style: italic;
-          /* background-color: #f8f8f8; */
-          background-color: #f2eff3;
-          padding: 8px;
-          border-left: 4px solid #222;
-          padding-left: 12px;
-          border-radius: 2px;
-        }
-        blockquote > :last-child,
-        .block > :last-child {
-          margin-bottom: 0;
-        }
-
         .center {
           text-align: center;
           margin-left: auto;
@@ -184,6 +160,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           .note > ol,
           .note > dl > dt,
           .note > dl > dd,
+          .note > .block-clearfix > ul,
+          .note > .block-clearfix > ol,
+          .note > .block-clearfix > dl > dt,
+          .note > .block-clearfix > dl > dd,
           section > ul,
           section > ol,
           section > dl > dt,
@@ -203,19 +183,19 @@ function MyApp({ Component, pageProps }: AppProps) {
           font-size: 18px;
           font-weight: 700;
           margin-top: 40px;
-          margin-bottom: 8px;
+          margin-bottom: 16px;
         }
         h3 {
           font-size: 14px;
           font-weight: 700;
           margin-top: 16px;
-          margin-bottom: 8px;
+          margin-bottom: 16px;
         }
         h4 {
           font-size: 12px;
           font-weight: 700;
           margin-top: 16px;
-          margin-bottom: 8px;
+          margin-bottom: 16px;
         }
         p,
         ul,
@@ -283,6 +263,31 @@ function MyApp({ Component, pageProps }: AppProps) {
         .footnotes {
           display: flex;
           flex-direction: column;
+        }
+
+        pre {
+          overflow: auto;
+          line-height: 1.3;
+          /* background-color: #f0f0f0; */
+        }
+
+        blockquote,
+        pre.verse,
+        .block {
+          display: block;
+          font-family: 'Libre Baskerville', serif;
+          font-style: italic;
+          /* background-color: #f8f8f8; */
+          background-color: #f2eff3;
+          padding: 8px;
+          border-left: 4px solid #222;
+          padding-left: 12px;
+          border-radius: 2px;
+          margin-top: -8px;
+        }
+        blockquote > :last-child,
+        .block > :last-child {
+          margin-bottom: 0;
         }
       `}</style>
     </main>

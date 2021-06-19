@@ -67,7 +67,10 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           // allow top-level quotes to be slightly wider
           .note > blockquote,
           .note > pre.verse,
-          .note > .block {
+          .note > .block,
+          .note > .block-clearfix > blockquote,
+          .note > .block-clearfix > pre.verse,
+          .note > .block-clearfix > .block {
             margin-left: -16px;
             margin-right: -16px;
             padding-left: 16px;
@@ -188,7 +191,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
         `}</style>
       </div>
       {!!backlinks.length && (
-        <section style={{ marginTop: 24 }}>
+        <section>
           <h2>{'Backlinks'}</h2>
           <ul className="wide">
             {backlinks.map((b) => (
