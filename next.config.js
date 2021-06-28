@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   future: {
     webpack5: true,
@@ -18,20 +16,23 @@ module.exports = {
   },
 
   webpack: (config, options) => {
-    // Requires webpack 5.
     config.output.assetModuleFilename = 'static/resources/[hash]/[name][ext]';
     config.output.publicPath = '/_next/';
-    config.module.rules.push({
-      include: [
-        path.resolve(__dirname, 'posts/life'),
-        path.resolve(__dirname, 'posts/ring'),
-      ],
-      use: [{ loader: 'ignore-loader' }],
-    });
-    config.module.rules.push({
-      test: /\.(org|bib|md)$/,
-      use: [{ loader: 'ignore-loader' }],
-    });
+
+    config.plugins.push(
+      new options.webpack.IgnorePlugin({
+        checkResource(resource) {
+          return (
+            resource.startsWith('./posts/life/') ||
+            resource.startsWith('./posts/ring/') ||
+            resource.startsWith('./posts/biblio/files/') ||
+            resource.match(/\.(org|bib|md)$/)
+          );
+        },
+      })
+    );
+
+    // Requires webpack 5.
     config.module.rules.push({
       test: /\.(svg|png|jpe?g|gif|mp4|pdf|txt|sh|zip)$/i,
       type: 'asset/resource',
