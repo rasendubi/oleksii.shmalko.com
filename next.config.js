@@ -5,13 +5,6 @@ module.exports = {
     webpack5: true,
   },
 
-  experimental: {
-    amp: {
-      // TODO: fix latex rendering
-      skipValidation: true,
-    },
-  },
-
   trailingSlash: true,
 
   async redirects() {

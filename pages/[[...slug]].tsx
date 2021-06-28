@@ -57,7 +57,3 @@ export const getStaticProps = async ({ params }: PageParams) => {
     },
   };
 };
-
-export const config = {
-  amp: 'hybrid',
-};
