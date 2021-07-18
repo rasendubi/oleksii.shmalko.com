@@ -62,6 +62,9 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
             margin-left: -16px;
             margin-right: -16px;
             max-width: calc(100% + 32px);
+            width: calc(100% + 32px);
+            // height: unset;
+            object-fit: scale-down;
           }
 
           // allow top-level quotes to be slightly wider

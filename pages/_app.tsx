@@ -205,6 +205,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         blockquote,
         pre.verse,
         .block,
+        .src-block,
         .math-display {
           margin: 0 0 25.6px 0;
         }
