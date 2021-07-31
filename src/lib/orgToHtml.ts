@@ -52,17 +52,17 @@ function saveIds() {
       if (node.type === 'org-data') {
         ids[id] = '';
       } else if (node.type === 'headline') {
-        if (!node.data?.hProperties?.id) {
+        const data: any = (node.data = node.data || {});
+        if (!data?.hProperties?.id) {
           // The headline doesn't have an html id assigned.
           //
           // Assign an html id property based on org id property, so
-          // the links won't be broken.
-          node.data = node.data || {};
-          node.data.hProperties = node.data.hProperties || {};
-          node.data.hProperties.id = id;
+          // the links are not broken.
+          data.hProperties = node.data.hProperties || {};
+          data.hProperties.id = id;
         }
 
-        ids[id] = '#' + node.data?.hProperties?.id;
+        ids[id] = '#' + data?.hProperties?.id;
       }
     });
   }
