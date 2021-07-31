@@ -180,13 +180,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin-bottom: 16px;
         }
         h2 {
-          font-size: 18px;
+          font-size: 20px;
           font-weight: 700;
           margin-top: 40px;
           margin-bottom: 16px;
         }
         h3 {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 700;
           margin-top: 16px;
           margin-bottom: 16px;

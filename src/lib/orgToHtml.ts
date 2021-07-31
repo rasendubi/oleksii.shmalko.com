@@ -4,6 +4,7 @@ import visit from 'unist-util-visit';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 
+import type { NodeProperty } from 'uniorg';
 import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
 import { uniorgSlug } from 'uniorg-slug';
@@ -13,6 +14,7 @@ import { visitIds } from 'orgast-util-visit-ids';
 const processor = json()
   .use(orgParse)
   .use(saveKeywords)
+  .use(saveProperties)
   .use(removeCards)
   .use(orgSmartypants as Plugin<any>, { dashes: 'oldschool' })
   .use(uniorgSlug)
@@ -21,6 +23,22 @@ const processor = json()
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {
   return await processor.process(file);
+}
+
+function saveProperties() {
+  return transformer;
+
+  function transformer(tree: any, file: any) {
+    const data = file.data || (file.data = {});
+
+    const props = tree.children[0]?.children?.[0];
+    if (props?.type !== 'property-drawer') {
+      return;
+    }
+    visit(props, 'node-property', (prop: NodeProperty) => {
+      data[prop.key] = prop.value;
+    });
+  }
 }
 
 function saveIds() {

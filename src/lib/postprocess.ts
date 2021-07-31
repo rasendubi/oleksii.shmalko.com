@@ -77,7 +77,6 @@ function bibtexInfo() {
     if (!m) return;
 
     const bib = (file as any).bibliography[m[1]];
-    if (!bib) return;
 
     if (bib) {
       if (bib.TITLE) {
@@ -91,6 +90,18 @@ function bibtexInfo() {
         ? [h('dt', 'url'), h('dd', h('a', { href: bib.URL }, bib.URL))]
         : [];
       tree.children.unshift(h('dl.bibinfo', [...author, ...year, ...url]));
+    } else {
+      const refs = (file.data as any).ROAM_REFS as string | undefined;
+      if (!refs) return;
+
+      const url = refs.split(/\s+/).filter((r) => r.startsWith('http'))[0] as
+        | string
+        | undefined;
+      if (!url) return;
+
+      tree.children.unshift(
+        h('dl.bibinfo', [h('dt', 'url'), h('dd', [h('a', { href: url }, url)])])
+      );
     }
   }
 }
