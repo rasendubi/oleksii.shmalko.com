@@ -149,7 +149,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           }
           // asides are moving to the right
           @media (min-width: 1280px) {
-            aside {
+            .block-clearfix aside {
               position: absolute;
               // .note and .block-clearfix are narrower than
               // main. Compensate for main's padding.
@@ -161,8 +161,8 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
             .block-clearfix aside {
               top: 0px;
             }
-            .note aside,
-            .note > aside,
+            .block-clearfix aside,
+            // needed for specificity
             .note > .block-clearfix > aside {
               margin-left: 16px;
               margin-right: 16px;
