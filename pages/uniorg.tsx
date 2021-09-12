@@ -9,12 +9,16 @@ import uniorg2rehype from 'uniorg-rehype';
 import raw from 'rehype-raw';
 import format from 'rehype-format';
 import html from 'rehype-stringify';
+import katex from 'rehype-katex';
+import 'katex/dist/contrib/mhchem';
+
 import Header from '@/components/Header';
 
 const processor = unified()
   .use(uniorgParse)
   .use(uniorg2rehype)
   .use(raw)
+  .use(katex)
   .use(format)
   .use(html);
 
@@ -39,11 +43,11 @@ some text
     [source]
   );
 
-  const [mode, setMode] = React.useState('html');
+  const [mode, setMode] = React.useState('rendered');
 
   return (
     <div className="root">
-      <Header slug="/uniorg" title="uniorg test" />
+      <Header slug="/uniorg" title="uniorg playground" />
       <textarea value={input} onChange={handleChange} />
       <div className={clsx('result', mode !== 'rendered' && 'pre')}>
         {mode === 'uniorg' && JSON.stringify(uniorg, null, 2)}
