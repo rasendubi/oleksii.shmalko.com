@@ -39,6 +39,7 @@ const LatteListBanner = ({}: LatteListBannerProps) => {
         }
         img {
           height: 3em;
+          width: 3em;
         }
       `}</style>
     </aside>
