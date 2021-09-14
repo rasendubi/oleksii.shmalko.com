@@ -14,7 +14,14 @@ const LinkView = React.forwardRef(
   ({ className, children, href, ...props }: any, ref) => {
     const external = className && className.includes('external');
     return (
-      <a ref={ref} {...props} href={href} className={clsx('root', className)}>
+      <a
+        ref={ref}
+        rel={external ? 'noopener' : undefined}
+        target={external ? '_blank' : undefined}
+        {...props}
+        href={href}
+        className={clsx('root', className)}
+      >
         {children}
         {external && (
           <svg
