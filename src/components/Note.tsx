@@ -3,6 +3,7 @@ import React from 'react';
 import Backlink, { BacklinkProps } from './Backlink';
 import Rehype from './Rehype';
 import Header from './Header';
+import LatteListBanner from '@/components/LatteListBanner';
 
 export interface NoteProps {
   pageType: string;
@@ -22,6 +23,7 @@ export interface NoteProps {
 const Note = ({ hast, backlinks, ...props }: NoteProps) => {
   return (
     <article>
+      {props.slug !== '/' && <LatteListBanner />}
       <Header {...props} />
       <div className="note">
         <Rehype hast={hast} />
@@ -173,10 +175,11 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           .block-categories {
             display: flex;
             flex-wrap: wrap;
+            column-gap: 48px;
             margin-bottom: 32px;
           }
           .block-categories > section {
-            margin-right: 48px;
+            max-width: 320px;
           }
           .block-categories li {
             margin-top: 4px;
