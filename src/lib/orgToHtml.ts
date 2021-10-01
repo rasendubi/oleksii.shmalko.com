@@ -1,10 +1,10 @@
-import { Plugin } from 'unified';
-import { VFile } from 'vfile';
+import type { Plugin } from 'unified';
+import type { VFile } from 'vfile';
 import visit from 'unist-util-visit';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 
-import type { NodeProperty } from 'uniorg';
+import type { Headline, NodeProperty, PropertyDrawer, Text } from 'uniorg';
 import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
 import { uniorgSlug } from 'uniorg-slug';
@@ -22,7 +22,12 @@ const processor = json()
   .use(org2rehype);
 
 export default async function orgToHtml(file: VFile): Promise<VFile> {
-  return await processor.process(file);
+  try {
+    return await processor.process(file);
+  } catch (e) {
+    console.error('Error building file', file.path, e);
+    throw e;
+  }
 }
 
 function saveProperties() {
@@ -31,8 +36,10 @@ function saveProperties() {
   function transformer(tree: any, file: any) {
     const data = file.data || (file.data = {});
 
-    const props = tree.children[0]?.children?.[0];
-    if (props?.type !== 'property-drawer') {
+    const props = tree.children.find(
+      (node: any) => node.type === 'property-drawer'
+    ) as PropertyDrawer | undefined;
+    if (!props) {
       return;
     }
     visit(props, 'node-property', (prop: NodeProperty) => {
@@ -51,14 +58,15 @@ function saveIds() {
     visitIds(tree, (id, node) => {
       if (node.type === 'org-data') {
         ids[id] = '';
-      } else if (node.type === 'headline') {
-        const data: any = (node.data = node.data || {});
+      } else if (node.type === 'section') {
+        const headline = node.children[0] as Headline;
+        const data: any = (headline.data = headline.data || {});
         if (!data?.hProperties?.id) {
           // The headline doesn't have an html id assigned.
           //
           // Assign an html id property based on org id property, so
           // the links are not broken.
-          data.hProperties = node.data.hProperties || {};
+          data.hProperties = data.hProperties || {};
           data.hProperties.id = id;
         }
 
@@ -84,8 +92,8 @@ function removeCards() {
   function transformer(tree: any) {
     tree.children = tree.children.filter((child: any) => {
       return !(
-        child.type === 'headline' &&
-        child.title[0]?.value?.toLowerCase() === 'cards'
+        child.type === 'section' &&
+        (child.children[0] as Headline).rawValue.toLowerCase() === 'cards'
       );
     });
   }
@@ -96,7 +104,7 @@ function orgSmartypants(options: any) {
   return transformer;
 
   function transformer(tree: any) {
-    visit(tree, 'text', (node) => {
+    visit(tree, 'text', (node: Text) => {
       node.value = String(processor.processSync(node.value));
     });
   }
