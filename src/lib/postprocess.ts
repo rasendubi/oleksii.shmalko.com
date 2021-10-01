@@ -19,7 +19,12 @@ const processor = json()
   .use(rehypeRaw)
   .use(bibtexInfo)
   .use(demoteHeadings)
-  .use(prism, { ignoreMissing: true })
+  .use(prism, {
+    ignoreMissing: true,
+    alias: {
+      lisp: 'common-lisp',
+    },
+  })
   .use(katex)
   .use(sizeImages)
   .use(inspectUrls, { inspectEach: processUrl })
