@@ -206,7 +206,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         pre.verse,
         .block,
         .src-block,
-        .math-display {
+        .math-display,
+        pre[class^='language-'] {
           margin: 0 0 25.6px 0;
         }
         table {

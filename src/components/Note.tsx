@@ -29,7 +29,8 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
         <Rehype hast={hast} />
 
         <style jsx global>{`
-          pre.src-block {
+          pre.src-block,
+          pre[class^='language-'] {
             background-color: #f0f0f0;
           }
 
