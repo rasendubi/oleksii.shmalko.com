@@ -15,6 +15,25 @@ import { matches, selectAll } from 'hast-util-select';
 import processUrl from '@/lib/processUrls';
 import json from '@/lib/unified-json';
 
+import refractor from 'refractor';
+
+function alpha(Prism: any) {
+  Prism.languages.alpha = {
+    comment: /#.*/,
+    keyword: /\b(type|fn|let|quote|macro)\b/,
+    punctuation: /[[\],;.:{}()]/,
+    string: {
+      pattern: /"(?:[^\\"]|\\(?:\S|\s+\\))*"/,
+      greedy: true,
+    },
+    'class-name': /\b([A-Z]\w*|i64|f64|i32|f32|bool)\b/,
+    builtin: /\b(integer|float|abstract)\b/,
+  };
+}
+alpha.displayName = 'alpha';
+alpha.aliases = [] as string[];
+refractor.register(alpha);
+
 const processor = json()
   .use(rehypeRaw)
   .use(bibtexInfo)
