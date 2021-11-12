@@ -4,11 +4,17 @@ import moment from 'moment';
 import { getAllPaths, getPostBySlug } from '@/lib/api';
 import Note, { NoteProps } from '@/components/Note';
 import pageSymbol from '@/lib/pageSymbol';
+import Footer from '@/components/Footer';
 
 interface PostProps extends NoteProps {}
 
 const Post = ({ ...props }: PostProps) => {
-  return <Note {...props} />;
+  return (
+    <>
+      <Note {...props} />
+      <Footer />
+    </>
+  );
 };
 export default Post;
 

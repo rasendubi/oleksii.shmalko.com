@@ -13,9 +13,11 @@
   "dependencies": {
     "@mapbox/rehype-prism": "^0.8.0",
     "@silvenon/remark-smartypants": "^1.0.0",
+    "@types/refractor": "^3.0.2",
     "bibtex-parse": "^2.1.0",
     "clsx": "^1.1.1",
     "fathom-client": "^3.2.0",
+    "fetch-jsonp": "^1.2.1",
     "file-loader": "^6.2.0",
     "hast-util-select": "^4.0.2",
     "hast-util-to-string": "^1.0.4",
@@ -63,6 +65,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
+    "@types/fetch-jsonp": "^1.1.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^15.14.9",
     "@types/react": "^17.0.26",

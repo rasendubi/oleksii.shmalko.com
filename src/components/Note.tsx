@@ -3,7 +3,6 @@ import React from 'react';
 import Backlink, { BacklinkProps } from './Backlink';
 import Rehype from './Rehype';
 import Header from './Header';
-import LatteListBanner from '@/components/LatteListBanner';
 
 export interface NoteProps {
   pageType: string;
@@ -23,7 +22,6 @@ export interface NoteProps {
 const Note = ({ hast, backlinks, ...props }: NoteProps) => {
   return (
     <article>
-      {props.slug !== '/' && <LatteListBanner />}
       <Header {...props} />
       <div className="note">
         <Rehype hast={hast} />
@@ -44,6 +42,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
           .token.string {
             color: #2544bb;
           }
+          .token.class-name,
           .token.function,
           .token.variable {
             color: #721045;

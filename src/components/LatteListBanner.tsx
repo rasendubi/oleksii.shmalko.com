@@ -15,8 +15,8 @@ const LatteListBanner = ({}: LatteListBannerProps) => {
         <Link className="external" href="https://lattelist.app/">
           Latte List
         </Link>
-        —a reading list that helps you read what you save. I would love if you
-        could give it a try.
+        —a reading list app that helps you to actually read what you save. If
+        you love reading, you might want to give it a try.
       </div>
       <style jsx>{`
         .root {
