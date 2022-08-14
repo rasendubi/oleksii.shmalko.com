@@ -49,7 +49,7 @@ const SubscribeForm = ({}: SubscribeFormProps) => {
       // intended.
       setResult({
         result: 'error',
-        msg: 'Error sending request. Please, try again.',
+        msg: 'Network error occured. Please, try again.',
       });
     }
   };
@@ -60,7 +60,7 @@ const SubscribeForm = ({}: SubscribeFormProps) => {
     ) : (
       <>
         <div className="prompt">
-          {'Want to receive my posts as I publish them?'}
+          {'Want to receive my 🖋 posts as I publish them?'}
         </div>
         <form
           ref={formRef}
