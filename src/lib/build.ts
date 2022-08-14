@@ -39,7 +39,7 @@ type BibtexEntry = {
 
 export interface BraindumpOptions {
   root: string;
-  blacklistedDirectories: Set<string>;
+  allowDirectoryScan: (path: string) => boolean;
   specialPages: Set<string>;
 }
 
@@ -87,10 +87,13 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
       (file, stats) => {
         const p = path.relative(ctx.options.root, file.path!);
         if (stats.isDirectory()) {
-          if (ctx.options.blacklistedDirectories.has(p)) {
-            return findDown.SKIP;
-          } else {
+          // rewrite path so it starts/ends with slashes
+          const pp = path.join('/', p, '/');
+          if (ctx.options.allowDirectoryScan(pp)) {
+            console.log('scanning into', pp);
             return;
+          } else {
+            return findDown.SKIP;
           }
         }
 

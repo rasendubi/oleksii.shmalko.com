@@ -5,12 +5,16 @@ import { build, Page } from './build';
 export type { Page };
 
 const postsDirectory = path.join(process.cwd(), 'posts');
-const blacklistedDirectories = new Set(['life', 'ring']);
+const allowDirectoryScan = (path: string) => {
+  return (
+    path === '/' || path.startsWith('/posts/') || path.startsWith('/biblio/')
+  );
+};
 const specialPages = new Set(['/', '/uniorg/', '/archive/']);
 
 const dump = build({
   root: postsDirectory,
-  blacklistedDirectories,
+  allowDirectoryScan,
   specialPages,
 });
 
