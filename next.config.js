@@ -21,12 +21,28 @@ module.exports = {
 
     config.plugins.push(
       new options.webpack.IgnorePlugin({
-        checkResource(resource) {
-          return (
-            resource.startsWith('./posts/life/') ||
-            resource.startsWith('./posts/ring/') ||
-            resource.startsWith('./posts/biblio/files/') ||
-            resource.match(/\.(org|bib|md)$/)
+        checkResource(resource, context) {
+          if (context !== __dirname) {
+            return false;
+          }
+
+          if (
+            !resource.startsWith('./') ||
+            resource.startsWith('./node_modules/')
+          ) {
+            return false;
+          }
+
+          if (resource.match(/\.(org|org_archive|bib|md)$/)) {
+            return true;
+          }
+
+          return !(
+            resource.startsWith('./posts/images/') ||
+            resource.startsWith('./posts/assets/') ||
+            resource.startsWith('./posts/posts/') ||
+            (resource.startsWith('./posts/biblio/') &&
+              !resource.startsWith('./posts/biblio/files/'))
           );
         },
       })
