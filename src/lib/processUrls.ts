@@ -33,10 +33,13 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
   // to normalize link against.
   let url = new URL(urlString, 'file:///' + file.history[1]);
 
-  if (url.protocol === 'cite:') {
+  if (url.protocol.startsWith('cite')) {
     const child = node.children[0];
 
-    const key = url.pathname;
+    const key = url.pathname
+      // Skip initial @, so it handles org-cite links, in a primitive
+      // way. This doesn't handle prefix/suffix, etc.
+      .replace(/^@/, '');
     const bib = formatBib(file.bibliography[key]);
     const cite = bib ? bib.cite : [{ type: 'text', value: url.href }];
 
@@ -58,7 +61,7 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
       node.children = [...cite];
     }
 
-    const ref = url.pathname + url.hash;
+    const ref = key + url.hash;
     url = new URL(`file:///biblio/${ref}`);
   }
 
@@ -87,6 +90,9 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
         node.properties.className.push('broken');
       }
     }
+  } else if (url.protocol === 'id:') {
+    // unresolved id: link
+    node.properties.className.push('broken');
   } else {
     node.properties.className.push('external');
   }
