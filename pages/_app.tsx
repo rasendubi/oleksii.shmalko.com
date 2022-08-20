@@ -43,12 +43,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         <style jsx global>{`
           :root {
             --primary-spacing: 25.6px;
+            --font-serif: 'Libre Baskerville', serif;
+            --font-monospace: 'Source Code Pro', monospace;
+            --bg-alt: #f0f0f0;
+            --cyan-intense: #005f88;
+            --cyan-alt-other: #005a5f;
+            --magenta-alt: #8f0075;
           }
           html,
           body {
             padding: 0;
             margin: 0;
-            font-family: 'Libre Baskerville', serif;
+            font-family: var(--font-serif);
           }
 
           main {
@@ -71,7 +77,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
 
           code {
-            font-family: 'Source Code Pro', monospace;
+            font-family: var(--font-monospace);
           }
 
           html {
@@ -127,16 +133,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
 
           code.inline-code {
-            background-color: #f0f0f0;
-            color: #721045;
+            color: var(--cyan-alt-other);
           }
           code.inline-verbatim {
-            background-color: #f0f0f0;
-            color: #61284f;
+            color: var(--magenta-alt);
           }
 
           .todo-keyword {
-            font-family: 'Source Code Pro', monospace;
+            font-family: var(--font-monospace);
           }
           .todo-keyword.TODO {
             color: #1111ee;
