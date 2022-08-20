@@ -41,15 +41,15 @@ const LinkView = React.forwardRef(
         <style jsx>{`
           .root {
             text-decoration: none;
-            color: #315b00;
-            background-color: #f0f0f0;
+            color: var(--green-alt);
+            background-color: var(--bg-alt);
 
             transition: color 0.05s ease-in-out,
               background-color 0.05s ease-in-out;
           }
           .root:hover {
-            background-color: #aecf90;
-            color: #282828;
+            background-color: var(--green-subtle-bg);
+            color: var(--fg-dim);
           }
 
           // heading autolinks
@@ -68,33 +68,33 @@ const LinkView = React.forwardRef(
           :global(h4) > .root:hover,
           :global(h5) > .root:hover,
           :global(h6) > .root:hover {
-            background-color: #f0f0f0;
+            background-color: var(--bg-alt);
             color: inherit;
           }
 
           .root.broken {
             text-decoration: none;
-            color: #972500;
+            color: var(--red-alt);
           }
           .root.broken:hover {
-            background-color: #f2b0a2;
-            color: #282828;
+            background-color: var(--red-subtle-bg);
+            color: var(--fg-dim);
           }
           .root.external {
-            color: #2544bb;
+            color: var(--blue-alt);
             padding-right: 0.75em;
           }
           .root.external:hover {
-            background-color: #b5d0ff;
-            color: #282828;
+            background-color: var(--blue-subtle-bg);
+            color: var(--fg-dim);
           }
           .root.external:hover > .fa-external-link-alt {
-            fill: #282828;
+            fill: var(--fg-dim);
           }
           .fa-external-link-alt {
             display: inline-block;
             vertical-align: super;
-            fill: #2544bb;
+            fill: var(--blue-alt);
             height: 0.625em;
             width: 0.625em;
             margin-left: 0.125em;

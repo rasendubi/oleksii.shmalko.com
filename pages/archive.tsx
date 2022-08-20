@@ -110,7 +110,7 @@ const Archive = ({ posts }: ArchiveProps) => {
         .pages-counter {
           font-size: 0.8em;
           line-height: 1;
-          color: #282828;
+          color: var(--fg-dim);
           text-align: right;
         }
       `}</style>

@@ -46,6 +46,13 @@ function MyApp({ Component, pageProps }: AppProps) {
             --font-serif: 'Libre Baskerville', serif;
             --font-monospace: 'Source Code Pro', monospace;
             --bg-alt: #f0f0f0;
+            --fg-dim: #282828;
+            --green-alt: #315b00;
+            --green-subtle-bg: #aecf90;
+            --blue-alt: #2544bb;
+            --blue-subtle-bg: #b5d0ff;
+            --red-alt: #972500;
+            --red-subtle-bg: #f2b0a2;
             --cyan-intense: #005f88;
             --cyan-alt-other: #005a5f;
             --magenta-alt: #8f0075;
