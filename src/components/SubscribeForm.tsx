@@ -200,7 +200,7 @@ const SubscribeForm = ({}: SubscribeFormProps) => {
           align-items: center;
         }
         .dinkus {
-          margin: 0 0 25.6px;
+          margin: 0 0 var(--primary-spacing);
           font-size: 28px;
         }
       `}</style>

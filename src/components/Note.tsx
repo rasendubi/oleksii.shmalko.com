@@ -69,17 +69,20 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
             object-fit: scale-down;
           }
 
-          // allow top-level quotes to be slightly wider
-          .note > blockquote,
-          .note > pre.verse,
-          .note > .block,
-          .note > .block-clearfix > blockquote,
-          .note > .block-clearfix > pre.verse,
-          .note > .block-clearfix > .block {
-            margin-left: -16px;
-            margin-right: -16px;
-            padding-left: 16px;
-            padding-right: 16px;
+          @media (min-width: 900px) {
+            // allow top-level quotes to be slightly wider on wider screens
+            .note > blockquote,
+            .note > pre.verse,
+            .note > .block,
+            .note > .block-clearfix > blockquote,
+            .note > .block-clearfix > pre.verse,
+            .note > .block-clearfix > .block {
+              border-left: 2px solid #222;
+              margin-left: -18px; /* -2 for border */
+              margin-right: -16px;
+              padding-left: 16px;
+              padding-right: 16px;
+            }
           }
 
           .note {
@@ -138,7 +141,7 @@ const Note = ({ hast, backlinks, ...props }: NoteProps) => {
             background-color: #f2eff3;
             border-radius: 2px;
             padding: 8px 16px;
-            margin-bottom: 25.6px;
+            margin-bottom: var(--primary-spacing);
           }
           aside > *:last-child {
             margin-bottom: 0px;

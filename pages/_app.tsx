@@ -41,6 +41,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
 
         <style jsx global>{`
+          :root {
+            --primary-spacing: 25.6px;
+          }
           html,
           body {
             padding: 0;
@@ -211,10 +214,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           .src-block,
           .math-display,
           pre[class^='language-'] {
-            margin: 0 0 25.6px 0;
+            margin: 0 0 var(--primary-spacing) 0;
           }
           table {
-            margin-bottom: 25.6px;
+            margin-bottom: var(--primary-spacing);
           }
           dt {
             float: left;
@@ -273,22 +276,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           pre {
             overflow: auto;
             line-height: 1.3;
-            /* background-color: #f0f0f0; */
           }
 
           blockquote,
           pre.verse,
           .block {
             display: block;
-            font-family: 'Libre Baskerville', serif;
-            font-style: italic;
-            /* background-color: #f8f8f8; */
-            background-color: #f2eff3;
-            padding: 8px;
-            border-left: 4px solid #222;
-            padding-left: 12px;
-            border-radius: 2px;
-            margin-top: -8px;
+            padding: 0px 8px;
+            border-left: 2px solid #444;
           }
           blockquote > :last-child,
           .block > :last-child {
