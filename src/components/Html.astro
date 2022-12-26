@@ -1,0 +1,31 @@
+---
+import { transform, __unsafeHTML } from 'ultrahtml';
+import swap from 'ultrahtml/transformers/swap';
+import { renderJSX } from 'astro/server/jsx';
+import { jsx } from 'astro/jsx-runtime';
+
+const { html } = Astro.props;
+
+const components = Object.fromEntries(
+  Object.entries(Astro.props.components ?? {}).map(([key, value]) => {
+    if (typeof value === 'string') {
+      return [key, value];
+    }
+
+    return [
+      key,
+      async (props, children) => {
+        const output = await renderJSX(
+          $$result,
+          jsx(value, { ...props, 'set:html': children.value })
+        );
+        return __unsafeHTML(output);
+      },
+    ];
+  })
+);
+
+const content = transform(html, [swap(components)]);
+---
+
+<Fragment set:html={content} />

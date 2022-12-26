@@ -1,0 +1,20 @@
+---
+import SubscribeForm from './SubscribeForm';
+---
+
+<footer>
+  <div class="dinkus">❦</div>
+  <SubscribeForm client:visible />
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dinkus {
+    margin: 0 0 var(--primary-spacing);
+    font-size: 28px;
+  }
+</style>

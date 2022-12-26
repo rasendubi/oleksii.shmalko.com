@@ -1,0 +1,64 @@
+.link {
+  text-decoration: none;
+  color: var(--green-alt);
+  background-color: var(--bg-alt);
+
+  transition: color 0.05s ease-in-out, background-color 0.05s ease-in-out;
+}
+.link:hover {
+  background-color: var(--green-subtle-bg);
+  color: var(--fg-dim);
+}
+
+/* heading autolinks */
+h1 > .link,
+h2 > .link,
+h3 > .link,
+h4 > .link,
+h5 > .link,
+h6 > .link {
+  color: inherit;
+  background-color: inherit;
+}
+h1 > .link:hover,
+h2 > .link:hover,
+h3 > .link:hover,
+h4 > .link:hover,
+h5 > .link:hover,
+h6 > .link:hover {
+  background-color: var(--bg-alt);
+  color: inherit;
+}
+
+.link:global(.broken) {
+  text-decoration: none;
+  color: var(--red-alt);
+}
+.link:global(.broken):hover {
+  background-color: var(--red-subtle-bg);
+  color: var(--fg-dim);
+}
+.link:global(.external) {
+  color: var(--blue-alt);
+  padding-right: 0.75em;
+}
+.link:global(.external):hover {
+  background-color: var(--blue-subtle-bg);
+  color: var(--fg-dim);
+}
+.link:global(.external):hover > .fa-external-link-alt {
+  fill: var(--fg-dim);
+}
+.fa-external-link-alt {
+  display: inline-block;
+  vertical-align: super;
+  fill: var(--blue-alt);
+  height: 0.625em;
+  width: 0.625em;
+  margin-left: 0.125em;
+
+  /* Use negative margin to prevent wrapping the icon alone:
+   * https://stackoverflow.com/a/25857961
+   */
+  margin-right: -0.75em;
+}

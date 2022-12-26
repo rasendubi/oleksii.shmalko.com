@@ -1,0 +1,16 @@
+---
+import { Picture } from '@astrojs/image/components';
+const { src, width, height } = Astro.props;
+---
+
+{
+  typeof src === 'string' && (src.endsWith('.svg') || src.endsWith('.gif')) ? (
+    <img {...Astro.props} />
+  ) : (
+    <Picture
+      widths={[320, 480, /* full-width */ 700, /* @2x */ 1400]}
+      aspectRatio={`${width}:${height}`}
+      {...Astro.props}
+    />
+  )
+}

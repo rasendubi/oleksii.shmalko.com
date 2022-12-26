@@ -1,0 +1,111 @@
+---
+import moment from 'moment';
+
+import Link from './Link.astro';
+import HomeIcon from './home-icon.svg?raw';
+import SearchIcon from './search-icon.svg?raw';
+
+const { title, icon, date, lastModified } = Astro.props;
+
+const isodate = date ? moment(date).format('YYYY-MM-DD') : null;
+const dateHuman = date ? moment(date).format('MMMM D, YYYY') : null;
+const lastModifiedIso = lastModified
+  ? moment(lastModified).format('YYYY-MM-DD')
+  : null;
+const lastModifiedHuman = lastModified
+  ? moment(lastModified).format('MMMM D, YYYY')
+  : null;
+---
+
+<header>
+  <div class="homerow">
+    <nav class="quicklinks">
+      <a href="/" class="icon-link" aria-label="Home" rel="prefetch">
+        <Fragment set:html={HomeIcon} />
+      </a>
+      <a href="/archive" class="icon-link" aria-label="Search">
+        <Fragment set:html={SearchIcon} />
+      </a>
+    </nav>
+    <h1>
+      <span class="page-symbol">{icon}</span>
+      {title}
+    </h1>
+  </div>
+  {
+    dateHuman || lastModifiedHuman ? (
+      <div class="time">
+        {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}
+        {dateHuman && lastModifiedHuman && '–'}
+        {lastModifiedHuman && lastModifiedIso && (
+          <time dateTime={lastModifiedIso}>{lastModifiedHuman}</time>
+        )}
+      </div>
+    ) : null
+  }
+  <style>
+    header {
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+    .homerow {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row-reverse;
+    }
+    .page-symbol {
+      margin-right: 8px;
+    }
+    h1 {
+      flex-shrink: 0;
+      flex-grow: 1;
+      justify-self: stretch;
+      max-width: 100%;
+      margin-bottom: 0px;
+    }
+    .time {
+      display: inline-block;
+      color: #444;
+      font-style: italic;
+      font-size: 13px;
+    }
+    .quicklinks {
+      display: inline-flex;
+      align-items: flex-start;
+      margin-left: 12px;
+    }
+    .icon-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: -12px;
+
+      border-radius: 50%;
+      transition: color 0.05s ease-in-out, background-color 0.05s ease-in-out;
+    }
+    .icon-link:hover {
+      background-color: #f0f0f0;
+    }
+    .icon-link:active {
+      background-color: #d7d7d7;
+    }
+    img {
+      /* Reset global img styles */
+      max-width: unset;
+      height: unset;
+    }
+    @media (min-width: 900px) {
+      .page-symbol {
+        position: absolute;
+        right: 100%;
+        margin-right: 0;
+      }
+      .quicklinks {
+        position: absolute;
+        left: 100%;
+        margin-left: 0;
+      }
+    }
+  </style>
+</header>

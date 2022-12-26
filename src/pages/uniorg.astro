@@ -1,0 +1,10 @@
+---
+import Root from '../layouts/Root.astro';
+import Header from '../components/Header.astro';
+import UniorgPlayground from '../components/UniorgPlayground.tsx';
+---
+
+<Root title="uniorg playground">
+  <Header title="uniorg playground" />
+  <UniorgPlayground client:load />
+</Root>

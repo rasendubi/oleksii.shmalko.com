@@ -10,7 +10,13 @@ const allowDirectoryScan = (path: string) => {
     path === '/' || path.startsWith('/posts/') || path.startsWith('/biblio/')
   );
 };
-const specialPages = new Set(['/', '/uniorg/', '/archive/']);
+const specialPages = new Set([
+  '/',
+  '/uniorg/',
+  '/archive/',
+  '/archive.rss.xml',
+  '/posts.rss.xml',
+]);
 
 const dump = build({
   root: postsDirectory,

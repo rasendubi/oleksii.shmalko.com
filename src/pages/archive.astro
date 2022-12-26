@@ -1,0 +1,41 @@
+---
+import moment from 'moment';
+
+import Root from '../layouts/Root.astro';
+import Header from '../components/Header.astro';
+import Archive from '../components/Archive.tsx';
+
+import { getAllPosts, Page } from '../lib/api';
+import pageSymbol from '../lib/pageSymbol';
+import comparePages from '../lib/comparePages.ts';
+
+const allPosts = await getAllPosts();
+const posts = Object.values(allPosts)
+  .sort(comparePages({ preferLastmod: true }))
+  .map((p) => ({
+    title: p.data.title,
+    path: p.path,
+    icon: p.data.icon ?? pageSymbol(p.data.pageType) ?? null,
+  }));
+---
+
+<Root title="§ Archive">
+  <Fragment slot="head">
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS feed for all notes"
+      href="/archive.rss.xml"
+    />
+    <noscript>
+      <style is:inline>
+        .input-wrapper {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </Fragment>
+
+  <Header title="§ Archive" icon="🗄️" />
+  <Archive client:load posts={posts} />
+</Root>

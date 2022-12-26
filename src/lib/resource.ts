@@ -5,16 +5,29 @@ export function isResource(path: string): boolean {
   return resourceTest.test(path);
 }
 
+const assets = import.meta.glob(
+  [
+    '../../posts/**/*.png',
+    '../../posts/**/*.svg',
+    '../../posts/**/*.jpg',
+    '../../posts/**/*.jpeg',
+    '../../posts/**/*.gif',
+    '../../posts/**/*.sh',
+    '../../posts/**/*.txt',
+  ],
+  { as: 'url' }
+);
+
 /**
  * Try loading a resource. `path` must be relative to the posts
  * directory.
  */
-export function loadResource(path: string): string {
+export async function loadResource(path: string): Promise<string> {
   let url = decodeURIComponent(path);
   try {
-    url = require('../../posts' + url);
+    url = await assets['../../posts' + url]();
   } catch (e) {
-    console.log('failed to load resource', path, e);
+    console.log('failed to load resource', { path, url }, e);
   }
 
   return encodeURI(url);

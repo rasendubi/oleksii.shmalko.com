@@ -10,7 +10,7 @@ import orgToHtml from './orgToHtml';
 import mdToHtml from './mdToHtml';
 import bibtexToHtml from './bibtex';
 import postprocessPage from './postprocess';
-import rewritePath from './rewrite-path';
+import { rewritePagePath } from './rewrite-path';
 
 export interface PageData {
   type: '.org' | '.md' | '.bib';
@@ -99,7 +99,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
 
         const ext = path.extname(p);
         if (ext === '.org' || ext === '.bib' || ext === '.md') {
-          const slug = rewritePath(p);
+          const slug = rewritePagePath(p);
           const type = pageType(p);
 
           const data: PageData = {
@@ -218,7 +218,7 @@ async function preprocessPages(ctx: BuildCtx): Promise<void> {
     const published = (file.data as any).published;
     if (published && (published !== 'true' || published !== 'yes')) {
       // TODO: refactor this, so it does less mutation
-      if (process.env.NODE_ENV !== 'development') {
+      if (import.meta.env.PROD) {
         delete ctx.pages[file.data.slug];
       }
     }

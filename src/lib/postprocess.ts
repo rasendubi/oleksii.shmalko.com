@@ -6,7 +6,6 @@ import 'katex/dist/contrib/mhchem';
 import minify from 'rehype-preset-minify';
 import h from 'hastscript';
 import rehypeRaw from 'rehype-raw';
-import inspectUrls from 'rehype-url-inspector';
 import link from 'rehype-autolink-headings';
 import sizeOf from 'image-size';
 import toString from 'hast-util-to-string';
@@ -208,9 +207,35 @@ function description() {
 
     if (p) {
       const description = toString(p);
-      // console.log(file.path, description);
 
       data.description = description;
+    }
+  }
+}
+
+function inspectUrls({ inspectEach }: any) {
+  return transformer;
+
+  async function transformer(node: any, file: VFile) {
+    const nodes = selectAll('a[href], link[href], img[src]', node);
+    for (const node of nodes) {
+      let propertyName = 'href';
+      switch (node.tagName) {
+        case 'link':
+        case 'a':
+          propertyName = 'href';
+          break;
+        case 'img':
+          propertyName = 'src';
+          break;
+      }
+
+      await inspectEach({
+        file,
+        node,
+        url: node.properties[propertyName],
+        propertyName,
+      });
     }
   }
 }

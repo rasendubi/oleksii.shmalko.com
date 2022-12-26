@@ -4,29 +4,7 @@ import { isResource } from './resource';
 
 export default processUrl;
 
-const formatBib = (bib: any) => {
-  if (!bib) return null;
-
-  const lastName = (author: string) =>
-    author?.replace(/^(.*),.*$/, '$1').replace(/^.* (.*)$/, '$1');
-
-  const authorLastName = lastName(bib.authors[0]);
-  const author2LastName = lastName(bib.authors[1]);
-
-  const author2 = bib.authors.length === 2 ? ` & ${author2LastName}` : '';
-  const authors = [{ type: 'text', value: `${authorLastName}${author2}` }];
-  const rest = bib.authors.length > 2 ? [{ type: 'text', value: '…' }] : [];
-
-  const cite = authorLastName
-    ? [...authors, h('sub', [...rest, '' + bib.YEAR])]
-    : [{ type: 'text', value: `cite:${bib.key}` }];
-
-  const title = bib.TITLE ?? null;
-
-  return { cite, title };
-};
-
-function processUrl({ url: urlString, propertyName, node, file }: any) {
+async function processUrl({ url: urlString, propertyName, node, file }: any) {
   // next/link does not handle relative urls properly.
   //
   // file.history[1] is file path relative to root of content. Use it
@@ -75,7 +53,7 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
 
   node.properties.className = node.properties.className || [];
   if (url.protocol === 'file:') {
-    let pathname = rewritePath(url.pathname);
+    let pathname = await rewritePath(url.pathname);
     node.properties[propertyName] = pathname + url.hash;
 
     const linkFile = decodeURI(pathname);
@@ -97,3 +75,25 @@ function processUrl({ url: urlString, propertyName, node, file }: any) {
     node.properties.className.push('external');
   }
 }
+
+const formatBib = (bib: any) => {
+  if (!bib) return null;
+
+  const lastName = (author: string) =>
+    author?.replace(/^(.*),.*$/, '$1').replace(/^.* (.*)$/, '$1');
+
+  const authorLastName = lastName(bib.authors[0]);
+  const author2LastName = lastName(bib.authors[1]);
+
+  const author2 = bib.authors.length === 2 ? ` & ${author2LastName}` : '';
+  const authors = [{ type: 'text', value: `${authorLastName}${author2}` }];
+  const rest = bib.authors.length > 2 ? [{ type: 'text', value: '…' }] : [];
+
+  const cite = authorLastName
+    ? [...authors, h('sub', [...rest, '' + bib.YEAR])]
+    : [{ type: 'text', value: `cite:${bib.key}` }];
+
+  const title = bib.TITLE ?? null;
+
+  return { cite, title };
+};

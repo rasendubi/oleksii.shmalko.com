@@ -1,22 +1,17 @@
 import React from 'react';
+import { useDebounced } from '../useDebounced';
 import clsx from 'clsx';
-import moment from 'moment';
+import Link from './Link';
 
-import { getAllPosts, Page } from '@/lib/api';
-import Link from '@/components/Link';
-import Header from '@/components/Header';
-import { useDebounced } from '@/useDebounced';
-import pageSymbol from '@/lib/pageSymbol';
-
-type PostInfo = {
-  path: string;
-  title: string;
-  icon: string | null;
+export type ArchiveProps = {
+  posts: ArchivePost[];
 };
 
-interface ArchiveProps {
-  posts: PostInfo[];
-}
+type ArchivePost = {
+  title: string;
+  path: string;
+  icon: string;
+};
 
 const Archive = ({ posts }: ArchiveProps) => {
   const [input, setInput] = React.useState('');
@@ -31,7 +26,7 @@ const Archive = ({ posts }: ArchiveProps) => {
     setInput('');
   }, []);
 
-  const query = useDebounced(input, 200);
+  const [query] = useDebounced(input, 200);
   const searchResult = React.useMemo(() => {
     const stems = query.toLowerCase().split(/\s+/);
     return posts.filter((post) => {
@@ -42,7 +37,6 @@ const Archive = ({ posts }: ArchiveProps) => {
 
   return (
     <>
-      <Header slug="/archive" title={'§ Archive'} />
       <div className="input-wrapper">
         <input
           aria-label="Search"
@@ -66,12 +60,12 @@ const Archive = ({ posts }: ArchiveProps) => {
       <PostList posts={searchResult} />
       {/* always show scroll on this page, so the layout is stable
           when pages list gets too short */}
-      <style global jsx>{`
+      <style>{`
         body {
           overflow-y: scroll;
         }
       `}</style>
-      <style jsx>{`
+      <style>{`
         .input-wrapper {
           display: flex;
           align-items: center;
@@ -112,6 +106,7 @@ const Archive = ({ posts }: ArchiveProps) => {
           line-height: 1;
           color: var(--fg-dim);
           text-align: right;
+          margin-bottom: 4px;
         }
       `}</style>
     </>
@@ -133,51 +128,3 @@ const PostList = React.memo(({ posts }: ArchiveProps) => {
     </ul>
   );
 });
-
-export const getStaticProps = async () => {
-  const allPosts = await getAllPosts();
-  const posts = Object.values(allPosts)
-    .sort((a, b) => {
-      // new notes on top, but bibliography on bottom (notes with
-      // non-numeric path)
-
-      const isodate = (p: Page) => {
-        const format = (s: string) => moment(s).format('YYYYMMDD');
-
-        if (p.data.last_modified) {
-          return format(p.data.last_modified);
-        }
-        if (p.data.date) {
-          return format(p.data.date);
-        }
-        return null;
-      };
-
-      const aIsodate = isodate(a);
-      const bIsodate = isodate(b);
-
-      const aNumeric = !!a.path.match(/^\/\d/) || !!aIsodate;
-      const bNumeric = !!b.path.match(/^\/\d/) || !!bIsodate;
-      if (aNumeric != bNumeric) {
-        return aNumeric < bNumeric ? 1 : -1;
-      }
-
-      if (!aNumeric) {
-        return a.path < b.path ? -1 : 1;
-      }
-
-      return (aIsodate || a.path.slice(1)) < (bIsodate || b.path.slice(1))
-        ? 1
-        : -1;
-    })
-    .map((p) => ({
-      title: p.data.title,
-      path: p.path,
-      icon: p.data.icon ?? pageSymbol(p.data.pageType) ?? null,
-    }));
-
-  const props: ArchiveProps = {
-    posts,
-  };
-  return { props };
-};

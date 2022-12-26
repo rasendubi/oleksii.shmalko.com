@@ -12,7 +12,7 @@ import html from 'rehype-stringify';
 import katex from 'rehype-katex';
 import 'katex/dist/contrib/mhchem';
 
-import Header from '@/components/Header';
+import './UniorgPlayground.css';
 
 const processor = unified()
   .use(uniorgParse)
@@ -36,7 +36,7 @@ some text
     []
   );
 
-  const source = useDebounced(input, 100);
+  const [source] = useDebounced(input, 100);
   const uniorg = React.useMemo(() => parse(source), [source]);
   const html = React.useMemo(
     () => processor.processSync(source).contents as string,
@@ -46,8 +46,7 @@ some text
   const [mode, setMode] = React.useState('rendered');
 
   return (
-    <div className="root">
-      <Header slug="/uniorg" title="uniorg playground" />
+    <div>
       <textarea value={input} onChange={handleChange} />
       <div className={clsx('result', mode !== 'rendered' && 'pre')}>
         {mode === 'uniorg' && JSON.stringify(uniorg, null, 2)}
@@ -61,40 +60,6 @@ some text
         <button onClick={() => setMode('html')}>{'HTML'}</button>
         <button onClick={() => setMode('rendered')}>{'rendered'}</button>
       </div>
-
-      <style jsx>{`
-        textarea {
-          width: 100%;
-          display: block;
-          background: #fff;
-          border: thin solid #888888;
-          border-radius: 2px;
-          font-family: 'Source Code Pro', monospace;
-          white-space: pre;
-          overflow: auto;
-          min-height: 30vh;
-        }
-        .result {
-          padding: 4px;
-          background: #fff;
-          border: thin solid #888888;
-          border-radius: 2px;
-          overflow: auto;
-          height: 45vh;
-        }
-        .result.pre {
-          font-family: 'Source Code Pro', monospace;
-          white-space: pre;
-        }
-        .buttons {
-          display: flex;
-          width: 100%;
-          justify-content: stretch;
-        }
-        button {
-          flex-grow: 1;
-        }
-      `}</style>
     </div>
   );
 };

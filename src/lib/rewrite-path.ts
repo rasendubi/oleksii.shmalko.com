@@ -1,12 +1,8 @@
 import path from 'path';
 import { isResource, loadResource } from './resource';
 
-export default function rewritePath(p: string): string {
+export function rewritePagePath(p: string): string {
   let result = '/' + p.replace(/^\//, '');
-
-  if (isResource(p)) {
-    return loadResource(p);
-  }
 
   const ext = path.extname(p);
   if (ext === '' || ext === '.org' || ext === '.bib' || ext === '.md') {
@@ -21,4 +17,12 @@ export default function rewritePath(p: string): string {
   }
 
   return result;
+}
+
+export default async function rewritePath(p: string): Promise<string> {
+  if (isResource(p)) {
+    return await loadResource(p);
+  } else {
+    return rewritePagePath(p);
+  }
 }

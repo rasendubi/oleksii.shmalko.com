@@ -1,0 +1,38 @@
+---
+import Root from '../layouts/Root.astro';
+import Link from '../components/Link.astro';
+---
+
+<Root>
+  <div class="root">
+    <h1>404</h1>
+    <p>This page is private or does not exist.</p>
+    <div class="goto">
+      Go to:
+      <ul>
+        <li>
+          <Link href="/">Home page</Link>
+        </li>
+        <li>
+          <Link href="/archive">Search</Link>
+        </li>
+      </ul>
+    </div>
+  </div>
+</Root>
+<style>
+  .root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 4px;
+  }
+  ul {
+    padding: 0;
+  }
+</style>
