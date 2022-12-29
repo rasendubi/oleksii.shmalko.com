@@ -11,7 +11,7 @@ import { parse as yamlParse } from 'yaml';
 import remarkFootnotes from 'remark-footnotes';
 import { matches, select } from 'hast-util-select';
 
-import json from '@/lib/unified-json';
+import json from './unified-json';
 
 const processor = json()
   .use(remarkParse)

@@ -8,7 +8,7 @@ import type { Headline, NodeProperty, PropertyDrawer, Text } from 'uniorg';
 import orgParse from 'uniorg-parse';
 import org2rehype from 'uniorg-rehype';
 import { uniorgSlug } from 'uniorg-slug';
-import json from '@/lib/unified-json';
+import json from './unified-json';
 import { visitIds } from 'orgast-util-visit-ids';
 
 const processor = json()

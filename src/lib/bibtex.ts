@@ -3,7 +3,7 @@ import bibtexParse from 'bibtex-parse';
 import u from 'unist-builder';
 import h from 'hastscript';
 
-import json from '@/lib/unified-json';
+import json from './unified-json';
 
 const processor = json().use(parseBibtex).use(bibtex2rehype);
 

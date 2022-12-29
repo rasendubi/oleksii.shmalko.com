@@ -11,8 +11,8 @@ import sizeOf from 'image-size';
 import toString from 'hast-util-to-string';
 import { matches, selectAll } from 'hast-util-select';
 
-import processUrl from '@/lib/processUrls';
-import json from '@/lib/unified-json';
+import processUrl from './processUrls';
+import json from './unified-json';
 
 import refractor from 'refractor';
 
