@@ -12,7 +12,6 @@
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.nodejs-16_x
-            pkgs.awscli2
           ];
         };
       });
