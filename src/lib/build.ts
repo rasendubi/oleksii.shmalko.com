@@ -238,13 +238,11 @@ async function postprocessPages(ctx: BuildCtx): Promise<void> {
   await Promise.all(Object.values(ctx.pages).map(processPage));
 
   async function processPage(file: Page): Promise<Page> {
-    const data = file.data;
-
     file.bibliography = ctx.bibliography;
     file.pageExists = pageExists;
     file.ids = ids;
 
-    postprocessPage(file);
+    await postprocessPage(file);
 
     return file;
   }
