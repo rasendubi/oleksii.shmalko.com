@@ -136,10 +136,12 @@ function sizeImages() {
     visit(tree, { type: 'element', tagName: 'img' }, (img: any) => {
       if (img.properties.src) {
         const url = new URL(img.properties.src, 'file:///' + file.history[1]);
-        const f = './posts' + decodeURIComponent(url.pathname);
-        const { height, width } = sizeOf(f);
-        img.properties.height = height;
-        img.properties.width = width;
+        if (url.protocol === 'file:') {
+          const f = './posts' + decodeURIComponent(url.pathname);
+          const { height, width } = sizeOf(f);
+          img.properties.height = height;
+          img.properties.width = width;
+        }
       }
     });
   }

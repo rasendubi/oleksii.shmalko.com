@@ -1,9 +1,9 @@
 import * as path from 'path';
 import trough from 'trough';
-import toVFile from 'to-vfile';
-import { VFile } from 'vfile';
-import findDown from 'vfile-find-down';
-import rename from 'vfile-rename';
+import { toVFile, read as toVFileRead } from 'to-vfile';
+import type { VFile } from 'vfile';
+import * as findDown from 'vfile-find-down';
+import { rename } from 'vfile-rename';
 import bibtexParse from 'bibtex-parse';
 
 import orgToHtml from './orgToHtml';
@@ -83,7 +83,7 @@ export const build = async (
 
 async function collectFiles(ctx: BuildCtx): Promise<void> {
   const files = await new Promise<Page[]>((resolve, reject) => {
-    findDown.all(
+    findDown.findDown(
       (file, stats) => {
         const p = path.relative(ctx.options.root, file.path!);
         if (stats.isDirectory()) {
@@ -132,8 +132,9 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
     files.map(async (f) => {
       await toVFile.read(f, 'utf8');
       return rename(
+        // renaming two times, so relative path remains in history
         rename(f, { path: path.relative(ctx.options.root, f.path) }),
-        { path: f.data.slug }
+        { path: f.data.slug + 'index.html' }
       );
     })
   );
@@ -142,7 +143,7 @@ async function collectFiles(ctx: BuildCtx): Promise<void> {
 
 async function collectBibliography(ctx: BuildCtx): Promise<void> {
   const files = await new Promise<VFile[]>((resolve, reject) => {
-    findDown.all('.bib', ctx.options.root, (err, files) => {
+    findDown.findDown('.bib', ctx.options.root, (err, files) => {
       if (err) {
         reject(err);
       } else {
@@ -154,7 +155,7 @@ async function collectBibliography(ctx: BuildCtx): Promise<void> {
     await Promise.all(
       files.map(async (f) => {
         await toVFile.read(f, 'utf8');
-        return bibtexParse.entries(f.contents);
+        return bibtexParse.entries(f.value);
       })
     )
   ).reduce((acc: any[], es) => {
@@ -181,7 +182,7 @@ function populateBibliographyPages(ctx: BuildCtx): void {
 
     ctx.pages[path] = toVFile({
       path,
-      contents: '',
+      value: '',
       data: {
         slug: path,
         type: '.org',
@@ -230,6 +231,7 @@ async function preprocessPages(ctx: BuildCtx): Promise<void> {
 async function postprocessPages(ctx: BuildCtx): Promise<void> {
   const ids: Record</* id: */ string, { path: string; anchor: string }> = {};
   Object.values(ctx.pages).forEach((p) => {
+    rename(p, { path: p.path.replace(/\/index.html$/, '/') });
     Object.entries(p.data.ids).forEach(([id, anchor]: [string, string]) => {
       ids[id] = { path: p.path, anchor };
     });

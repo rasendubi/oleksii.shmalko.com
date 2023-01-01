@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { useDebounced } from '@/useDebounced';
 
-import unified from 'unified';
+import { unified } from 'unified';
 import uniorgParse from 'uniorg-parse';
 import { parse } from 'uniorg-parse/lib/parser';
 import uniorg2rehype from 'uniorg-rehype';

@@ -22,7 +22,7 @@ export function bibtex2rehype() {
   return transformer;
 
   function transformer(node: any, file: VFile) {
-    const base = file.basename!.replace(/\.bib$/, '');
+    const base = (file as any).data.slug.split('/').slice(-2)[0];
     (file.data as any).title = '§ ' + base[0].toUpperCase() + base.slice(1);
 
     return h(

@@ -1,4 +1,4 @@
-import unified from 'unified';
+import { unified } from 'unified';
 
 export const json = unified().use(fromJson).use(toJson).freeze();
 
