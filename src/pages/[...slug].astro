@@ -52,10 +52,10 @@ const html = rehype.stringify(post.result);
       }}
     />
     {
-      !!backlinks.length && (
-        <section>
+      !!backlinks.length && data.no_backlinks === undefined && (
+        <>
           <h2>Backlinks</h2>
-          <ul class="wide">
+          <ul>
             {backlinks
               .sort((a, b) => (a.path < b.path ? -1 : 1))
               .map((b) => (
@@ -65,7 +65,7 @@ const html = rehype.stringify(post.result);
                 </li>
               ))}
           </ul>
-        </section>
+        </>
       )
     }
   </article>

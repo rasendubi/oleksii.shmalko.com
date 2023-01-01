@@ -57,7 +57,9 @@ const Archive = ({ posts }: ArchiveProps) => {
         </div>
       </div>
       <div className="pages-counter">{`${searchResult.length} pages`}</div>
-      <PostList posts={searchResult} />
+      <section>
+        <PostList posts={searchResult} />
+      </section>
       {/* always show scroll on this page, so the layout is stable
           when pages list gets too short */}
       <style>{`
@@ -69,8 +71,9 @@ const Archive = ({ posts }: ArchiveProps) => {
         .input-wrapper {
           display: flex;
           align-items: center;
-          border: thin solid #888888;
-          border-radius: 1px;
+          border: thin solid #888;
+          border-radius: 4px;
+          overflow: hidden;
           margin-bottom: 5px;
         }
         input {
@@ -119,7 +122,7 @@ export default Archive;
 // hinder typing performance.
 const PostList = React.memo(({ posts }: ArchiveProps) => {
   return (
-    <ul className="wide">
+    <ul>
       {posts.map((p) => (
         <li key={p.path}>
           {p.icon} <Link href={p.path}>{p.title}</Link>
