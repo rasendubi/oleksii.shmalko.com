@@ -223,7 +223,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         section > dl > dt,
         section > dl > dd {
           margin-left: 0px;
-          /* padding-left: 0px; */
         }
         section > ul,
         section > ol,
@@ -400,13 +399,14 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       /* make top-level images slightly wider */
-      article > p > picture:only-child > img,
-      article > p > img:only-child {
+      article > p > picture:only-child {
+        display: flex;
+        justify-content: center;
+        width: calc(100% + 32px);
         margin-left: -16px;
         margin-right: -16px;
-        margin: -16px -16px;
-        max-width: calc(100% + 32px);
-        width: calc(100% + 32px);
+      }
+      img {
         object-fit: scale-down;
       }
 
@@ -474,6 +474,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-top: -8px;
         margin-bottom: 24px;
       }
+      header + dl > dt, header + dl > dd {
+        list-style-type: none;
+        margin-left: 0;
+      }
 
       /* asides */
       .block-clearfix {
@@ -539,6 +543,16 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       .block-small {
         font-size: 14px;
+      }
+
+      .block-important {
+        background: var(--bg-alt);
+        margin: -4px;
+        padding: 4px;
+        border-radius: 4px;
+      }
+      .block-important > :last-child {
+        margin-bottom: 0;
       }
     </style>
   </body>

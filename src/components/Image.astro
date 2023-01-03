@@ -1,16 +1,25 @@
 ---
 import { Picture } from '@astrojs/image/components';
 const { src, width, height } = Astro.props;
+
+const notSupported =
+  typeof src === 'string' && (src.endsWith('.svg') || src.endsWith('.gif'));
+const isSupported = !notSupported;
+
+const hasAspectRatio = width !== undefined && height !== undefined;
+// aspectRatio={`${width}:${height}`}
 ---
 
 {
-  typeof src === 'string' && (src.endsWith('.svg') || src.endsWith('.gif')) ? (
-    <img {...Astro.props} />
-  ) : (
+  typeof src !== 'string' ? (
     <Picture
       widths={[320, 480, /* full-width */ 700, /* @2x */ 1400]}
-      aspectRatio={`${width}:${height}`}
+      fit="contain"
       {...Astro.props}
     />
+  ) : (
+    <picture>
+      <img {...Astro.props} />
+    </picture>
   )
 }

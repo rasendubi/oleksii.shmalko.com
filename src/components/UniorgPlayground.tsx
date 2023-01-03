@@ -39,7 +39,7 @@ some text
   const [source] = useDebounced(input, 100);
   const uniorg = React.useMemo(() => parse(source), [source]);
   const html = React.useMemo(
-    () => processor.processSync(source).contents as string,
+    () => String(processor.processSync(source).value),
     [source]
   );
 

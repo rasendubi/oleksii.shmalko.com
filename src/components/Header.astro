@@ -28,16 +28,13 @@ const lastModifiedHuman = lastModified
       </a>
     </nav>
     <h1>
-      <span class="page-symbol">{icon}</span>
-      {title}
+      <span class="page-symbol">{icon}</span>{title}
     </h1>
   </div>
   {
     dateHuman || lastModifiedHuman ? (
       <div class="time">
-        {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}
-        {dateHuman && lastModifiedHuman && '–'}
-        {lastModifiedHuman && lastModifiedIso && (
+        {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}{dateHuman && lastModifiedHuman && '–'}{lastModifiedHuman && lastModifiedIso && (
           <time dateTime={lastModifiedIso}>{lastModifiedHuman}</time>
         )}
       </div>
@@ -55,6 +52,7 @@ const lastModifiedHuman = lastModified
     }
     .page-symbol {
       margin-right: 8px;
+      white-space: nowrap;
     }
     h1 {
       flex-shrink: 0;

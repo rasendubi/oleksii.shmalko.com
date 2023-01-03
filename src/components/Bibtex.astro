@@ -1,0 +1,36 @@
+---
+import Link from './Link.astro';
+
+const { entries } = Astro.props;
+---
+
+<ul>
+  {
+    entries.map((e) => {
+      const year = e.YEAR ? ` ${e.YEAR}` : '';
+      const title = e.URL ? (
+        <Link href={e.URL}>
+          <em>{e.TITLE}</em>
+        </Link>
+      ) : (
+        <em>{e.TITLE}</em>
+      );
+      return (
+        <li>
+          {e.AUTHOR ? (
+            <>
+              {e.AUTHOR}
+              {year}, {title}
+            </>
+          ) : (
+            <>
+              {title}
+              {year}
+            </>
+          )}
+          (<Link href={'cite:' + e.key}>notes</Link>)
+        </li>
+      );
+    })
+  }
+</ul>

@@ -5,17 +5,16 @@ import Root from '../layouts/Root.astro';
 import Header from '../components/Header.astro';
 import Archive from '../components/Archive.tsx';
 
-import { getAllPosts, Page } from '../lib/api';
-import pageSymbol from '../lib/pageSymbol';
+import { Page, allPages } from '../lib/posts';
 import comparePages from '../lib/comparePages.ts';
 
-const allPosts = await getAllPosts();
+const allPosts = await allPages;
 const posts = Object.values(allPosts)
   .sort(comparePages({ preferLastmod: true }))
   .map((p) => ({
-    title: p.data.title,
-    path: p.path,
-    icon: p.data.icon ?? pageSymbol(p.data.pageType) ?? null,
+    title: p.frontmatter.title,
+    path: p.frontmatter.slug,
+    icon: p.frontmatter.icon,
   }));
 ---
 

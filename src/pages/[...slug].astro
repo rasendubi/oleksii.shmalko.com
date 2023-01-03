@@ -2,30 +2,57 @@
 import '@fontsource/source-code-pro/400.css';
 import '@fontsource/source-code-pro/500.css';
 
+import { pathToFileURL, fileURLToPath } from 'url';
+import { relative } from 'path';
+import fs from 'fs';
+
 import { getAllPaths, getPostBySlug } from '../lib/api';
-import { rehype } from 'rehype';
+import comparePages from '@/lib/comparePages';
 import Root from '../layouts/Root.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Html from '../components/Html.astro';
 import Link from '../components/Link.astro';
 import Image from '../components/Image.astro';
-import pageSymbol from '../lib/pageSymbol';
+import Bibtex from '../components/Bibtex.astro';
+
+import { allPages, getBacklinks, resources } from '../lib/posts.ts';
 
 export async function getStaticPaths() {
-  const paths = await getAllPaths();
-  return paths.map((slug) => ({
-    params: { slug: slug === '/' ? undefined : slug.slice(1, slug.length - 1) },
-  }));
+  const posts = await allPages;
+
+  return posts.map((post) => {
+    const slug = post.frontmatter.slug.slice(1, -1);
+    return {
+      params: {
+        slug: slug === '' ? undefined : slug,
+      },
+      props: {
+        post,
+      },
+    };
+  });
 }
 
-const { slug } = Astro.params;
-const post = await getPostBySlug(slug ? '/' + slug + '/' : '/');
-const data = post.data;
-const image = data.images?.[0]?.src ?? '/gravatar.png';
-const backlinks = await Promise.all([...data.backlinks].map(getPostBySlug));
+const {
+  post: { default: Content, frontmatter: data = {}, file },
+} = Astro.props;
 
-const html = rehype.stringify(post.result);
+const backlinks = [...(await getBacklinks(data.slug))].sort(comparePages());
+
+const imgs = (data.images ?? [])
+  .map((image) => {
+    let url;
+    try {
+      url = new URL(image);
+    } catch {}
+    if (!url || url.protocol === 'file:') {
+      const path = fileURLToPath(new URL(image, pathToFileURL(file)));
+      return resources[path];
+    }
+  })
+  .filter((x) => !!x);
+
+const image = await imgs[0]?.();
 ---
 
 <Root title={data.title} image={image} description={data.description ?? null}>
@@ -40,30 +67,33 @@ const html = rehype.stringify(post.result);
   <article>
     <Header
       title={data.title}
-      icon={data.icon ?? pageSymbol(data.pageType)}
+      icon={data.icon}
       date={data.date}
       lastModified={data.last_modified}
     />
-    <Html
-      html={html}
-      components={{
-        a: Link,
-        img: Image,
-      }}
-    />
+    {
+      data.renderer === 'bib' ? (
+        <Bibtex entries={Astro.props.post.entries} />
+      ) : (
+        <Content
+          components={{
+            a: Link,
+            img: Image,
+          }}
+        />
+      )
+    }
     {
       !!backlinks.length && data.no_backlinks === undefined && (
         <>
           <h2>Backlinks</h2>
           <ul>
-            {backlinks
-              .sort((a, b) => (a.path < b.path ? -1 : 1))
-              .map((b) => (
-                <li>
-                  {b.data.icon ?? pageSymbol(b.data.pageType)}
-                  <Link href={b.path}>{b.data.title}</Link>
-                </li>
-              ))}
+            {backlinks.map((b) => (
+              <li>
+                {b.frontmatter.icon}
+                <Link href={b.frontmatter.slug}>{b.frontmatter.title}</Link>
+              </li>
+            ))}
           </ul>
         </>
       )
