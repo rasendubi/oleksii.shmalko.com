@@ -12,20 +12,38 @@ import Link from '../components/Link.astro';
 import Image from '../components/Image.astro';
 import pageSymbol from '../lib/pageSymbol';
 
+import { allPages } from '../lib/posts.ts';
+
 export async function getStaticPaths() {
-  const paths = await getAllPaths();
-  return paths.map((slug) => ({
-    params: { slug: slug === '/' ? undefined : slug.slice(1, slug.length - 1) },
+  const posts = await allPages;
+
+  // console.log(posts.map((p) => p.keywords.slug));
+  // console.log('posts', posts);
+
+  return posts.map((post) => ({
+    params: {
+      slug:
+        post.keywords?.slug === '' ? undefined : post.keywords?.slug ?? 'blah',
+    },
+    props: {
+      post,
+    },
   }));
 }
 
-const { slug } = Astro.params;
-const post = await getPostBySlug(slug ? '/' + slug + '/' : '/');
-const data = post.data;
-const image = data.images?.[0]?.src ?? '/gravatar.png';
-const backlinks = await Promise.all([...data.backlinks].map(getPostBySlug));
+// const { slug } = Astro.params;
+const {
+  post: { default: Content, keywords: data = {} },
+} = Astro.props;
 
-const html = rehype.stringify(post.result);
+// const post = await getPostBySlug(slug ? '/' + slug + '/' : '/');
+// const data = post.data;
+// const image = data.images?.[0]?.src ?? '/gravatar.png';
+// const backlinks = await Promise.all([...data.backlinks].map(getPostBySlug));
+//
+// const html = rehype.stringify(post.result);
+const image = undefined;
+const backlinks = [];
 ---
 
 <Root title={data.title} image={image} description={data.description ?? null}>
@@ -44,8 +62,7 @@ const html = rehype.stringify(post.result);
       date={data.date}
       lastModified={data.last_modified}
     />
-    <Html
-      html={html}
+    <Content
       components={{
         a: Link,
         img: Image,

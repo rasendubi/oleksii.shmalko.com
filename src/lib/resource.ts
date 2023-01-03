@@ -5,18 +5,19 @@ export function isResource(path: string): boolean {
   return resourceTest.test(path);
 }
 
-const assets = import.meta.glob(
-  [
-    '../../posts/**/*.png',
-    '../../posts/**/*.svg',
-    '../../posts/**/*.jpg',
-    '../../posts/**/*.jpeg',
-    '../../posts/**/*.gif',
-    '../../posts/**/*.sh',
-    '../../posts/**/*.txt',
-  ],
-  { as: 'url' }
-);
+const assets =
+  import.meta.glob?.(
+    [
+      '../../posts/**/*.png',
+      '../../posts/**/*.svg',
+      '../../posts/**/*.jpg',
+      '../../posts/**/*.jpeg',
+      '../../posts/**/*.gif',
+      '../../posts/**/*.sh',
+      '../../posts/**/*.txt',
+    ],
+    { as: 'url' }
+  ) ?? {};
 
 /**
  * Try loading a resource. `path` must be relative to the posts

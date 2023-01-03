@@ -10,7 +10,7 @@ import raw from 'rehype-raw';
 import format from 'rehype-format';
 import html from 'rehype-stringify';
 import katex from 'rehype-katex';
-import 'katex/dist/contrib/mhchem';
+import 'katex/contrib/mhchem';
 
 import './UniorgPlayground.css';
 

@@ -1,8 +1,8 @@
 import { VFile } from 'vfile';
-import visit from 'unist-util-visit';
+import { visit } from 'unist-util-visit';
 import prism from '@mapbox/rehype-prism';
 import katex from 'rehype-katex';
-import 'katex/dist/contrib/mhchem';
+import 'katex/contrib/mhchem';
 import minify from 'rehype-preset-minify';
 import h from 'hastscript';
 import rehypeRaw from 'rehype-raw';
@@ -14,7 +14,7 @@ import { matches, selectAll } from 'hast-util-select';
 import processUrl from './processUrls';
 import json from './unified-json';
 
-import refractor from 'refractor';
+import { refractor } from 'refractor';
 
 function alpha(Prism: any) {
   Prism.languages.alpha = {

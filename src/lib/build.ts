@@ -83,6 +83,9 @@ export const build = async (
 
 async function collectFiles(ctx: BuildCtx): Promise<void> {
   const files = await new Promise<Page[]>((resolve, reject) => {
+    resolve([]);
+    return;
+
     findDown.findDown(
       (file, stats) => {
         const p = path.relative(ctx.options.root, file.path!);
@@ -219,9 +222,9 @@ async function preprocessPages(ctx: BuildCtx): Promise<void> {
     const published = (file.data as any).published;
     if (published && (published !== 'true' || published !== 'yes')) {
       // TODO: refactor this, so it does less mutation
-      if (import.meta.env.PROD) {
-        delete ctx.pages[file.data.slug];
-      }
+      // if (import.meta.env.PROD) {
+      //   delete ctx.pages[file.data.slug];
+      // }
     }
 
     return file;

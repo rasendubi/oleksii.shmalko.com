@@ -1,7 +1,7 @@
 {
   description = "www.alexeyshmalko.com";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = { self, nixpkgs, flake-utils }:
@@ -11,7 +11,8 @@
       in {
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
-            pkgs.nodejs-16_x
+            pkgs.nodejs-18_x
+            # pkgs.nodejs-16_x.pkgs.pnpm
           ];
         };
       });

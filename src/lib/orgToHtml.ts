@@ -1,6 +1,6 @@
 import type { Plugin } from 'unified';
 import type { VFile } from 'vfile';
-import visit from 'unist-util-visit';
+import { visit } from 'unist-util-visit';
 import retext from 'retext';
 import smartypants from 'retext-smartypants';
 

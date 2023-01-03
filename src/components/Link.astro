@@ -1,8 +1,18 @@
 ---
 import classes from './Link.module.css';
+import { resolveId } from '../lib/posts.ts';
 
-const { class: className, ...props } = Astro.props;
-const external = className && className.includes('external');
+const { class: className, href, ...props } = Astro.props;
+
+let link = href;
+console.log('link', link);
+const url = new URL(link, 'file://');
+if (url.protocol === 'id:') {
+  link = await resolveId(url.pathname);
+  console.log('resolved to', link);
+}
+
+const external = url.protocol === 'http:' || url.protocol === 'https:';
 ---
 
 <a
@@ -10,7 +20,8 @@ const external = className && className.includes('external');
   target={external ? '_blank' : undefined}
   preload={!external}
   {...props}
-  class:list={[classes.link, className]}
+  href={link}
+  class:list={[classes.link, { external }, className]}
   ><slot />{
     external && (
       <svg
