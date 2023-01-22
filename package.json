@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "patch-package",
     "dev": "astro dev",
     "build": "astro build",
     "start": "astro build && astro preview",
@@ -33,7 +32,6 @@
     "katex": "^0.13.24",
     "moment": "^2.29.1",
     "orgast-util-visit-ids": "^0.5.6",
-    "patch-package": "^6.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "refractor": "^4.8.0",
@@ -68,5 +66,10 @@
     "rehype-format": "^3.1.0",
     "typescript": "^4.4.3",
     "uniorg": "^0.4.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@astrojs/image@0.12.1": "patches/@astrojs__image@0.12.1.patch"
+    }
   }
 }
