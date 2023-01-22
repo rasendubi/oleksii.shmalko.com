@@ -486,17 +486,11 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       aside {
         background-color: var(--bg-alt);
         border-radius: 4px;
+        margin: 0 -16px var(--primary-spacing);
         padding: 8px 16px;
-        margin-bottom: var(--primary-spacing);
       }
       aside > *:last-child {
         margin-bottom: 0px;
-      }
-      /* more space for top-level asides */
-      article > aside,
-      article > .block-clearfix > aside {
-        margin-left: -16px;
-        margin-right: -16px;
       }
       /* asides are moving to the right */
       @media (min-width: 1280px) {
