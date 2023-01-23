@@ -267,7 +267,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .block,
       .src-block,
       .math-display,
-      pre[class^='language-'] {
+      pre[class^='language-'],
+      .footnote-definition {
         margin: 0 0 var(--primary-spacing) 0;
       }
       /* pull top-level lists slightly closer to the preceding
@@ -276,6 +277,13 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       article > p + ol,
       article > p + dl {
         margin-top: -16px;
+      }
+
+      .footnum {
+        margin-right: 8px;
+      }
+      .footdef {
+        display: inline;
       }
 
       table {
