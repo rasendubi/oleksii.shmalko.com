@@ -28,14 +28,14 @@
     "hast-util-select": "^5.0.5",
     "hast-util-to-string": "^2.0.0",
     "hastscript": "^7.2.0",
-    "katex": "^0.13.24",
+    "katex": "^0.16.4",
     "moment": "^2.29.1",
     "orgast-util-visit-ids": "^0.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "refractor": "^4.8.0",
     "rehype-autolink-headings": "^6.1.1",
-    "rehype-katex": "^5.0.0",
+    "rehype-katex": "^6.0.2",
     "rehype-preset-minify": "^6.0.0",
     "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.3",
@@ -67,6 +67,9 @@
     "uniorg": "^0.5.3"
   },
   "pnpm": {
+    "overrides": {
+      "katex": "^0.16.4"
+    },
     "patchedDependencies": {
       "@astrojs/image@0.13.0": "patches/@astrojs__image@0.12.1.patch"
     }
