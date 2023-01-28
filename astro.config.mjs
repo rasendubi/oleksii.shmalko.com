@@ -1,5 +1,3 @@
-import * as path from 'path';
-import * as fs from 'fs/promises';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import image from '@astrojs/image';

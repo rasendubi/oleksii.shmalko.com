@@ -14,26 +14,25 @@ export type Page = {
 
     no_backlinks?: unknown;
     no_links?: unknown;
+    draft?: unknown;
   };
   ids: Record<string, string>;
 };
 
-export const allPages: Promise<Page[]> = Promise.all(
-  Object.values(
-    import.meta.glob([
-      '../../posts/*.org',
-      '../../posts/{posts,biblio}/**/*.{org,bib}',
-    ])
-  ).map((p: any) => p())
-).then((pgs) => {
-  if (process.env.NODE_ENV === 'development') {
-    return pgs;
-  } else {
-    return pgs.filter(
-      (p: any) => p.frontmatter?.published !== 'false' && !p.frontmatter?.draft
-    );
-  }
-});
+const on = <T, R>(value: T, f: (value: T) => R): R => f(value);
+
+const pages = import.meta.glob<true, '', Page>(
+  [
+    '../../posts/index.org',
+    '../../posts/*.org',
+    '../../posts/{posts,biblio}/**/*.{org,bib}',
+  ],
+  { eager: true }
+);
+
+export const allPages = Object.values(pages).filter(
+  (p) => process.env.NODE_ENV === 'development' || !('draft' in p.frontmatter)
+);
 
 const cwd = process.cwd();
 export const resources = Object.fromEntries(
@@ -49,15 +48,7 @@ export const resources = Object.fromEntries(
   })
 );
 
-export const bySlug = allPages.then((pages) => {
-  const bySlug = new Map();
-  pages.forEach((p) => {
-    bySlug.set(p.frontmatter.slug, p);
-  });
-  return bySlug;
-});
-
-const idLinks = allPages.then((posts) => {
+const idLinks = on(allPages, (posts) => {
   const ids = new Map();
   posts.forEach((p) => {
     const localIds = p.ids;
@@ -70,19 +61,17 @@ const idLinks = allPages.then((posts) => {
   return ids;
 });
 
-export const resolveId = async (id: string) => {
-  const ids = await idLinks;
-  const saved = ids.get(id);
+export const resolveId = (id: string) => {
+  const saved = idLinks.get(id);
   if (!saved) {
     throw new Error(`Unable to resolve ${id}`);
   }
 
-  const { slug, anchor } = ids.get(id);
+  const { slug, anchor } = saved;
   return slug + anchor;
 };
 
-export const calculateBacklinks = async () => {
-  const posts = await allPages;
+const backlinks = on(allPages, (posts) => {
   const backlinks: Record<string, Set<Page>> = {};
   for (const p of posts) {
     if (p.frontmatter.hasOwnProperty('no_links')) {
@@ -98,7 +87,7 @@ export const calculateBacklinks = async () => {
       }
 
       try {
-        link = await resolveId(link);
+        link = resolveId(link);
       } catch {}
 
       backlinks[link] = backlinks[link] ?? new Set();
@@ -107,10 +96,8 @@ export const calculateBacklinks = async () => {
   }
 
   return backlinks;
-};
-const backlinks = calculateBacklinks();
+});
 
-export const getBacklinks = async (slug: string) => {
-  const b = await backlinks;
-  return b[slug] ?? new Set();
+export const getBacklinks = (slug: string) => {
+  return backlinks[slug] ?? new Set();
 };

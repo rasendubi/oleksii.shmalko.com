@@ -10,7 +10,7 @@
     "deploy": "astro build && firebase deploy"
   },
   "dependencies": {
-    "@astrojs/image": "^0.12.1",
+    "@astrojs/image": "^0.13.0",
     "@astrojs/prefetch": "^0.1.1",
     "@astrojs/rss": "^2.0.0",
     "@astrojs/sitemap": "^1.0.0",
@@ -21,7 +21,7 @@
     "@types/refractor": "^3.0.2",
     "@uniorgjs/orgx": "^0.6.0-alpha.2",
     "acorn": "^8.8.1",
-    "astro": "^1.9.2",
+    "astro": "^2.0.2",
     "astro-compress": "^1.1.24",
     "bibtex-parse": "^2.1.0",
     "clsx": "^1.1.1",
@@ -55,7 +55,7 @@
     "vfile": "^5.3.6"
   },
   "devDependencies": {
-    "@astrojs/react": "^1.2.2",
+    "@astrojs/react": "^2.0.1",
     "@types/jest": "^26.0.24",
     "@types/node": "^15.14.9",
     "@types/react": "^17.0.26",
@@ -69,7 +69,7 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "@astrojs/image@0.12.1": "patches/@astrojs__image@0.12.1.patch"
+      "@astrojs/image@0.13.0": "patches/@astrojs__image@0.12.1.patch"
     }
   }
 }

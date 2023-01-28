@@ -32,6 +32,7 @@ export default function org(options = {}) {
                     rehypeResolveImg,
                     rehypeExportFrontmatter,
                   ],
+                  development: false,
                   jsxImportSource: 'astro',
                 }),
               },
