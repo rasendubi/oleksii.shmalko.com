@@ -37,7 +37,7 @@ refractor.register(alpha);
 
 export default {
   uniorgPlugins: [
-    slugify,
+    frontmatter,
     uniorgRemoveCards,
     saveRoamRefs,
     [uniorgSmartypants, { oldschool: true }],
@@ -69,12 +69,16 @@ export default {
   ],
 };
 
-function slugify() {
+function frontmatter() {
   return async (_tree, file) => {
     file.data.astro.frontmatter = {
       ...(await pathToFrontmatter(file.path)),
       ...file.data.astro.frontmatter,
     };
+
+    if (file.data.astro.frontmatter.hasOwnProperty('draft')) {
+      file.data.astro.frontmatter.title += ' 🚧';
+    }
   };
 }
 
