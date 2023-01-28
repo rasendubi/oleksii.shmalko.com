@@ -1,6 +1,6 @@
 import { uniorgSlug } from 'uniorg-slug';
-import retext from 'retext';
-import smartypants from 'retext-smartypants';
+import { retext } from 'retext';
+import { smartypants } from 'retext-smartypants';
 import rehypeRaw from 'rehype-raw';
 import { visit } from 'unist-util-visit';
 import 'katex/dist/contrib/mhchem.js';
@@ -8,9 +8,9 @@ import katex from 'rehype-katex';
 import prism from '@mapbox/rehype-prism';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import minify from 'rehype-preset-minify';
-import h from 'hastscript';
+import { h } from 'hastscript';
 import { matches, selectAll } from 'hast-util-select';
-import toString from 'hast-util-to-string';
+import { toString } from 'hast-util-to-string';
 import { visitParents } from 'unist-util-visit-parents';
 
 import { pathToFrontmatter } from './path-to-frontmatter.js';
