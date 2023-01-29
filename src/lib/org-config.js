@@ -37,14 +37,25 @@ alpha.aliases = [];
 refractor.register(alpha);
 
 export default {
+  uniorgParseOptions: {
+    useSubSuperscripts: '{}',
+  },
   uniorgPlugins: [
     frontmatter,
     uniorgRemoveCards,
     saveRoamRefs,
     [uniorgSmartypants, { oldschool: true }],
+    awaitBibliography,
     uniorgCiteFormat,
     uniorgSlug,
   ],
+  uniorgRehypeOptions: {
+    handlers: {
+      'citation-key': function (org) {
+        return citeToHast(org.key);
+      },
+    },
+  },
   rehypePlugins: [
     rehypeRaw,
     bibtexInfo,
@@ -70,6 +81,17 @@ export default {
     saveImages,
   ],
 };
+
+// uniorg-rehype handlers are sync, so we need to await for
+// bibliography to ensure it is available during that stage.
+let savedBibliography;
+function awaitBibliography() {
+  return transformer;
+  async function transformer(tree) {
+    savedBibliography = await bibliography;
+    return tree;
+  }
+}
 
 function frontmatter() {
   return async (_tree, file) => {
@@ -114,55 +136,13 @@ function uniorgCiteFormat() {
   async function transformer(tree) {
     const bib = await bibliography;
     visit(tree, { type: 'link', linkType: 'cite' }, (link, index, parent) => {
-      const cite = link.path.replace(/^@/, '');
-      const e = bib.get(cite);
-      if (!e) {
-        return new Error(`bibliography does not exist: ${cite}`);
-      }
+      // const cite = link.path.replace(/^@/, '');
+      // const e = bib.get(cite);
+      // if (!e) {
+      //   return new Error(`bibliography does not exist: ${cite}`);
+      // }
 
-      const authors = e.AUTHOR?.split(/,? and /) ?? [];
-      const lastName = (author) =>
-        author?.replace(/^(.*),.*$/, '$1').replace(/^.* (.*)$/, '$1');
-
-      parent.children[index] = {
-        type: 'link',
-        format: 'bracket',
-        linkType: 'cite',
-        rawLink: link.rawLink,
-        path: cite,
-        data: {
-          ...link.data,
-          hProperties: {
-            ...link.data?.hProperties,
-            title: e.TITLE,
-          },
-        },
-        children: [
-          ...(authors.length === 0
-            ? [{ type: 'text', value: e.key }]
-            : authors.length === 1
-            ? [{ type: 'text', value: lastName(authors[0]) }]
-            : authors.length === 2
-            ? [
-                {
-                  type: 'text',
-                  value: `${lastName(authors[0])} & ${lastName(authors[1])}`,
-                },
-              ]
-            : [{ type: 'text', value: lastName(authors[0]) + '…' }]),
-          ...(e.YEAR
-            ? [
-                {
-                  type: 'subscript',
-                  children: [{ type: 'text', value: String(e.YEAR) }],
-                },
-              ]
-            : []),
-          ...(link.children.length
-            ? [{ type: 'text', value: ', ' }, ...link.children]
-            : []),
-        ],
-      };
+      parent.children[index] = citeToHast(link.path);
     });
   }
 }
@@ -335,4 +315,28 @@ function bibtexInfo() {
       dl.children.push(h('dt', 'url'), h('dd', [h('a', { href: url }, url)]));
     }
   }
+}
+
+function citeToHast(key) {
+  const e = savedBibliography.get(key);
+
+  const authors = e.AUTHOR?.split(/,? and /) ?? [];
+  const lastName = (author) =>
+    author?.replace(/^(.*),.*$/, '$1').replace(/^.* (.*)$/, '$1');
+
+  return h('a', { href: 'cite:' + e.key, title: e.TITLE }, [
+    ...(authors.length === 0
+      ? [{ type: 'text', value: e.key }]
+      : authors.length === 1
+      ? [{ type: 'text', value: lastName(authors[0]) }]
+      : authors.length === 2
+      ? [
+          {
+            type: 'text',
+            value: `${lastName(authors[0])} & ${lastName(authors[1])}`,
+          },
+        ]
+      : [{ type: 'text', value: lastName(authors[0]) + '…' }]),
+    ...(e.YEAR ? [h('sub', [{ type: 'text', value: String(e.YEAR) }])] : []),
+  ]);
 }

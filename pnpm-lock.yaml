@@ -24,7 +24,7 @@ specifiers:
   '@types/refractor': ^3.0.2
   astro: ^2.0.2
   astro-compress: ^1.1.28
-  astro-org: 0.5.10-alpha.2
+  astro-org: 1.0.0
   bibtex-parse: ^2.1.0
   clsx: ^1.1.1
   fetch-jsonp: ^1.2.1
@@ -34,7 +34,7 @@ specifiers:
   hastscript: ^7.2.0
   katex: ^0.16.4
   moment: ^2.29.1
-  orgast-util-visit-ids: ^0.5.6
+  orgast-util-visit-ids: ^1.0.0
   prettier: ^2.8.3
   prettier-plugin-astro: ^0.8.0
   react: 18.2.0
@@ -51,10 +51,10 @@ specifiers:
   sharp: ^0.31.3
   typescript: ^4.4.3
   unified: ^10.1.2
-  uniorg: ^0.5.3
-  uniorg-parse: ^0.5.6
-  uniorg-rehype: ^0.5.9
-  uniorg-slug: ^0.5.9
+  uniorg: ^1.1.0
+  uniorg-parse: ^2.0.0
+  uniorg-rehype: ^1.1.0
+  uniorg-slug: ^1.0.0
   unist-util-visit: ^4.1.2
   unist-util-visit-parents: ^5.1.3
 
@@ -69,7 +69,7 @@ dependencies:
   '@types/refractor': 3.0.2
   astro: 2.0.2_@types+node@18.11.18
   astro-compress: 1.1.28
-  astro-org: 0.5.10-alpha.2
+  astro-org: 1.0.0
   bibtex-parse: 2.1.0
   clsx: 1.2.1
   fetch-jsonp: 1.2.3
@@ -78,7 +78,7 @@ dependencies:
   hastscript: 7.2.0
   katex: 0.16.4
   moment: 2.29.4
-  orgast-util-visit-ids: 0.5.6
+  orgast-util-visit-ids: 1.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   refractor: 4.8.0
@@ -91,9 +91,9 @@ dependencies:
   retext-smartypants: 5.2.0
   sharp: 0.31.3
   unified: 10.1.2
-  uniorg-parse: 0.5.6
-  uniorg-rehype: 0.5.9
-  uniorg-slug: 0.5.9
+  uniorg-parse: 2.0.0
+  uniorg-rehype: 1.1.0
+  uniorg-slug: 1.0.0
   unist-util-visit: 4.1.2
   unist-util-visit-parents: 5.1.3
 
@@ -108,7 +108,7 @@ devDependencies:
   prettier-plugin-astro: 0.8.0
   rehype-format: 4.0.1
   typescript: 4.9.4
-  uniorg: 0.5.3
+  uniorg: 1.1.0
 
 packages:
 
@@ -1242,19 +1242,19 @@ packages:
       '@types/yargs-parser': 21.0.0
     dev: true
 
-  /@uniorgjs/orgx/0.5.10-alpha.0:
-    resolution: {integrity: sha512-Cf2eEZL5gayesSPa74eD3NPMAfcSaX0lssE6rDl6THdIMmvoGUiTuvuef39IC4OSbleLmlYEKawD3o12RGQsaQ==}
+  /@uniorgjs/orgx/1.0.0:
+    resolution: {integrity: sha512-DaveXwU95NsltAgiKSw3KK6qL7tkqdU0zF46FifcUtzvoIA6IpNBtEBkDcYzz//B5anIrVE+DAy28uOjY5LHhw==}
     dependencies:
       '@types/estree-jsx': 1.0.0
       estree-util-build-jsx: 2.2.2
       estree-util-is-identifier-name: 2.1.0
       estree-util-to-js: 1.1.1
-      estree-walker: 3.0.1
+      estree-walker: 3.0.3
       hast-util-to-estree: 2.2.1
       periscopic: 3.1.0
       unified: 10.1.2
       unist-util-position-from-estree: 1.1.2
-      unist-util-stringify-position: 3.0.2
+      unist-util-stringify-position: 3.0.3
       unist-util-visit: 4.1.2
       vfile: 5.3.6
     transitivePeerDependencies:
@@ -1573,14 +1573,14 @@ packages:
       terser: 5.16.1
     dev: false
 
-  /astro-org/0.5.10-alpha.2:
-    resolution: {integrity: sha512-GOStvcpUx4FTudDxPBaBWClv1WoB4/Seq5zjtGJfLWQ431Az4bSbf4qUtS9OVXszm0/gZWBExW7OUnZRRU5ZbA==}
+  /astro-org/1.0.0:
+    resolution: {integrity: sha512-zGUKYRacFQhM4YQa4aFmlSGtO8nBmhvCv1yCBw1lwie3UVqomlBI+LpifqDhmzKNfLFdkRpUQpLGHjUOuERQHA==}
     dependencies:
       acorn: 8.8.2
-      orgast-util-visit-ids: 0.5.6
-      rollup-plugin-orgx: 0.5.10-alpha.0
-      uniorg-extract-keywords: 0.5.6
-      uniorg-slug: 0.5.9
+      orgast-util-visit-ids: 1.0.0
+      rollup-plugin-orgx: 1.0.0
+      uniorg-extract-keywords: 1.0.0
+      uniorg-slug: 1.0.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3080,7 +3080,7 @@ packages:
     dependencies:
       '@types/estree-jsx': 1.0.0
       estree-util-is-identifier-name: 2.1.0
-      estree-walker: 3.0.1
+      estree-walker: 3.0.3
     dev: false
 
   /estree-util-is-identifier-name/2.1.0:
@@ -3101,6 +3101,12 @@ packages:
 
   /estree-walker/3.0.1:
     resolution: {integrity: sha512-woY0RUD87WzMBUiZLx8NsYr23N5BKsOMZHhu2hoNRVh6NXGfoiT1KOL8G3UHlJAnEDGmfa5ubNA/AacfG+Kb0g==}
+    dev: false
+
+  /estree-walker/3.0.3:
+    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
+    dependencies:
+      '@types/estree': 1.0.0
     dev: false
 
   /esutils/2.0.3:
@@ -5423,7 +5429,26 @@ packages:
       micromark-util-normalize-identifier: 1.0.0
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
-      unist-util-stringify-position: 3.0.2
+      unist-util-stringify-position: 3.0.3
+      uvu: 0.5.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /mdast-util-from-markdown/1.3.0:
+    resolution: {integrity: sha512-HN3W1gRIuN/ZW295c7zi7g9lVBllMgZE40RxCX37wrTPWXCWtpvOZdfnuK+1WNpvZje6XuJeI3Wnb4TJEUem+g==}
+    dependencies:
+      '@types/mdast': 3.0.10
+      '@types/unist': 2.0.6
+      decode-named-character-reference: 1.0.2
+      mdast-util-to-string: 3.1.1
+      micromark: 3.1.0
+      micromark-util-decode-numeric-character-reference: 1.0.0
+      micromark-util-decode-string: 1.0.2
+      micromark-util-normalize-identifier: 1.0.0
+      micromark-util-symbol: 1.0.1
+      micromark-util-types: 1.0.2
+      unist-util-stringify-position: 3.0.3
       uvu: 0.5.6
     transitivePeerDependencies:
       - supports-color
@@ -5491,8 +5516,8 @@ packages:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-from-markdown: 1.2.0
-      mdast-util-to-markdown: 1.4.0
+      mdast-util-from-markdown: 1.3.0
+      mdast-util-to-markdown: 1.5.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5503,10 +5528,17 @@ packages:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-from-markdown: 1.2.0
-      mdast-util-to-markdown: 1.4.0
+      mdast-util-from-markdown: 1.3.0
+      mdast-util-to-markdown: 1.5.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /mdast-util-phrasing/3.0.1:
+    resolution: {integrity: sha512-WmI1gTXUBJo4/ZmSk79Wcb2HcjPJBzM1nlI/OUWA8yk2X9ik3ffNbBGsU+09BFmXaL1IBb9fiuvq6/KMiNycSg==}
+    dependencies:
+      '@types/mdast': 3.0.10
+      unist-util-is: 5.2.0
     dev: false
 
   /mdast-util-to-hast/12.2.4:
@@ -5517,7 +5549,7 @@ packages:
       mdast-util-definitions: 5.1.1
       micromark-util-sanitize-uri: 1.1.0
       trim-lines: 3.0.1
-      unist-builder: 3.0.0
+      unist-builder: 3.0.1
       unist-util-generated: 2.0.0
       unist-util-position: 4.0.4
       unist-util-visit: 4.1.2
@@ -5535,8 +5567,27 @@ packages:
       zwitch: 2.0.4
     dev: false
 
+  /mdast-util-to-markdown/1.5.0:
+    resolution: {integrity: sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==}
+    dependencies:
+      '@types/mdast': 3.0.10
+      '@types/unist': 2.0.6
+      longest-streak: 3.1.0
+      mdast-util-phrasing: 3.0.1
+      mdast-util-to-string: 3.1.1
+      micromark-util-decode-string: 1.0.2
+      unist-util-visit: 4.1.2
+      zwitch: 2.0.4
+    dev: false
+
   /mdast-util-to-string/3.1.0:
     resolution: {integrity: sha512-n4Vypz/DZgwo0iMHLQL49dJzlp7YtAJP+N07MZHpjPf/5XJuHUWstviF4Mn2jEiR/GNmtnRRqnwsXExk3igfFA==}
+    dev: false
+
+  /mdast-util-to-string/3.1.1:
+    resolution: {integrity: sha512-tGvhT94e+cVnQt8JWE9/b3cUQZWS732TJxXHktvP+BYo62PpYD53Ls/6cC60rW21dW+txxiM4zMdc6abASvZKA==}
+    dependencies:
+      '@types/mdast': 3.0.10
     dev: false
 
   /mdn-data/2.0.28:
@@ -6356,12 +6407,12 @@ packages:
       wcwidth: 1.0.1
     dev: false
 
-  /orgast-util-to-string/0.5.6:
-    resolution: {integrity: sha512-Ev9soG0Fsrnk1URxs4fmONuWIMSPUTgb9EbqX/uCjWm2vJAXpFYswVIiK4Eu2GZTfKXs3ltOxPC6qQZ8Htl/XA==}
+  /orgast-util-to-string/1.0.0:
+    resolution: {integrity: sha512-oYUlYja1ANy0xThF95npDWZ5bwwNKwbxV7tANLwuy3c7wKxIHSL4534Rxe4LkqEPjI5ulEzlK0GrnYPwXGACHg==}
     dev: false
 
-  /orgast-util-visit-ids/0.5.6:
-    resolution: {integrity: sha512-+AbmLUOij77/yOEUKnZxNJkVrPRVkwRX7mE9ilOllU5SaWMtjn9bnLDqTR5JB25FtioeKLNX9q0m+JI4WanaLg==}
+  /orgast-util-visit-ids/1.0.0:
+    resolution: {integrity: sha512-eoTSQdA9ZgnykpBeslEtefoN0O/gyrkzpRko79acoXay0pjzWp+HRXV3Lzeik+IrTcamjtNZQA5fWWEguiN/fQ==}
     dependencies:
       unist-util-visit-parents: 5.1.0
     dev: false
@@ -6624,7 +6675,7 @@ packages:
     resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
     dependencies:
       '@types/estree': 1.0.0
-      estree-walker: 3.0.1
+      estree-walker: 3.0.3
       is-reference: 3.0.1
     dev: false
 
@@ -7651,10 +7702,10 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup-plugin-orgx/0.5.10-alpha.0:
-    resolution: {integrity: sha512-qc3rhM+XbBTAX2mHi4CCSiUarGadiZkiN2W1oEkbBtIpe04yUa6loZmZSlyRciXxqGDH6aHkroqzJ4CstElBTg==}
+  /rollup-plugin-orgx/1.0.0:
+    resolution: {integrity: sha512-NvSND5Y2iXrNIabJFhjnBYbGyA198jAVV+wUMJsktJUeDN9UbZBHyqkXLxz48xKuSju+aF92uyS/c21rqAnXCg==}
     dependencies:
-      '@uniorgjs/orgx': 0.5.10-alpha.0
+      '@uniorgjs/orgx': 1.0.0
       rollup-pluginutils: 2.8.2
       vfile: 5.3.6
     transitivePeerDependencies:
@@ -8585,37 +8636,37 @@ packages:
       trough: 2.1.0
       vfile: 5.3.6
 
-  /uniorg-extract-keywords/0.5.6:
-    resolution: {integrity: sha512-V+wc2PJm/KoT14v8BGvciALWa4jTZwSqkVzxyYTqxoUjFHF8tYEln6u5ZXd0bb54hywvod45kjWa/R7tRlW8tA==}
+  /uniorg-extract-keywords/1.0.0:
+    resolution: {integrity: sha512-WbQstQ8hVHfN2xYpG/SWXu3xvBicYxduxxZqPQZxp+w/uY0wx+5fsjZy3zmbSTd8Ny75oHUxp8azF+faig8c+Q==}
     dependencies:
       unist-util-visit: 4.1.0
     dev: false
 
-  /uniorg-parse/0.5.6:
-    resolution: {integrity: sha512-FbmZdIk7ULh+bqxU0p1vSzQb+Ss+pAguB8bZIkbgIYSiKkmErosqWmWEz9V7iqk4YEv4NcgSjsYLsidwlYDSgA==}
+  /uniorg-parse/2.0.0:
+    resolution: {integrity: sha512-Rn9VIFz1qvaXMAF0v1IOPPY9aIAhJWeuxK9FFFrBuPUlSxwFo9Z5TD+3KzfnDCWCoZBLBNKjk9RUoQ4Siyp93w==}
     dependencies:
       unist-builder: 3.0.0
       vfile: 5.3.2
       vfile-location: 4.0.1
     dev: false
 
-  /uniorg-rehype/0.5.9:
-    resolution: {integrity: sha512-UXbQf/IMUV0yr3JJ9oJUHil2ZmhAmxfAtllcFqSJr2+pcEHVxugI428VBUrqo/FXc91/VyOzwcW24ucr5jgrqw==}
+  /uniorg-rehype/1.1.0:
+    resolution: {integrity: sha512-0tpApcJdBz2jdAp8RSoAlc9jAGJEpBnC+CQ0pSUkOcWXRAEJsvpBmAdXiL/aSVOSvHZgR/R0s47tqOAV+zlnLA==}
     dependencies:
       hastscript: 7.0.2
       unist-builder: 3.0.0
     dev: false
 
-  /uniorg-slug/0.5.9:
-    resolution: {integrity: sha512-YbvAot6IRdHIbQW6NWu9jb+JPH6O8tnyz5lVCBcMVtc/S1kdDavgutL6fPLM7Xsd+b94GRS5SR8br4yNk/ljOw==}
+  /uniorg-slug/1.0.0:
+    resolution: {integrity: sha512-6huIQVNwP1fVgEjQCnORCZDwE7zWwthDzw11ViOS2tPMWU70FZF3p2RMYMfkvQ+i2/NsE+FRujoPu3od7S41FA==}
     dependencies:
       github-slugger: 1.5.0
-      orgast-util-to-string: 0.5.6
+      orgast-util-to-string: 1.0.0
       unist-util-visit: 4.1.0
     dev: false
 
-  /uniorg/0.5.3:
-    resolution: {integrity: sha512-CDiRPnkMbm0G7Qnix369xxd9xOsu1HMRKt6Quhiz++R04vBgyWNTaNuIISecNd4T3GQoEqBvJOrb1ZJ2rn3VeQ==}
+  /uniorg/1.1.0:
+    resolution: {integrity: sha512-ktxNAe0whlwDpXiiJJ1froGmiT+WP65dgVd4KBXgkIstSiVFCjX/TaZx/e2en7zNXrIkKyW28lFi26Y63zr9Aw==}
     dev: true
 
   /unique-filename/2.0.1:
@@ -8665,6 +8716,12 @@ packages:
       '@types/unist': 2.0.6
     dev: false
 
+  /unist-builder/3.0.1:
+    resolution: {integrity: sha512-gnpOw7DIpCA0vpr6NqdPvTWnlPTApCTRzr+38E6hCWx3rz/cjo83SsKIlS1Z+L5ttScQ2AwutNnb8+tAvpb6qQ==}
+    dependencies:
+      '@types/unist': 2.0.6
+    dev: false
+
   /unist-util-filter/4.0.1:
     resolution: {integrity: sha512-RynicUM/vbOSTSiUK+BnaK9XMfmQUh6gyi7L6taNgc7FIf84GukXVV3ucGzEN/PhUUkdP5hb1MmXc+3cvPUm5Q==}
     dependencies:
@@ -8686,10 +8743,6 @@ packages:
 
   /unist-util-is/4.1.0:
     resolution: {integrity: sha512-ZOQSsnce92GrxSqlnEEseX0gi7GH9zTJZ0p9dtu87WRb/37mMPO2Ilx1s/t9vBHrFhbgweUwb+t7cIn5dxPhZg==}
-    dev: false
-
-  /unist-util-is/5.1.1:
-    resolution: {integrity: sha512-F5CZ68eYzuSvJjGhCLPL3cYx45IxkqXSetCcRgUXtbcm50X2L9oOWQlfUfDdAf+6Pd27YDblBfdtmsThXmwpbQ==}
     dev: false
 
   /unist-util-is/5.2.0:
@@ -8726,6 +8779,11 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
 
+  /unist-util-stringify-position/3.0.3:
+    resolution: {integrity: sha512-k5GzIBZ/QatR8N5X2y+drfpWG8IDBzdnVj6OInRNWm1oXrzydiaAT2OQiA8DPRRZyAKb9b6I2a6PxYklZD0gKg==}
+    dependencies:
+      '@types/unist': 2.0.6
+
   /unist-util-visit-children/2.0.2:
     resolution: {integrity: sha512-+LWpMFqyUwLGpsQxpumsQ9o9DG2VGLFrpz+rpVXYIEdPy57GSy5HioC0g3bg/8WP9oCLlapQtklOzQ8uLS496Q==}
     dependencies:
@@ -8743,7 +8801,7 @@ packages:
     resolution: {integrity: sha512-y+QVLcY5eR/YVpqDsLf/xh9R3Q2Y4HxkZTp7ViLDU6WtJCEcPmRzW1gpdWDCDIqIlhuPDXOgttqPlykrHYDekg==}
     dependencies:
       '@types/unist': 2.0.6
-      unist-util-is: 5.1.1
+      unist-util-is: 5.2.0
     dev: false
 
   /unist-util-visit-parents/5.1.3:
@@ -8764,7 +8822,7 @@ packages:
     resolution: {integrity: sha512-n7lyhFKJfVZ9MnKtqbsqkQEk5P1KShj0+//V7mAcoI6bpbUjh3C/OG8HVD+pBihfh6Ovl01m8dkcv9HNqYajmQ==}
     dependencies:
       '@types/unist': 2.0.6
-      unist-util-is: 5.1.1
+      unist-util-is: 5.2.0
       unist-util-visit-parents: 5.1.3
     dev: false
 
@@ -8985,21 +9043,21 @@ packages:
     resolution: {integrity: sha512-JDxPlTbZrZCQXogGheBHjbRWjESSPEak770XwWPfw5mTc1v1nWGLB/apzZxsx8a0SJVfF8HK8ql8RD308vXRUw==}
     dependencies:
       '@types/unist': 2.0.6
-      vfile: 5.3.6
+      vfile: 5.3.2
     dev: false
 
   /vfile-message/3.1.3:
     resolution: {integrity: sha512-0yaU+rj2gKAyEk12ffdSbBfjnnj+b1zqTBv3OQCTn8yEB02bsPizwdBPrLJjHnK+cU9EMMcUnNv938XcZIkmdA==}
     dependencies:
       '@types/unist': 2.0.6
-      unist-util-stringify-position: 3.0.2
+      unist-util-stringify-position: 3.0.3
 
   /vfile/5.3.2:
     resolution: {integrity: sha512-w0PLIugRY3Crkgw89TeMvHCzqCs/zpreR31hl4D92y6SOE07+bfJe+dK5Q2akwS+i/c801kzjoOr9gMcTe6IAA==}
     dependencies:
       '@types/unist': 2.0.6
       is-buffer: 2.0.5
-      unist-util-stringify-position: 3.0.2
+      unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.3
     dev: false
 
