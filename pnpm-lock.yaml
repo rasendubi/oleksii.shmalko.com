@@ -22,10 +22,9 @@ specifiers:
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
   '@types/refractor': ^3.0.2
-  '@uniorgjs/orgx': ^0.6.0-alpha.2
-  acorn: ^8.8.2
   astro: ^2.0.2
   astro-compress: ^1.1.28
+  astro-org: 0.5.10-alpha.2
   bibtex-parse: ^2.1.0
   clsx: ^1.1.1
   fetch-jsonp: ^1.2.1
@@ -49,19 +48,15 @@ specifiers:
   rehype-stringify: ^9.0.3
   retext: ^8.1.0
   retext-smartypants: ^5.2.0
-  rollup-pluginutils: ^2.8.2
   sharp: ^0.31.3
   typescript: ^4.4.3
   unified: ^10.1.2
   uniorg: ^0.5.3
-  uniorg-extract-keywords: ^0.5.6
   uniorg-parse: ^0.5.6
   uniorg-rehype: ^0.5.9
   uniorg-slug: ^0.5.9
-  unist-util-select: ^4.0.3
   unist-util-visit: ^4.1.2
   unist-util-visit-parents: ^5.1.3
-  vfile: ^5.3.6
 
 dependencies:
   '@astrojs/image': 0.13.0_fiyj6wm2zbydmvwv625ijidkpi_astro@2.0.2+sharp@0.31.3
@@ -72,10 +67,9 @@ dependencies:
   '@fontsource/source-code-pro': 4.5.14
   '@mapbox/rehype-prism': 0.8.0
   '@types/refractor': 3.0.2
-  '@uniorgjs/orgx': 0.6.0-alpha.2
-  acorn: 8.8.2
   astro: 2.0.2_@types+node@18.11.18
   astro-compress: 1.1.28
+  astro-org: 0.5.10-alpha.2
   bibtex-parse: 2.1.0
   clsx: 1.2.1
   fetch-jsonp: 1.2.3
@@ -95,17 +89,13 @@ dependencies:
   rehype-stringify: 9.0.3
   retext: 8.1.0
   retext-smartypants: 5.2.0
-  rollup-pluginutils: 2.8.2
   sharp: 0.31.3
   unified: 10.1.2
-  uniorg-extract-keywords: 0.5.6
   uniorg-parse: 0.5.6
   uniorg-rehype: 0.5.9
   uniorg-slug: 0.5.9
-  unist-util-select: 4.0.3
   unist-util-visit: 4.1.2
   unist-util-visit-parents: 5.1.3
-  vfile: 5.3.6
 
 devDependencies:
   '@astrojs/react': 2.0.1_fxtgt6bjwd6p4cwoordejim2zi
@@ -1252,18 +1242,18 @@ packages:
       '@types/yargs-parser': 21.0.0
     dev: true
 
-  /@uniorgjs/orgx/0.6.0-alpha.2:
-    resolution: {integrity: sha512-0mwewjReQEyvPQ+L3SLxbCWu9YuGhaenT0wPOTP6uj39faGdWlI2hqt+9yESBi2eVeuA4yr3Nw5okE/lYlKkBA==}
+  /@uniorgjs/orgx/0.5.10-alpha.0:
+    resolution: {integrity: sha512-Cf2eEZL5gayesSPa74eD3NPMAfcSaX0lssE6rDl6THdIMmvoGUiTuvuef39IC4OSbleLmlYEKawD3o12RGQsaQ==}
     dependencies:
       '@types/estree-jsx': 1.0.0
       estree-util-build-jsx: 2.2.2
-      estree-util-is-identifier-name: 2.0.1
-      estree-util-to-js: 1.1.0
+      estree-util-is-identifier-name: 2.1.0
+      estree-util-to-js: 1.1.1
       estree-walker: 3.0.1
-      hast-util-to-estree: 2.1.0
-      periscopic: 3.0.4
+      hast-util-to-estree: 2.2.1
+      periscopic: 3.1.0
       unified: 10.1.2
-      unist-util-position-from-estree: 1.1.1
+      unist-util-position-from-estree: 1.1.2
       unist-util-stringify-position: 3.0.2
       unist-util-visit: 4.1.2
       vfile: 5.3.6
@@ -1581,6 +1571,18 @@ packages:
       sharp: 0.31.3
       svgo: 3.0.2
       terser: 5.16.1
+    dev: false
+
+  /astro-org/0.5.10-alpha.2:
+    resolution: {integrity: sha512-GOStvcpUx4FTudDxPBaBWClv1WoB4/Seq5zjtGJfLWQ431Az4bSbf4qUtS9OVXszm0/gZWBExW7OUnZRRU5ZbA==}
+    dependencies:
+      acorn: 8.8.2
+      orgast-util-visit-ids: 0.5.6
+      rollup-plugin-orgx: 0.5.10-alpha.0
+      uniorg-extract-keywords: 0.5.6
+      uniorg-slug: 0.5.9
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /astro/2.0.2_@types+node@18.11.18:
@@ -3067,8 +3069,8 @@ packages:
     engines: {node: '>=4.0'}
     dev: true
 
-  /estree-util-attach-comments/2.1.0:
-    resolution: {integrity: sha512-rJz6I4L0GaXYtHpoMScgDIwM0/Vwbu5shbMeER596rB2D1EWF6+Gj0e0UKzJPZrpoOc87+Q2kgVFHfjAymIqmw==}
+  /estree-util-attach-comments/2.1.1:
+    resolution: {integrity: sha512-+5Ba/xGGS6mnwFbXIuQiDPTbuTxuMCooq3arVv7gPZtYpjp+VXH/NkHAP35OOefPhNG/UGqU3vt/LTABwcHX0w==}
     dependencies:
       '@types/estree': 1.0.0
     dev: false
@@ -3077,16 +3079,16 @@ packages:
     resolution: {integrity: sha512-m56vOXcOBuaF+Igpb9OPAy7f9w9OIkb5yhjsZuaPm7HoGi4oTOQi0h2+yZ+AtKklYFZ+rPC4n0wYCJCEU1ONqg==}
     dependencies:
       '@types/estree-jsx': 1.0.0
-      estree-util-is-identifier-name: 2.0.1
+      estree-util-is-identifier-name: 2.1.0
       estree-walker: 3.0.1
     dev: false
 
-  /estree-util-is-identifier-name/2.0.1:
-    resolution: {integrity: sha512-rxZj1GkQhY4x1j/CSnybK9cGuMFQYFPLq0iNyopqf14aOVLFtMv7Esika+ObJWPWiOHuMOAHz3YkWoLYYRnzWQ==}
+  /estree-util-is-identifier-name/2.1.0:
+    resolution: {integrity: sha512-bEN9VHRyXAUOjkKVQVvArFym08BTWB0aJPppZZr0UNyAqWsLaVfAqP7hbaTJjzHifmB5ebnR8Wm7r7yGN/HonQ==}
     dev: false
 
-  /estree-util-to-js/1.1.0:
-    resolution: {integrity: sha512-490lbfCcpLk+ofK6HCgqDfYs4KAfq6QVvDw3+Bm1YoKRgiOjKiKYGAVQE1uwh7zVxBgWhqp4FDtp5SqunpUk1A==}
+  /estree-util-to-js/1.1.1:
+    resolution: {integrity: sha512-tW/ADSJON4o+T8rSmSX1ZXdat4n6bVOu0iTUFY9ZFF2dD/1/Hug8Lc/HYuJRA4Mop9zDZHQMo1m4lIxxJHkTjQ==}
     dependencies:
       '@types/estree-jsx': 1.0.0
       astring: 1.8.4
@@ -4145,23 +4147,23 @@ packages:
       zwitch: 2.0.4
     dev: false
 
-  /hast-util-to-estree/2.1.0:
-    resolution: {integrity: sha512-Vwch1etMRmm89xGgz+voWXvVHba2iiMdGMKmaMfYt35rbVtFDq8JNwwAIvi8zHMkO6Gvqo9oTMwJTmzVRfXh4g==}
+  /hast-util-to-estree/2.2.1:
+    resolution: {integrity: sha512-kiGD9WIW3gRKK8Gao3n1f+ahUeTMeJUJILnIT2QNrPigDNdH7rJxzhEbh81UajGeAdAHFecT1a+fLVOCTq9B4Q==}
     dependencies:
       '@types/estree': 1.0.0
       '@types/estree-jsx': 1.0.0
       '@types/hast': 2.3.4
       '@types/unist': 2.0.6
       comma-separated-tokens: 2.0.3
-      estree-util-attach-comments: 2.1.0
-      estree-util-is-identifier-name: 2.0.1
-      hast-util-whitespace: 2.0.0
+      estree-util-attach-comments: 2.1.1
+      estree-util-is-identifier-name: 2.1.0
+      hast-util-whitespace: 2.0.1
       mdast-util-mdx-expression: 1.3.1
       mdast-util-mdxjs-esm: 1.3.0
       property-information: 6.2.0
       space-separated-tokens: 2.0.2
-      style-to-object: 0.3.0
-      unist-util-position: 4.0.3
+      style-to-object: 0.4.1
+      unist-util-position: 4.0.4
       zwitch: 2.0.4
     transitivePeerDependencies:
       - supports-color
@@ -4211,10 +4213,6 @@ packages:
       '@types/unist': 2.0.6
       hast-util-is-element: 2.1.3
       unist-util-find-after: 4.0.1
-    dev: false
-
-  /hast-util-whitespace/2.0.0:
-    resolution: {integrity: sha512-Pkw+xBHuV6xFeJprJe2BBEoDV+AvQySaz3pPDRUs5PNZEMQjpXJJueqrpcHIXxnWTcAGi/UOCgVShlkY6kLoqg==}
     dev: false
 
   /hast-util-whitespace/2.0.1:
@@ -6622,9 +6620,10 @@ packages:
     resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
     dev: true
 
-  /periscopic/3.0.4:
-    resolution: {integrity: sha512-SFx68DxCv0Iyo6APZuw/AKewkkThGwssmU0QWtTlvov3VAtPX+QJ4CadwSaz8nrT5jPIuxdvJWB4PnD2KNDxQg==}
+  /periscopic/3.1.0:
+    resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
     dependencies:
+      '@types/estree': 1.0.0
       estree-walker: 3.0.1
       is-reference: 3.0.1
     dev: false
@@ -6724,7 +6723,7 @@ packages:
       '@astrojs/compiler': 0.31.4
       prettier: 2.8.3
       sass-formatter: 0.7.5
-      synckit: 0.8.4
+      synckit: 0.8.5
     dev: false
 
   /prettier-plugin-astro/0.8.0:
@@ -7652,6 +7651,16 @@ packages:
       glob: 7.2.3
     dev: true
 
+  /rollup-plugin-orgx/0.5.10-alpha.0:
+    resolution: {integrity: sha512-qc3rhM+XbBTAX2mHi4CCSiUarGadiZkiN2W1oEkbBtIpe04yUa6loZmZSlyRciXxqGDH6aHkroqzJ4CstElBTg==}
+    dependencies:
+      '@uniorgjs/orgx': 0.5.10-alpha.0
+      rollup-pluginutils: 2.8.2
+      vfile: 5.3.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /rollup-pluginutils/2.8.2:
     resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
     dependencies:
@@ -8203,8 +8212,8 @@ packages:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
     dev: false
 
-  /style-to-object/0.3.0:
-    resolution: {integrity: sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA==}
+  /style-to-object/0.4.1:
+    resolution: {integrity: sha512-HFpbb5gr2ypci7Qw+IOhnP2zOU7e77b+rzM+wTzXzfi1PrtBCX0E7Pk4wL4iTLnhzZ+JgEGAhX81ebTg/aYjQw==}
     dependencies:
       inline-style-parser: 0.1.1
     dev: false
@@ -8294,21 +8303,12 @@ packages:
       picocolors: 1.0.0
     dev: false
 
-  /synckit/0.8.4:
-    resolution: {integrity: sha512-Dn2ZkzMdSX827QbowGbU/4yjWuvNaCoScLLoMo/yKbu+P4GBR6cRGKZH27k6a9bRzdqcyd1DE96pQtQ6uNkmyw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    dependencies:
-      '@pkgr/utils': 2.3.1
-      tslib: 2.4.1
-    dev: false
-
   /synckit/0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
       '@pkgr/utils': 2.3.1
       tslib: 2.5.0
-    dev: true
 
   /taffydb/2.6.2:
     resolution: {integrity: sha512-y3JaeRSplks6NYQuCOj3ZFMO3j60rTwbuKCvZxsAraGYH2epusatvZ0baZYA01WsGqJBq/Dl6vOrMUJqyMj8kA==}
@@ -8702,14 +8702,8 @@ packages:
       array-iterate: 2.0.1
     dev: false
 
-  /unist-util-position-from-estree/1.1.1:
-    resolution: {integrity: sha512-xtoY50b5+7IH8tFbkw64gisG9tMSpxDjhX9TmaJJae/XuxQ9R/Kc8Nv1eOsf43Gt4KV/LkriMy9mptDr7XLcaw==}
-    dependencies:
-      '@types/unist': 2.0.6
-    dev: false
-
-  /unist-util-position/4.0.3:
-    resolution: {integrity: sha512-p/5EMGIa1qwbXjA+QgcBXaPWjSnZfQ2Sc3yBEEfgPwsEmJd8Qh+DSk3LGnmOM4S1bY2C0AjmMnB8RuEYxpPwXQ==}
+  /unist-util-position-from-estree/1.1.2:
+    resolution: {integrity: sha512-poZa0eXpS+/XpoQwGwl79UUdea4ol2ZuCYguVaJS4qzIOMDzbqz8a3erUCOmubSZkaOuGamb3tX790iwOIROww==}
     dependencies:
       '@types/unist': 2.0.6
     dev: false
@@ -8725,15 +8719,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
       unist-util-visit: 4.1.2
-    dev: false
-
-  /unist-util-select/4.0.3:
-    resolution: {integrity: sha512-1074+K9VyR3NyUz3lgNtHKm7ln+jSZXtLJM4E22uVuoFn88a/Go2pX8dusrt/W+KWH1ncn8jcd8uCQuvXb/fXA==}
-    dependencies:
-      '@types/unist': 2.0.6
-      css-selector-parser: 1.4.1
-      nth-check: 2.1.1
-      zwitch: 2.0.4
     dev: false
 
   /unist-util-stringify-position/3.0.2:

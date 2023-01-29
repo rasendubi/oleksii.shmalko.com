@@ -1,6 +1,6 @@
 import { uniorgSlug } from 'uniorg-slug';
 import { retext } from 'retext';
-import { smartypants } from 'retext-smartypants';
+import smartypants from 'retext-smartypants';
 import rehypeRaw from 'rehype-raw';
 import { visit } from 'unist-util-visit';
 import 'katex/contrib/mhchem';
@@ -13,6 +13,7 @@ import { matches, selectAll } from 'hast-util-select';
 import { toString } from 'hast-util-to-string';
 import { visitParents } from 'unist-util-visit-parents';
 
+import { rehypeResolveImg } from './rehype-resolve-img.js';
 import { pathToFrontmatter } from './path-to-frontmatter.js';
 import { bibliography } from './bibliography.js';
 
@@ -59,6 +60,7 @@ export default {
       },
     ],
     katex,
+    rehypeResolveImg,
     collectLinks,
     [rehypeAutolinkHeadings, { behavior: 'wrap' }],
     minify,
