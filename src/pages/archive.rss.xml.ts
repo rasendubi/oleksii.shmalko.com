@@ -6,7 +6,7 @@ import comparePages from '@/lib/comparePages';
 export const get = async () => {
   const posts = [...allPages].sort(comparePages({ preferLastmod: true }));
   return rss({
-    title: 'Alexey Shmalko',
+    title: 'Oleksii Shmalko',
     site: import.meta.env.SITE,
     items: posts.map((p) => ({
       link: p.frontmatter.slug,

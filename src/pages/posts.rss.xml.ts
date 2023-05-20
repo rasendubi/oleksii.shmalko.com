@@ -8,7 +8,7 @@ export const get = async () => {
     .filter((p) => p.frontmatter.pageType === 'post')
     .sort(comparePages({ preferLastmod: false }));
   return rss({
-    title: 'Alexey Shmalko Posts',
+    title: 'Oleksii Shmalko Posts',
     site: import.meta.env.SITE,
     items: posts.map((p) => ({
       link: p.frontmatter.slug,

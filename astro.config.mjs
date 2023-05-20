@@ -11,7 +11,7 @@ import orgConfig from './src/lib/org-config.js';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.alexeyshmalko.com',
+  site: 'https://oleksii.shmalko.com',
   integrations: [
     org(orgConfig),
     bib({

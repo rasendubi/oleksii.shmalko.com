@@ -1,4 +1,4 @@
-This is the source of [my website](https://www.alexeyshmalko.com).
+This is the source of [my website](https://oleksii.shmalko.com).
 
 It uses [uniorg](https://github.com/rasendubi/uniorg) org-mode parser and Astro.
 
