@@ -1,25 +1,39 @@
 ---
-import { Picture } from '@astrojs/image/components';
-const { src, width, height } = Astro.props;
+/** @file
+ * This is an image component that is only used for .org files
+ * rendering.
+ */
+import { getImage } from 'astro:assets';
+const { src } = Astro.props;
 
-const notSupported =
-  typeof src === 'string' && (src.endsWith('.svg') || src.endsWith('.gif'));
-const isSupported = !notSupported;
+// Only support optimization for imported images (where src is an object).
+const optimizationSupported = typeof src !== 'string';
 
-const hasAspectRatio = width !== undefined && height !== undefined;
-// aspectRatio={`${width}:${height}`}
+let imgProps = {};
+
+if (optimizationSupported) {
+  const widths = [320, 480, /* full-width */ 700, /* @2x */ 1400];
+
+  const mainSrc = await getImage({ src });
+  const srcset = (
+    await Promise.all(widths.map((w) => getImage({ src, width: w })))
+  )
+    .map((x) => `${x.src} ${x.attributes.width}w`)
+    .join(', ');
+
+  imgProps = {
+    ...Astro.props,
+    src: mainSrc.src,
+    srcset: srcset,
+    sizes: '(max-width: 700px) 100vw, 700px',
+    fit: 'contain',
+    ...mainSrc.attributes,
+  };
+} else {
+  imgProps = { ...Astro.props };
+}
 ---
 
-{
-  typeof src !== 'string' ? (
-    <Picture
-      widths={[320, 480, /* full-width */ 700, /* @2x */ 1400]}
-      fit="contain"
-      {...Astro.props}
-    />
-  ) : (
-    <picture>
-      <img {...Astro.props} />
-    </picture>
-  )
-}
+<picture>
+  <img {...imgProps} />
+</picture>

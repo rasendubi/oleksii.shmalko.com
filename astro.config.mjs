@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import image from '@astrojs/image';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
 import org from 'astro-org';
@@ -18,9 +17,6 @@ export default defineConfig({
       frontmatter: (id) => pathToFrontmatter(id),
     }),
     react(),
-    image({
-      serviceEntryPoint: '@astrojs/image/sharp',
-    }),
     prefetch({
       throttle: 3,
     }),
