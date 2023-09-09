@@ -9,13 +9,15 @@ import font400 from '@fontsource/libre-baskerville/files/libre-baskerville-latin
 import font400italic from '@fontsource/libre-baskerville/files/libre-baskerville-latin-400-italic.woff2';
 import font700 from '@fontsource/libre-baskerville/files/libre-baskerville-latin-700-normal.woff2';
 
+import { ViewTransitions } from 'astro:transitions';
+
 const { title, image, description } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
@@ -67,13 +69,12 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
     <meta property="og:url" content={canonicalUrl} />
     <link rel="canonical" href={canonicalUrl} />
 
-    <script
-      src="https://cdn.usefathom.com/script.js"
-      data-site="PCSQWUMO"
-      async
+    <script src="https://cdn.usefathom.com/script.js" data-site="PCSQWUMO" async
     ></script>
 
     <slot name="head" />
+
+    <ViewTransitions />
   </head>
   <body>
     <main>
@@ -105,6 +106,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         padding: 0;
         margin: 0;
         font-family: var(--font-serif);
+      }
+      /* always show scroll bar. Otherwise, transitions might look junky. */
+      body {
+        overflow-y: scroll;
       }
 
       main {
@@ -482,7 +487,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-top: -8px;
         margin-bottom: 24px;
       }
-      header + dl > dt, header + dl > dd {
+      header + dl > dt,
+      header + dl > dd {
         list-style-type: none;
         margin-left: 0;
       }

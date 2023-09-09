@@ -17,7 +17,7 @@ const lastModifiedHuman = lastModified
   : null;
 ---
 
-<header>
+<header transition:name="header" transition:animate="none">
   <div class="homerow">
     <nav class="quicklinks">
       <a href="/" class="icon-link" aria-label="Home" rel="prefetch">
@@ -27,19 +27,23 @@ const lastModifiedHuman = lastModified
         <Fragment set:html={SearchIcon} />
       </a>
     </nav>
-    <h1>
+    <h1 transition:animate="fade">
       <span class="page-symbol">{icon}</span>{title}
     </h1>
   </div>
-  {
-    dateHuman || lastModifiedHuman ? (
-      <div class="time">
-        {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}{dateHuman && lastModifiedHuman && '–'}{lastModifiedHuman && lastModifiedIso && (
-          <time dateTime={lastModifiedIso}>{lastModifiedHuman}</time>
-        )}
-      </div>
-    ) : null
-  }
+  <div transition:animate="fade">
+    {
+      dateHuman || lastModifiedHuman ? (
+        <div class="time">
+          {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}
+          {dateHuman && lastModifiedHuman && '–'}
+          {lastModifiedHuman && lastModifiedIso && (
+            <time dateTime={lastModifiedIso}>{lastModifiedHuman}</time>
+          )}
+        </div>
+      ) : null
+    }
+  </div>
   <style>
     header {
       margin-top: 8px;
@@ -82,7 +86,9 @@ const lastModifiedHuman = lastModified
       margin-bottom: -12px;
 
       border-radius: 50%;
-      transition: color 0.05s ease-in-out, background-color 0.05s ease-in-out;
+      transition:
+        color 0.05s ease-in-out,
+        background-color 0.05s ease-in-out;
     }
     .icon-link:hover {
       background-color: #f0f0f0;
