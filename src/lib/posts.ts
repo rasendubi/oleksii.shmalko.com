@@ -19,6 +19,32 @@ export type Page = {
   ids: Record<string, string>;
 };
 
+export const pubDate = (page: Page): Date | null => {
+  if (page.frontmatter.date) {
+    return new Date(page.frontmatter.date);
+  }
+
+  const m = page.frontmatter.slug.match(/^\/(\d{14})/);
+  if (m) {
+    const n = m[1];
+    const year = n.slice(0, 4);
+    const month = n.slice(4, 6);
+    const day = n.slice(6, 8);
+    const hour = n.slice(8, 10);
+    const minute = n.slice(10, 12);
+    const second = n.slice(12, 15);
+    const s = `${year}-${month}-${day}T${hour}:${minute}:${second}Z`;
+    return new Date(s);
+  }
+
+  if (page.frontmatter.last_modified) {
+    // fallback
+    return new Date(page.frontmatter.last_modified);
+  }
+
+  return null;
+};
+
 const on = <T, R>(value: T, f: (value: T) => R): R => f(value);
 
 const pages = import.meta.glob<true, '', Page>(
@@ -28,7 +54,7 @@ const pages = import.meta.glob<true, '', Page>(
     '../../posts/{posts,biblio}/**/*.{org,bib}',
   ],
   { eager: true }
-);
+) as Record<string, Page>;
 
 export const allPages = Object.values(pages).filter(
   (p) => process.env.NODE_ENV === 'development' || !('draft' in p.frontmatter)
