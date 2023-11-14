@@ -3,7 +3,7 @@ import rss from '@astrojs/rss';
 import { allPages } from '@/lib/posts';
 import comparePages from '@/lib/comparePages';
 
-export const get = async () => {
+export const GET = async () => {
   const posts = [...allPages].sort(comparePages({ preferLastmod: true }));
   return rss({
     title: 'Oleksii Shmalko',

@@ -17,7 +17,7 @@ const lastModifiedHuman = lastModified
   : null;
 ---
 
-<header transition:name="header" transition:animate="none">
+<header>
   <div class="homerow">
     <nav class="quicklinks">
       <a href="/" class="icon-link" aria-label="Home" rel="prefetch">
@@ -27,11 +27,11 @@ const lastModifiedHuman = lastModified
         <Fragment set:html={SearchIcon} />
       </a>
     </nav>
-    <h1 transition:animate="fade">
+    <h1>
       <span class="page-symbol">{icon}</span>{title}
     </h1>
   </div>
-  <div transition:animate="fade">
+  <div>
     {
       dateHuman || lastModifiedHuman ? (
         <div class="time">
