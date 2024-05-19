@@ -9,6 +9,8 @@ import font400 from '@fontsource/libre-baskerville/files/libre-baskerville-latin
 import font400italic from '@fontsource/libre-baskerville/files/libre-baskerville-latin-400-italic.woff2';
 import font700 from '@fontsource/libre-baskerville/files/libre-baskerville-latin-700-normal.woff2';
 
+import Footer from '../components/Footer.astro';
+
 const { title, image, description } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
@@ -85,6 +87,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
     <main>
       <slot />
     </main>
+    <Footer />
     <style is:global>
       :root {
         /* = font-size * line-height */
@@ -128,7 +131,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         max-width: 700px;
         height: 100%;
         margin: 0 auto;
-        padding: 24px 16px 80px;
+        padding: 24px 16px 0px;
 
         /* Allow breaking words if text overflows (very long words or links) */
         word-wrap: break-word;
