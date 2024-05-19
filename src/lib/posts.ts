@@ -63,12 +63,9 @@ export const allPages = Object.values(pages).filter(
 const cwd = process.cwd();
 export const resources = Object.fromEntries(
   Object.entries(
-    import.meta.glob(
-      ['../../posts/**/*.{png,jpg,jpeg,gif,webp,avif,txt,pdf,sh,asc}'],
-      {
-        as: 'url',
-      }
-    )
+    import.meta.glob(['../../posts/**/*.{gif,txt,pdf,sh,asc}'], {
+      query: '?url',
+    })
   ).map(([path, loader]) => {
     return [fs.realpathSync(join(cwd, 'src/lib', path)), loader];
   })

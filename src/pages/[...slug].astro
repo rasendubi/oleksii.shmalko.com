@@ -90,9 +90,8 @@ const image = await imgs[0]?.();
           <ul>
             {backlinks.map((b) => (
               <li>
-                <Link href={b.frontmatter.slug}>
-                  {b.frontmatter.icon} {b.frontmatter.title}
-                </Link>
+                {b.frontmatter.icon}
+                <Link href={b.frontmatter.slug}>{b.frontmatter.title}</Link>
               </li>
             ))}
           </ul>
