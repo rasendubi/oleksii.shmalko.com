@@ -67,6 +67,15 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
     <meta property="og:url" content={canonicalUrl} />
     <link rel="canonical" href={canonicalUrl} />
 
+    <link
+      rel="webmention"
+      href="https://webmention.io/oleksii.shmalko.com/webmention"
+    />
+    <link
+      rel="pingback"
+      href="https://webmention.io/oleksii.shmalko.com/xmlrpc"
+    />
+
     <script src="https://cdn.usefathom.com/script.js" data-site="PCSQWUMO" async
     ></script>
 
@@ -211,14 +220,14 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       @media (min-width: 900px) {
-        article > ul,
-        article > ol,
-        article > dl > dt,
-        article > dl > dd,
-        article > .block-clearfix > ul,
-        article > .block-clearfix > ol,
-        article > .block-clearfix > dl > dt,
-        article > .block-clearfix > dl > dd,
+        .top-level > ul,
+        .top-level > ol,
+        .top-level > dl > dt,
+        .top-level > dl > dd,
+        .top-level > .block-clearfix > ul,
+        .top-level > .block-clearfix > ol,
+        .top-level > .block-clearfix > dl > dt,
+        .top-level > .block-clearfix > dl > dd,
         section > ul,
         section > ol,
         section > dl > dt,
@@ -274,9 +283,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       /* pull top-level lists slightly closer to the preceding
          paragraph */
-      article > p + ul,
-      article > p + ol,
-      article > p + dl {
+      .top-level > p + ul,
+      .top-level > p + ol,
+      .top-level > p + dl {
         margin-top: -16px;
       }
 
@@ -365,8 +374,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       pre[class^='language-'] {
         border-radius: 4px;
       }
-      article > pre.src-block,
-      article > pre[class^='language-'] {
+      .top-level > pre.src-block,
+      .top-level > pre[class^='language-'] {
         /* make top-level code wider */
         margin-left: -16px;
         margin-right: -16px;
@@ -408,7 +417,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       /* make top-level images slightly wider */
-      article > p > picture:only-child {
+      .top-level > p > picture:only-child {
         display: flex;
         justify-content: center;
         width: calc(100% + 32px);
@@ -421,12 +430,12 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 
       @media (min-width: 900px) {
         /* allow top-level quotes to be slightly wider on wider screens */
-        article > blockquote,
-        article > pre.verse,
-        article > .block,
-        article > .block-clearfix > blockquote,
-        article > .block-clearfix > pre.verse,
-        article > .block-clearfix > .block {
+        .top-level > blockquote,
+        .top-level > pre.verse,
+        .top-level > .block,
+        .top-level > .block-clearfix > blockquote,
+        .top-level > .block-clearfix > pre.verse,
+        .top-level > .block-clearfix > .block {
           border-left: 2px solid #222;
           margin-left: -18px; /* -2 for border */
           margin-right: -16px;
@@ -435,41 +444,42 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         }
       }
 
-      article {
+      article,
+      .top-level {
         display: flex;
         flex-direction: column;
         position: relative;
       }
 
-      article table {
+      .top-level table {
         display: block;
         border-collapse: collapse;
         font-size: 0.9em;
         overflow-x: auto;
       }
-      article > table {
+      .top-level > table {
         /* allow top-level tables to grow */
         max-width: calc(100vw - 32px);
         align-self: center;
       }
 
-      article th,
-      article td {
+      .top-level th,
+      .top-level td {
         padding: 12px 15px;
       }
-      article thead,
-      article tbody {
+      .top-level thead,
+      .top-level tbody {
         border-bottom: 2px solid #888888;
       }
-      article tbody {
+      .top-level tbody {
         border-top: 2px solid #888888;
       }
-      article thead tr {
+      .top-level thead tr {
         background-color: #e5e5e5;
         text-align: left;
         font-weight: 700;
       }
-      article tbody tr {
+      .top-level tbody tr {
         border-bottom: 1px solid #888888;
         vertical-align: baseline;
       }
@@ -519,7 +529,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         }
         .block-clearfix aside,
         /* needed for specificity */
-        article > .block-clearfix > aside {
+        .top-level > .block-clearfix > aside {
           margin-left: 16px;
           margin-right: 16px;
         }

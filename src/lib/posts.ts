@@ -64,7 +64,7 @@ const cwd = process.cwd();
 export const resources = Object.fromEntries(
   Object.entries(
     import.meta.glob(
-      ['../../posts/**/*.{png,jpg,jpeg,gif,webp,avif,txt,pdf,sh}'],
+      ['../../posts/**/*.{png,jpg,jpeg,gif,webp,avif,txt,pdf,sh,asc}'],
       {
         as: 'url',
       }

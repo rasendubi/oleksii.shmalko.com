@@ -28,21 +28,34 @@ const lastModifiedHuman = lastModified
       </a>
     </nav>
     <h1>
-      <span class="page-symbol">{icon}</span>{title}
+      <span class="page-symbol">{icon}</span><span class="p-name">{title}</span>
     </h1>
   </div>
   <div>
     {
       dateHuman || lastModifiedHuman ? (
         <div class="time">
-          {isodate && dateHuman && <time dateTime={isodate}>{dateHuman}</time>}
+          {isodate && dateHuman && (
+            <time class="dt-published" dateTime={isodate}>
+              {dateHuman}
+            </time>
+          )}
           {dateHuman && lastModifiedHuman && '–'}
           {lastModifiedHuman && lastModifiedIso && (
-            <time dateTime={lastModifiedIso}>{lastModifiedHuman}</time>
+            <time class="dt-updated" dateTime={lastModifiedIso}>
+              {lastModifiedHuman}
+            </time>
           )}
         </div>
       ) : null
     }
+  </div>
+  <a style="display:none" class="u-url" href=".">permalink</a>
+  <div class="p-author h-card" style="display:none">
+    by <a class="u-url u-uid" rel="author" href="https://oleksii.shmalko.com"
+      ><img class="u-logo" src="/gravatar.png" />
+      <span class="p-name">Oleksii Shmalko</span></a
+    >
   </div>
   <style>
     header {

@@ -18,7 +18,7 @@
     "@mapbox/rehype-prism": "^0.9.0",
     "@types/refractor": "^3.0.6",
     "astro": "^3.5.3",
-    "astro-org": "2.0.0",
+    "astro-org": "2.1.1",
     "bibtex-parse": "^2.1.0",
     "clsx": "^2.0.0",
     "fetch-jsonp": "^1.3.0",
@@ -27,7 +27,7 @@
     "hastscript": "^8.0.0",
     "katex": "^0.16.9",
     "moment": "^2.29.4",
-    "orgast-util-visit-ids": "^1.0.0",
+    "orgast-util-visit-ids": "^1.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "refractor": "^4.8.1",
@@ -40,9 +40,9 @@
     "retext-smartypants": "^6.0.0",
     "sharp": "^0.32.6",
     "unified": "^11.0.4",
-    "uniorg-parse": "^2.1.0",
-    "uniorg-rehype": "^1.1.0",
-    "uniorg-slug": "^1.0.0",
+    "uniorg-parse": "^3.0.1",
+    "uniorg-rehype": "^1.2.0",
+    "uniorg-slug": "^1.0.1",
     "unist-util-visit": "^5.0.0",
     "unist-util-visit-parents": "^6.0.1"
   },
@@ -57,7 +57,7 @@
     "prettier-plugin-astro": "^0.12.2",
     "rehype-format": "^5.0.0",
     "typescript": "^5.2.2",
-    "uniorg": "^1.1.0"
+    "uniorg": "^1.2.0"
   },
   "pnpm": {
     "overrides": {

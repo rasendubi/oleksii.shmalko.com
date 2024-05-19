@@ -3,7 +3,7 @@ import classes from './Link.module.css';
 import { resolveId } from '../lib/posts.ts';
 import { bibliography } from '../lib/bibliography.js';
 
-const { class: className, href, ...props } = Astro.props;
+const { className, href, ...props } = Astro.props;
 
 let broken = false;
 let link = href;
@@ -20,10 +20,12 @@ const external =
   url.protocol === 'http:' ||
   url.protocol === 'https:' ||
   url.protocol === 'mailto:';
+
+const rel = [props.rel, external ? 'noopener' : 'prefetch'].join(' ');
 ---
 
 <a
-  rel={external ? 'noopener' : 'prefetch'}
+  rel={rel}
   target={external ? '_blank' : undefined}
   preload={!external}
   role={broken ? 'link' : undefined}

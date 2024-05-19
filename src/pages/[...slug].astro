@@ -9,7 +9,6 @@ import fs from 'fs';
 import comparePages from '@/lib/comparePages';
 import Root from '../layouts/Root.astro';
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import Link from '../components/Link.astro';
 import Image from '../components/Image.astro';
 import Bibtex from '../components/Bibtex.astro';
@@ -63,25 +62,27 @@ const image = await imgs[0]?.();
     href="/posts.rss.xml"
   />
 
-  <article>
+  <article class="h-entry">
     <Header
       title={data.title}
       icon={data.icon}
       date={data.date}
       lastModified={data.last_modified}
     />
-    {
-      data.renderer === 'bib' ? (
-        <Bibtex entries={Astro.props.post.entries} />
-      ) : (
-        <Content
-          components={{
-            a: Link,
-            img: Image,
-          }}
-        />
-      )
-    }
+    <div class="e-content top-level">
+      {
+        data.renderer === 'bib' ? (
+          <Bibtex entries={Astro.props.post.entries} />
+        ) : (
+          <Content
+            components={{
+              a: Link,
+              img: Image,
+            }}
+          />
+        )
+      }
+    </div>
     {
       !!backlinks.length && data.no_backlinks === undefined && (
         <>
@@ -89,8 +90,9 @@ const image = await imgs[0]?.();
           <ul>
             {backlinks.map((b) => (
               <li>
-                {b.frontmatter.icon}
-                <Link href={b.frontmatter.slug}>{b.frontmatter.title}</Link>
+                <Link href={b.frontmatter.slug}>
+                  {b.frontmatter.icon} {b.frontmatter.title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -98,5 +100,4 @@ const image = await imgs[0]?.();
       )
     }
   </article>
-  <Footer />
 </Root>

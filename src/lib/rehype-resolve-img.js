@@ -33,7 +33,7 @@ export const rehypeResolveImg = () => {
         }
 
         const ext = path.extname(u.pathname);
-        const resourceExts = ['.txt', '.sh', '.pdf', '.gif'];
+        const resourceExts = ['.txt', '.sh', '.pdf', '.gif', '.asc'];
         const isResource = resourceExts.includes(ext);
 
         const isImg = node.tagName === 'img';
@@ -99,7 +99,13 @@ export const rehypeResolveImg = () => {
             ...Object.entries(node.properties).flatMap(([property, value]) =>
               property === propertyName
                 ? []
-                : [{ type: 'mdxJsxAttribute', name: property, value }]
+                : [
+                    {
+                      type: 'mdxJsxAttribute',
+                      name: property,
+                      value: Array.isArray(value) ? value.join(' ') : value,
+                    },
+                  ]
             ),
             {
               type: 'mdxJsxAttribute',
