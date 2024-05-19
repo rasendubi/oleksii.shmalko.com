@@ -3,7 +3,7 @@ import classes from './Link.module.css';
 import { resolveId } from '../lib/posts.ts';
 import { bibliography } from '../lib/bibliography.js';
 
-const { className, href, ...props } = Astro.props;
+const { class: class_, className, href, ...props } = Astro.props;
 
 let broken = false;
 let link = href;
@@ -32,7 +32,7 @@ const rel = [props.rel, external ? 'noopener' : 'prefetch'].join(' ');
   aria-disabled={broken}
   {...props}
   href={broken ? undefined : link}
-  class:list={[classes.link, { external, broken }, className]}
+  class:list={[classes.link, { external, broken }, class_, className]}
   ><slot />{
     external && (
       <svg
