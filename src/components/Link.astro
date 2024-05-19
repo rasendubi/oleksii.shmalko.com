@@ -21,7 +21,7 @@ const external =
   url.protocol === 'https:' ||
   url.protocol === 'mailto:';
 
-const rel = [props.rel, external ? 'noopener' : 'prefetch'].join(' ');
+const rel = [props.rel, external ? 'noopener' : ''].join(' ');
 ---
 
 <a

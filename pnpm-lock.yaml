@@ -1,12 +1,8 @@
 lockfileVersion: 5.4
 
-overrides:
-  katex: ^0.16.4
-
 specifiers:
-  '@astrojs/prefetch': ^0.4.1
   '@astrojs/react': ^3.3.4
-  '@astrojs/rss': ^3.0.0
+  '@astrojs/rss': ^4.0.6
   '@astrojs/sitemap': ^3.1.4
   '@fontsource/libre-baskerville': ^5.0.13
   '@fontsource/source-code-pro': ^5.0.18
@@ -25,7 +21,7 @@ specifiers:
   hast-util-select: ^6.0.2
   hast-util-to-string: ^3.0.0
   hastscript: ^9.0.0
-  katex: ^0.16.4
+  katex: ^0.16.10
   moment: ^2.30.1
   orgast-util-visit-ids: ^1.0.1
   prettier: ^3.2.5
@@ -52,8 +48,7 @@ specifiers:
   unist-util-visit-parents: ^6.0.1
 
 dependencies:
-  '@astrojs/prefetch': 0.4.1
-  '@astrojs/rss': 3.0.0
+  '@astrojs/rss': 4.0.6
   '@astrojs/sitemap': 3.1.4
   '@fontsource/libre-baskerville': 5.0.13
   '@fontsource/source-code-pro': 5.0.18
@@ -67,7 +62,7 @@ dependencies:
   hast-util-select: 6.0.2
   hast-util-to-string: 3.0.0
   hastscript: 9.0.0
-  katex: 0.16.9
+  katex: 0.16.10
   moment: 2.30.1
   orgast-util-visit-ids: 1.0.1
   react: 18.3.1
@@ -156,13 +151,6 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/prefetch/0.4.1:
-    resolution: {integrity: sha512-bpC875BqeIuWVgqhi4X814ftzzbKocaLkiZczaj8k5J2SRpueIGkww3XmD+yY/Ekkm9j30aS3neVO6wSm4IJNA==}
-    deprecated: '@astrojs/prefetch is deprecated in favor of the builtin prefetch option. Please see the migration guide for more information: https://docs.astro.build/en/guides/prefetch/#migrating-from-astrojsprefetch'
-    dependencies:
-      throttles: 1.0.1
-    dev: false
-
   /@astrojs/prism/3.1.0:
     resolution: {integrity: sha512-Z9IYjuXSArkAUx3N6xj6+Bnvx8OdUSHA8YoOgyepp3+zJmtVYJIl/I18GozdJVW1p5u/CNpl3Km7/gwTJK85cw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
@@ -190,10 +178,10 @@ packages:
       - vite
     dev: true
 
-  /@astrojs/rss/3.0.0:
-    resolution: {integrity: sha512-PMX8iqByk9gtOrusikten/oF5uHjOCZigL6RuXFBUu+xtdKQxXzfIohJ99V2haA4FJjVDyibDTGzXR81POBMxQ==}
+  /@astrojs/rss/4.0.6:
+    resolution: {integrity: sha512-hpfHz6OZVD4ME1ZmpNQim0yV0AOetVFUHv0vmL8+Bw4GNcmL0ibGkGtMv+PY72HLJUVfDtizrBjfN5HHg+LScA==}
     dependencies:
-      fast-xml-parser: 4.3.2
+      fast-xml-parser: 4.4.0
       kleur: 4.1.5
     dev: false
 
@@ -449,6 +437,7 @@ packages:
   /@colors/colors/1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -3484,8 +3473,8 @@ packages:
       punycode: 1.4.1
     dev: true
 
-  /fast-xml-parser/4.3.2:
-    resolution: {integrity: sha512-rmrXUXwbJedoXkStenj1kkljNF7ugn5ZjR9FJcwmCfcCbtOMDghPajbc+Tck6vE6F5XsDmx+Pr2le9fw8+pXBg==}
+  /fast-xml-parser/4.4.0:
+    resolution: {integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==}
     hasBin: true
     dependencies:
       strnum: 1.0.5
@@ -5014,8 +5003,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /katex/0.16.9:
-    resolution: {integrity: sha512-fsSYjWS0EEOwvy81j3vRA8TEAhQhKiqO+FQaKWp0m39qwOzHVBgAUBIXWj1pB+O2W3fIpNa6Y9KSKCVbfPhyAQ==}
+  /katex/0.16.10:
+    resolution: {integrity: sha512-ZiqaC04tp2O5utMsl2TEZTXxa6WSC4yo0fv5ML++D3QZv/vx2Mct0mTlRx3O+uUkjfuAgOkzsCmq5MiUEsDDdA==}
     hasBin: true
     dependencies:
       commander: 8.3.0
@@ -7002,7 +6991,7 @@ packages:
       '@types/katex': 0.16.6
       hast-util-from-html-isomorphic: 2.0.0
       hast-util-to-text: 4.0.0
-      katex: 0.16.9
+      katex: 0.16.10
       unist-util-visit-parents: 6.0.1
       vfile: 6.0.1
     dev: false
@@ -8077,11 +8066,6 @@ packages:
   /text-hex/1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
     dev: true
-
-  /throttles/1.0.1:
-    resolution: {integrity: sha512-fab7Xg+zELr9KOv4fkaBoe/b3L0GMGLd0IBSCn16GoE/Qx6/OfCr1eGNyEcDU2pUA79qQfZ8kPQWlRuok4YwTw==}
-    engines: {node: '>=6'}
-    dev: false
 
   /through/2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}

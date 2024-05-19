@@ -20,10 +20,20 @@ const lastModifiedHuman = lastModified
 <header>
   <div class="homerow">
     <nav class="quicklinks">
-      <a href="/" class="icon-link" aria-label="Home" rel="prefetch">
+      <a
+        href="/"
+        class="icon-link"
+        aria-label="Home"
+        data-astro-prefetch="hover"
+      >
         <Fragment set:html={HomeIcon} />
       </a>
-      <a href="/archive" class="icon-link" aria-label="Search">
+      <a
+        href="/archive"
+        class="icon-link"
+        aria-label="Search"
+        data-astro-prefetch="hover"
+      >
         <Fragment set:html={SearchIcon} />
       </a>
     </nav>
