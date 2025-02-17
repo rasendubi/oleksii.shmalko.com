@@ -13,7 +13,7 @@ specifiers:
   '@types/react-dom': ^18.3.0
   '@types/refractor': ^3.4.1
   astro: ^4.8.6
-  astro-org: 2.1.1
+  astro-org: 2.1.2
   bibtex-parse: ^2.1.0
   clsx: ^2.1.1
   fetch-jsonp: ^1.3.0
@@ -55,7 +55,7 @@ dependencies:
   '@mapbox/rehype-prism': 0.9.0
   '@types/refractor': 3.4.1
   astro: 4.8.6_w5wi72oywipdfmcf22arenepbq
-  astro-org: 2.1.1_astro@4.8.6
+  astro-org: 2.1.2_astro@4.8.6
   bibtex-parse: 2.1.0
   clsx: 2.1.1
   fetch-jsonp: 1.3.0
@@ -1761,8 +1761,8 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: false
 
-  /@uniorgjs/orgx/1.0.6:
-    resolution: {integrity: sha512-/cZTuFuu6yiUkcjWusxAx7k7PGrMOBEs2+mXKDbgJ1Ukl5rWHye15g8/6EXkmkn8lXQraqj2aYe3QRBlJ9y59w==}
+  /@uniorgjs/orgx/1.0.7:
+    resolution: {integrity: sha512-zl0zLU+XpmUAMqlf/aQhuuY5gmoBhsqKYZ6J72Mw9eBEP8V8Xjw54ZCUQgLtVtlUGtMXATFkVVju+pQAaEIeZQ==}
     dependencies:
       '@types/estree-jsx': 1.0.5
       estree-util-build-jsx: 3.0.1
@@ -2042,15 +2042,15 @@ packages:
     hasBin: true
     dev: false
 
-  /astro-org/2.1.1_astro@4.8.6:
-    resolution: {integrity: sha512-bio9Sk2AAfnXUuvoJN2SOLzwevFVVpP4DYGBjBL0+mfoHJXrv7gXbsMZhUNJOEkJH0A+MeFKkAftut2IIUzKkg==}
+  /astro-org/2.1.2_astro@4.8.6:
+    resolution: {integrity: sha512-+lHbS73w2xrcghRXppjHdR9M298J1CHgef26JiI3fWMFnQNhUgYgt99RPMma+/r/+N6ycnvWz77G617US2zRxg==}
     peerDependencies:
-      astro: ^3.0.12
+      astro: ^3.0.12 || ^4.0.0
     dependencies:
       acorn: 8.11.3
       astro: 4.8.6_w5wi72oywipdfmcf22arenepbq
       orgast-util-visit-ids: 1.0.1
-      rollup-plugin-orgx: 1.0.2
+      rollup-plugin-orgx: 1.0.3
       unified: 11.0.4
       uniorg-extract-keywords: 1.0.1
       uniorg-parse: 3.0.1
@@ -7457,10 +7457,10 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup-plugin-orgx/1.0.2:
-    resolution: {integrity: sha512-1MsBDG4GGTK1pnhAB4z+k/63uwgAX5+yvUCFhajEII9l0xgvigce9nXr/dQ2uKkqU25Md0WKNIZMA6Pmz1YHaQ==}
+  /rollup-plugin-orgx/1.0.3:
+    resolution: {integrity: sha512-ZKVG/mnN3XtCM68HwiRbnbBMZsx8rmkKj0Lw2RStHvjnjF31U+MgBGTWTmqvOZ+qyggQxCYw2GHuumxRA9Ltdw==}
     dependencies:
-      '@uniorgjs/orgx': 1.0.6
+      '@uniorgjs/orgx': 1.0.7
       rollup-pluginutils: 2.8.2
       vfile: 6.0.1
     transitivePeerDependencies:

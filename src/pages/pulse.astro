@@ -4,22 +4,20 @@ import moment from 'moment';
 import Root from '../layouts/Root.astro';
 import Header from '../components/Header.astro';
 import Archive from '../components/Archive.tsx';
+import Pulse from '../components/Pulse.astro';
+import Link from '../components/Link.astro';
+import Image from '../components/Image.astro';
 
 import { Page, allPages } from '../lib/posts';
 import comparePages from '../lib/comparePages.ts';
 
 const allPosts = await allPages;
 const posts = Object.values(allPosts)
-  .filter((p) => p.frontmatter.pageType !== 'pulse')
-  .sort(comparePages({ preferLastmod: true }))
-  .map((p) => ({
-    title: p.frontmatter.title,
-    path: p.frontmatter.slug,
-    icon: p.frontmatter.icon,
-  }));
+  .filter((p) => p.frontmatter.pageType === 'pulse')
+  .sort(comparePages({ preferLastmod: true }));
 ---
 
-<Root title="§ Archive">
+<Root title="§ Pulse">
   <Fragment slot="head">
     <link
       rel="alternate"
@@ -36,6 +34,17 @@ const posts = Object.values(allPosts)
     </noscript>
   </Fragment>
 
-  <Header title="§ Archive" icon="🗄️" />
-  <Archive client:load posts={posts} />
+  <Header title="Pulse" icon="✨️" />
+  {
+    posts.map((p) => (
+      <Pulse {...p.frontmatter}>
+        <p.default
+          components={{
+            a: Link,
+            img: Image,
+          }}
+        />
+      </Pulse>
+    ))
+  }
 </Root>

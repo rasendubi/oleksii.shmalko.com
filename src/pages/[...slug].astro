@@ -12,6 +12,7 @@ import Header from '../components/Header.astro';
 import Link from '../components/Link.astro';
 import Image from '../components/Image.astro';
 import Bibtex from '../components/Bibtex.astro';
+import Pulse from '../components/Pulse.astro';
 
 import { allPages, getBacklinks, resources } from '../lib/posts.ts';
 
@@ -62,41 +63,50 @@ const image = await imgs[0]?.();
     href="/posts.rss.xml"
   />
 
-  <article class="h-entry">
-    <Header
-      title={data.title}
-      icon={data.icon}
-      date={data.date}
-      lastModified={data.last_modified}
-    />
-    <div class="e-content top-level">
-      {
-        data.renderer === 'bib' ? (
-          <Bibtex entries={Astro.props.post.entries} />
-        ) : (
-          <Content
-            components={{
-              a: Link,
-              img: Image,
-            }}
-          />
-        )
-      }
-    </div>
-    {
-      !!backlinks.length && data.no_backlinks === undefined && (
-        <>
-          <h2>Backlinks</h2>
-          <ul>
-            {backlinks.map((b) => (
-              <li>
-                {b.frontmatter.icon}
-                <Link href={b.frontmatter.slug}>{b.frontmatter.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      )
-    }
-  </article>
+  {
+    data.renderer === 'pulse' ? (
+      <Pulse {...data}>
+        <Content
+          components={{
+            a: Link,
+            img: Image,
+          }}
+        />
+      </Pulse>
+    ) : (
+      <article class="h-entry">
+        <Header
+          title={data.title}
+          icon={data.icon}
+          date={data.date}
+          lastModified={data.last_modified}
+        />
+        <div class="e-content top-level">
+          {data.renderer === 'bib' ? (
+            <Bibtex entries={Astro.props.post.entries} />
+          ) : (
+            <Content
+              components={{
+                a: Link,
+                img: Image,
+              }}
+            />
+          )}
+        </div>
+        {!!backlinks.length && data.no_backlinks === undefined && (
+          <section>
+            <h2>Backlinks</h2>
+            <ul>
+              {backlinks.map((b) => (
+                <li>
+                  {b.frontmatter.icon}
+                  <Link href={b.frontmatter.slug}>{b.frontmatter.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </article>
+    )
+  }
 </Root>

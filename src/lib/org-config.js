@@ -189,7 +189,13 @@ function description() {
 
     const fakeRoot = h('div', { class: 'root' }, node.children);
     const p = selectAll(
-      '.root > p, .root > ul > li > p, .root > ol > li > p',
+      [
+        '.root > p',
+        '.root > ul > li > p',
+        '.root > ol > li > p',
+        // Homepage has an extra div.h-card wrapper.
+        '.root > div > p',
+      ].join(', '),
       fakeRoot
     ).filter(
       // filter out image-only elements
@@ -310,9 +316,12 @@ function bibtexInfo() {
       const url = bib.URL
         ? [h('dt', 'url'), h('dd', h('a', { href: bib.URL }, bib.URL))]
         : [];
-      dl.children.push(...author, ...year, ...url);
+      dl.children.unshift(...author, ...year, ...url);
     } else {
-      dl.children.push(h('dt', 'url'), h('dd', [h('a', { href: url }, url)]));
+      dl.children.unshift(
+        h('dt', 'url'),
+        h('dd', [h('a', { href: url }, url)])
+      );
     }
   }
 }
@@ -328,15 +337,15 @@ function citeToHast(key) {
     ...(authors.length === 0
       ? [{ type: 'text', value: e.key }]
       : authors.length === 1
-      ? [{ type: 'text', value: lastName(authors[0]) }]
-      : authors.length === 2
-      ? [
-          {
-            type: 'text',
-            value: `${lastName(authors[0])} & ${lastName(authors[1])}`,
-          },
-        ]
-      : [{ type: 'text', value: lastName(authors[0]) + '…' }]),
+        ? [{ type: 'text', value: lastName(authors[0]) }]
+        : authors.length === 2
+          ? [
+              {
+                type: 'text',
+                value: `${lastName(authors[0])} & ${lastName(authors[1])}`,
+              },
+            ]
+          : [{ type: 'text', value: lastName(authors[0]) + '…' }]),
     ...(e.YEAR ? [h('sub', [{ type: 'text', value: String(e.YEAR) }])] : []),
   ]);
 }

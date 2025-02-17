@@ -10,6 +10,17 @@
   color: var(--fg-dim);
 }
 
+.link:global(.ghost) {
+  color: inherit;
+  background-color: inherit;
+}
+.link:global(.ghost):hover {
+  background-color: var(--green-subtle-bg);
+  color: var(--fg-dim);
+  background-color: var(--bg-alt);
+  color: inherit;
+}
+
 /* heading autolinks */
 h1 > .link,
 h2 > .link,

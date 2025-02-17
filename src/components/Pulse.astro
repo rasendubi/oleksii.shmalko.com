@@ -1,0 +1,101 @@
+---
+import moment from 'moment';
+
+import Link from './Link.astro';
+
+const {
+  slug,
+  avatarUrl = '/gravatar.png',
+  authorName = 'Oleksii Shmalko',
+  authorUrl = 'https://oleksii.shmalko.com/',
+  date: postedDate,
+  last_modified: modifiedDate,
+} = Astro.props;
+
+const formatDate = (date) => moment(date).format('MMMM D, YYYY');
+const formatDateTime = (date) => moment(date).format('MMMM D, YYYY HH:mm Z');
+---
+
+<article class="card h-entry">
+  <header class="card-header">
+    <img src={avatarUrl} alt="Avatar" class="avatar u-photo" />
+    <div>
+      <Link class="author-name p-author ghost" href={authorUrl}
+        >{authorName}</Link
+      >
+      <div class="dates">
+        <Link class="u-url ghost" href={slug}>
+          <time
+            class="date dt-published"
+            dateTime={postedDate}
+            title={formatDateTime(postedDate)}>{formatDate(postedDate)}</time
+          ></Link
+        >{
+          modifiedDate && (
+            <>
+              {'. Edited on '}
+              <time
+                class="modification-date dt-updated"
+                dateTime={modifiedDate}
+                title={formatDateTime(modifiedDate)}
+              >
+                {formatDate(modifiedDate)}
+              </time>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </header>
+  <div class="card-text e-content">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 8px 0;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0px 0px 8px #e0e0e0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #eee;
+  }
+
+  .author-name {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .dates {
+    font-size: 13px;
+    color: #444;
+  }
+
+  .card-text {
+    /*
+    margin-top: 10px;
+    */
+  }
+
+  .card-text > :global(:last-child) {
+    margin-bottom: 0;
+  }
+</style>

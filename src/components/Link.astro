@@ -17,9 +17,10 @@ if (url.protocol === 'id:' || url.protocol === 'cite:') {
 }
 
 const external =
-  url.protocol === 'http:' ||
-  url.protocol === 'https:' ||
-  url.protocol === 'mailto:';
+  url.hostname !== 'oleksii.shmalko.com' &&
+  (url.protocol === 'http:' ||
+    url.protocol === 'https:' ||
+    url.protocol === 'mailto:');
 
 const rel = [props.rel, external ? 'noopener' : ''].join(' ');
 ---

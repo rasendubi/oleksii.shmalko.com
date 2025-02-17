@@ -237,6 +237,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         section > dl > dd {
           margin-left: 0px;
         }
+        .top-level > ul,
+        .top-level > ol,
+        .top-level > dl,
         section > ul,
         section > ol,
         section > dl {
@@ -347,6 +350,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       li > .block,
       li > pre {
         margin-bottom: 8px;
+      }
+      dd > :last-child {
+        margin-bottom: 0;
       }
       li {
         margin-bottom: 8px;
@@ -492,10 +498,13 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
        * source, etc.) or an auto-generated from bibtex file (authors, year,
        * etc.)
        */
+      .top-level > dl:first-child,
       header + dl {
         margin-top: -8px;
         margin-bottom: 24px;
       }
+      .top-level > dl:first-child > dt,
+      .top-level > dl:first-child > dd,
       header + dl > dt,
       header + dl > dd {
         list-style-type: none;
