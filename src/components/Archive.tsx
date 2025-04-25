@@ -43,6 +43,7 @@ const Archive = ({ posts }: ArchiveProps) => {
           value={input}
           placeholder="Search…"
           onChange={handleChange}
+          autoFocus
         />
         <div
           className={clsx('clear', input === '' && 'hidden')}
