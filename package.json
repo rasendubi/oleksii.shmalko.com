@@ -12,7 +12,6 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.3.0",
-    "@fontsource/libre-baskerville": "^5.0.13",
     "@fontsource/source-code-pro": "^5.0.18",
     "@mapbox/rehype-prism": "^0.9.0",
     "@types/refractor": "^3.4.1",
@@ -52,7 +51,7 @@
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "firebase-tools": "^14.0.1",
-    "prettier": "^3.2.5",
+    "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "rehype-format": "^5.0.0",
     "typescript": "^5.4.5",

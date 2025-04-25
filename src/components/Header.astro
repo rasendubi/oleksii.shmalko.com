@@ -38,25 +38,27 @@ const lastModifiedHuman = lastModified
       </a>
     </nav>
     <h1>
-      <span class="page-symbol">{icon}</span><span class="p-name">{title}</span>
+      <span class="page-symbol">{icon}</span><span class="p-name title"
+        >{title}</span
+      >
     </h1>
   </div>
+  <!-- prettier-ignore -->
   <div>
     {
       dateHuman || lastModifiedHuman ? (
-        <div class="time">
-          {isodate && dateHuman && (
-            <time class="dt-published" dateTime={isodate}>
-              {dateHuman}
-            </time>
-          )}
-          {dateHuman && lastModifiedHuman && '–'}
-          {lastModifiedHuman && lastModifiedIso && (
+        <span class="time">
+          {isodate && dateHuman &&
+            <time class="dt-published" dateTime={isodate}>{dateHuman}</time>
+          }{
+            dateHuman && lastModifiedHuman && (
+            <span class="time-separator">{'. Last modified: '}</span>
+          )}{lastModifiedHuman && lastModifiedIso && (
             <time class="dt-updated" dateTime={lastModifiedIso}>
               {lastModifiedHuman}
             </time>
           )}
-        </div>
+        </span>
       ) : null
     }
   </div>
@@ -70,43 +72,47 @@ const lastModifiedHuman = lastModified
   <style>
     header {
       margin-top: 8px;
-      margin-bottom: 16px;
+      margin-bottom: var(--secondary-spacing);
     }
     .homerow {
-      display: flex;
+      /* display: flex; */
       flex-wrap: wrap;
       flex-direction: row-reverse;
     }
     .page-symbol {
+      margin-top: 4px;
       margin-right: 8px;
       white-space: nowrap;
+      font-size: 20px;
     }
     h1 {
-      flex-shrink: 0;
-      flex-grow: 1;
-      justify-self: stretch;
-      max-width: 100%;
+      display: inline;
       margin-bottom: 0px;
       /* to position .page-symbol */
       position: relative;
     }
+
     .time {
-      display: inline-block;
       color: #444;
       font-style: italic;
-      font-size: 13px;
+      font-size: 20px;
+    }
+    .time-separator {
+      white-space: pre-wrap;
     }
     .quicklinks {
+      float: right;
       display: inline-flex;
       align-items: flex-start;
       margin-left: 12px;
+      z-index: 10;
     }
     .icon-link {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 12px;
-      margin-bottom: -12px;
+      margin: -12px 0;
 
       border-radius: 50%;
       transition:
@@ -119,7 +125,7 @@ const lastModifiedHuman = lastModified
     .icon-link:active {
       background-color: #d7d7d7;
     }
-    @media (min-width: 900px) {
+    @media (min-width: 950px) {
       .page-symbol {
         position: absolute;
         right: 100%;

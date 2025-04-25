@@ -14,9 +14,6 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.3.0
         version: 3.3.0
-      '@fontsource/libre-baskerville':
-        specifier: ^5.0.13
-        version: 5.2.5
       '@fontsource/source-code-pro':
         specifier: ^5.0.18
         version: 5.2.5
@@ -130,7 +127,7 @@ importers:
         specifier: ^14.0.1
         version: 14.0.1(encoding@0.1.13)
       prettier:
-        specifier: ^3.2.5
+        specifier: ^3.5.3
         version: 3.5.3
       prettier-plugin-astro:
         specifier: ^0.14.1
@@ -431,9 +428,6 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
-
-  '@fontsource/libre-baskerville@5.2.5':
-    resolution: {integrity: sha512-Gi/TTnkg1Ui6/AoilZ07pCDJbloB10GKljyegqiKzlolaaFuXIfLfl0ROHfzWYG1Kjxid7femmxOXCNaCEo5tw==}
 
   '@fontsource/source-code-pro@5.2.5':
     resolution: {integrity: sha512-1k7b9IdhVSdK/rJ8CkqqGFZ01C3NaXNynPZqKaTetODog/GPJiMYd6E8z+LTwSUTIX8dm2QZORDC+Uh91cjXSg==}
@@ -4594,8 +4588,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.1':
     optional: true
-
-  '@fontsource/libre-baskerville@5.2.5': {}
 
   '@fontsource/source-code-pro@5.2.5': {}
 

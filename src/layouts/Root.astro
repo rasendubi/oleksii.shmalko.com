@@ -1,13 +1,12 @@
 ---
-import '@fontsource/libre-baskerville/400.css';
-import '@fontsource/libre-baskerville/400-italic.css';
-import '@fontsource/libre-baskerville/700.css';
+import '@fontsource/source-code-pro/400.css?inline';
+import '@fontsource/source-code-pro/500.css?inline';
 
-import 'katex/dist/katex.css';
+import 'katex/dist/katex.css?inline';
 
-import font400 from '@fontsource/libre-baskerville/files/libre-baskerville-latin-400-normal.woff2';
-import font400italic from '@fontsource/libre-baskerville/files/libre-baskerville-latin-400-italic.woff2';
-import font700 from '@fontsource/libre-baskerville/files/libre-baskerville-latin-700-normal.woff2';
+import font400 from '../../Change-Regular-all.woff2';
+import font400italic from '../../Change-RegularItalic-all.woff2';
+import font700 from '../../Change-SemiBold-all.woff2';
 
 import Footer from '../components/Footer.astro';
 
@@ -36,9 +35,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       type="font/woff2"
       crossorigin="anonymous"
     />
-    {/* italic is not used on the home page */}
     <link
-      rel="prefetch"
+      rel="preload"
       href={font400italic}
       as="font"
       type="font/woff2"
@@ -89,13 +87,32 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
     </main>
     <Footer />
     <style is:global>
+      @font-face {
+        font-weight: 400;
+        font-family: Change;
+        src: url(../../Change-Regular-all.woff2) format('woff2');
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Change;
+        font-style: italic;
+        src: url(../../Change-RegularItalic-all.woff2) format('woff2');
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Change;
+        font-weight: 700;
+        src: url(../../Change-SemiBold-all.woff2) format('woff2');
+        font-display: swap;
+      }
       :root {
         /* = font-size * line-height */
-        --primary-spacing: 24px;
-        --secondary-spacing: 8px;
-        --primary-font-size: 16px;
-        --primary-line-height: 1.5;
-        --font-serif: 'Libre Baskerville', serif;
+        --primary-spacing: 32px;
+        --secondary-spacing: 16px;
+        --horizontal-spacing: 24px;
+        --primary-font-size: 22px;
+        --primary-line-height: 1.33;
+        --font-serif: Change;
         --font-monospace: 'Source Code Pro', monospace;
         --bg-alt: #f0f0f0;
         --fg-dim: #282828;
@@ -114,6 +131,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         padding: 0;
         margin: 0;
         font-family: var(--font-serif);
+        font-variant-ligatures: common-ligatures discretionary-ligatures;
       }
       /* always show scroll bar. Otherwise, transitions might look junky. */
       body {
@@ -128,10 +146,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         font-size: var(--primary-font-size);
         line-height: var(--primary-line-height);
 
-        max-width: 700px;
+        max-width: 750px;
         height: 100%;
         margin: 0 auto;
-        padding: 24px 16px 0px;
+        padding: 24px var(--horizontal-spacing) 0px;
 
         /* Allow breaking words if text overflows (very long words or links) */
         word-wrap: break-word;
@@ -140,6 +158,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 
       code {
         font-family: var(--font-monospace);
+        font-size: 0.8em;
       }
 
       html {
@@ -175,7 +194,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       li::marker,
       dt::marker {
-        font-size: 14px;
+        font-size: 18px;
       }
       ul {
         list-style: disc;
@@ -190,10 +209,12 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       code.inline-code {
-        color: var(--cyan-alt-other);
+        /*
+          color: var(--cyan-alt-other); */
       }
       code.inline-verbatim {
-        color: var(--magenta-alt);
+        /*
+          color: var(--magenta-alt); */
       }
 
       .todo-keyword {
@@ -222,54 +243,54 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-right: auto;
       }
 
-      @media (min-width: 900px) {
-        .top-level > ul,
-        .top-level > ol,
-        .top-level > dl > dt,
-        .top-level > dl > dd,
-        .top-level > .block-clearfix > ul,
-        .top-level > .block-clearfix > ol,
-        .top-level > .block-clearfix > dl > dt,
-        .top-level > .block-clearfix > dl > dd,
-        section > ul,
-        section > ol,
-        section > dl > dt,
-        section > dl > dd {
-          margin-left: 0px;
-        }
-        .top-level > ul,
-        .top-level > ol,
-        .top-level > dl,
-        section > ul,
-        section > ol,
-        section > dl {
-          padding-left: 0px;
-        }
+      /* @media (min-width: 900px) { */
+      .top-level > ul,
+      .top-level > ol,
+      .top-level > dl > dt,
+      .top-level > dl > dd,
+      .top-level > .block-clearfix > ul,
+      .top-level > .block-clearfix > ol,
+      .top-level > .block-clearfix > dl > dt,
+      .top-level > .block-clearfix > dl > dd,
+      section > ul,
+      section > ol,
+      section > dl > dt,
+      section > dl > dd {
+        margin-left: 0px;
       }
+      .top-level > ul,
+      .top-level > ol,
+      .top-level > dl,
+      section > ul,
+      section > ol,
+      section > dl {
+        padding-left: 0px;
+      }
+      /* } */
 
       h1 {
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 700;
         margin-top: 8px;
         margin-bottom: 16px;
+      }
+      h2,
+      h3,
+      h4 {
+        font-weight: 700;
+        font-variant-caps: small-caps;
+        letter-spacing: 0.04em;
+        margin-top: var(--primary-spacing);
+        margin-bottom: var(--secondary-spacing);
       }
       h2 {
         font-size: 20px;
-        font-weight: 700;
-        margin-top: 16px;
-        margin-bottom: 16px;
       }
       h3 {
         font-size: 16px;
-        font-weight: 700;
-        margin-top: 8px;
-        margin-bottom: 16px;
       }
       h4 {
-        font-size: 12px;
-        font-weight: 700;
-        margin-top: 8px;
-        margin-bottom: 16px;
+        font-size: 14px;
       }
 
       p,
@@ -285,17 +306,31 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .math-display,
       pre[class^='language-'],
       .footnote-definition {
-        margin: 0 0 var(--primary-spacing) 0;
+        margin: 0 0 var(--secondary-spacing) 0;
       }
       /* pull top-level lists slightly closer to the preceding
-         paragraph */
+        paragraph */
       .top-level > p + ul,
       .top-level > p + ol,
       .top-level > p + dl {
-        margin-top: -16px;
+        margin-top: -8px;
       }
 
-      .footnum {
+      sup {
+        font-size: inherit;
+        vertical-align: inherit;
+        font-variant-position: super;
+      }
+      sub {
+        font-size: inherit;
+        vertical-align: inherit;
+        font-variant-position: sub;
+      }
+      .footref {
+        background-color: none;
+      }
+      .footnote-definition > sup:first-child {
+        float: left;
         margin-right: 8px;
       }
       .footdef {
@@ -322,17 +357,17 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       dd > p:first-child::before {
         /*
-         * Add zero-width space to dd, so that dd always occupies
-         * some vertical space. Otherwise, the next dt will collapse
-         * into the previous one if dd has no text.
-         */
+        * Add zero-width space to dd, so that dd always occupies
+        * some vertical space. Otherwise, the next dt will collapse
+        * into the previous one if dd has no text.
+        */
         content: '${' \u200b'}';
       }
       /* For dd, use larger padding if first child is not the only
-       * child. So that next element is properly wrapped to the next
-       * line and is not affected by dt's float:left. (Happens when
-       * tag contains a list.)
-       */
+      * child. So that next element is properly wrapped to the next
+      * line and is not affected by dt's float:left. (Happens when
+      * tag contains a list.)
+      */
       dd > p,
       dd > ul,
       dd > ol,
@@ -386,8 +421,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .top-level > pre.src-block,
       .top-level > pre[class^='language-'] {
         /* make top-level code wider */
-        margin-left: -16px;
-        margin-right: -16px;
+        margin-left: calc(-1 * var(--horizontal-spacing));
+        margin-right: calc(-1 * var(--horizontal-spacing));
         border-radius: 0;
       }
       pre > code {
@@ -395,7 +430,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         width: fit-content;
         min-width: 100%;
         display: block;
-        padding: 8px 16px;
+        padding: 8px var(--horizontal-spacing);
       }
 
       .token.comment {
@@ -429,15 +464,15 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .top-level > p > picture:only-child {
         display: flex;
         justify-content: center;
-        width: calc(100% + 32px);
-        margin-left: -16px;
-        margin-right: -16px;
+        width: calc(100% + 2 * var(--horizontal-spacing));
+        margin-left: calc(-1 * var(--horizontal-spacing));
+        margin-right: calc(-1 * var(--horizontal-spacing));
       }
       img {
         object-fit: scale-down;
       }
 
-      @media (min-width: 900px) {
+      @media (min-width: 950px) {
         /* allow top-level quotes to be slightly wider on wider screens */
         .top-level > blockquote,
         .top-level > pre.verse,
@@ -455,8 +490,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 
       article,
       .top-level {
-        display: flex;
-        flex-direction: column;
         position: relative;
       }
 
@@ -468,7 +501,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       .top-level > table {
         /* allow top-level tables to grow */
-        max-width: calc(100vw - 32px);
+        max-width: calc(100vw - 2 * var(--horizontal-spacing));
         align-self: center;
       }
 
@@ -484,7 +517,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         border-top: 2px solid #888888;
       }
       .top-level thead tr {
-        background-color: #e5e5e5;
+        /* background-color: #e5e5e5; */
         text-align: left;
         font-weight: 700;
       }
@@ -494,14 +527,15 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       /* If first element of the note is a definition list, pull it up
-       * closer to the title. It is either my custom metadata list (tags,
-       * source, etc.) or an auto-generated from bibtex file (authors, year,
-       * etc.)
-       */
+      * closer to the title. It is either my custom metadata list (tags,
+      * source, etc.) or an auto-generated from bibtex file (authors, year,
+      * etc.)
+      */
       .top-level > dl:first-child,
       header + dl {
-        margin-top: -8px;
-        margin-bottom: 24px;
+        margin-top: calc(-1 * var(--secondary-spacing));
+        margin-bottom: var(--primary-spacing);
+        font-size: 20px;
       }
       .top-level > dl:first-child > dt,
       .top-level > dl:first-child > dd,
@@ -518,7 +552,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       aside {
         background-color: var(--bg-alt);
         border-radius: 4px;
-        margin: 0 -16px var(--primary-spacing);
+        margin: 0 -16px var(--secondary-spacing);
         padding: 8px 16px;
       }
       aside > *:last-child {
@@ -527,23 +561,26 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       /* asides are moving to the right */
       @media (min-width: 1280px) {
         .block-clearfix aside {
+          background: transparent;
+          color: #444;
           position: absolute;
           /* article and .block-clearfix are narrower than
-           * main. Compensate for main's padding.
-           */
-          left: calc(100% + 16px);
-          width: calc((100vw - 700px) / 2 - 32px);
-          max-width: 300px;
-          margin-top: -8px;
+          * main. Compensate for main's padding.
+          */
+          left: calc(100%);
+          width: calc((100vw - 750px) / 2);
+          max-width: 324px;
+          padding: 0;
+          padding-right: var(--horizontal-spacing);
         }
         .block-clearfix aside {
           top: 0px;
         }
         .block-clearfix aside,
-        /* needed for specificity */
-        .top-level > .block-clearfix > aside {
+       /* needed for specificity */
+       .top-level > .block-clearfix > aside {
           margin-left: 16px;
-          margin-right: 16px;
+          margin-right: var(--horizontal-spacing);
         }
       }
 
@@ -552,6 +589,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         display: flex;
         flex-wrap: wrap;
         column-gap: 48px;
+        margin-top: -16px; /* negate prev paragraph spacing */
         margin-bottom: 32px;
       }
       .block-categories > section {
@@ -560,15 +598,15 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .block-categories li {
         margin-top: 4px;
       }
-      @media (min-width: 900px) {
+      @media (min-width: 950px) {
         .block-categories {
-          width: calc(100vw - (100vw - 700px) / 2 - 32px);
+          width: calc(100vw - (100vw - 750px) / 2 - 48px);
           max-width: 960px;
           align-self: flex-start;
         }
       }
       .block-small {
-        font-size: 14px;
+        font-size: 18px;
       }
 
       .block-important {

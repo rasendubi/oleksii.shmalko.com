@@ -4,6 +4,11 @@
   background-color: var(--bg-alt);
 
   transition: color 0.05s ease-in-out, background-color 0.05s ease-in-out;
+
+  padding: 0px 2px;
+  margin: 0px -2px;
+  border-radius: 2px;
+  box-decoration-break: clone;
 }
 .link:hover {
   background-color: var(--green-subtle-bg);
@@ -64,12 +69,12 @@ h6 > .link:hover {
   display: inline-block;
   vertical-align: super;
   fill: var(--blue-alt);
-  height: 0.625em;
-  width: 0.625em;
+  height: 0.4em;
+  width: 0.4em;
   margin-left: 0.125em;
 
   /* Use negative margin to prevent wrapping the icon alone:
    * https://stackoverflow.com/a/25857961
    */
-  margin-right: -0.75em;
+  margin-right: -0.7em;
 }

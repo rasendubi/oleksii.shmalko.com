@@ -14,6 +14,8 @@
             pkgs.nodejs_22
             pkgs.nodejs_22.pkgs.pnpm
             # pkgs.nodejs-16_x.pkgs.pnpm
+
+            pkgs.python3
           ];
         };
       });

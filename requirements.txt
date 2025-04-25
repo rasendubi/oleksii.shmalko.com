@@ -1,0 +1,5 @@
+Brotli==1.1.0
+fonttools==4.57.0
+uharfbuzz==0.49.0
+unicodedata2==16.0.0
+zopfli==0.2.3.post1
