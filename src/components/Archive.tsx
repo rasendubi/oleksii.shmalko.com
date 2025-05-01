@@ -36,7 +36,7 @@ const Archive = ({ posts }: ArchiveProps) => {
   }, [posts, query]);
 
   return (
-    <>
+    <div className="root">
       <div className="input-wrapper">
         <input
           aria-label="Search"
@@ -106,14 +106,18 @@ const Archive = ({ posts }: ArchiveProps) => {
           fill: #888888;
         }
         .pages-counter {
+          float: right;
           font-size: 0.8em;
           line-height: 1;
           color: var(--fg-dim);
-          text-align: right;
+          margin-left: 8px;
           margin-bottom: 4px;
         }
+        section {
+          margin-top: var(--secondary-spacing);
+        }
       `}</style>
-    </>
+    </div>
   );
 };
 
