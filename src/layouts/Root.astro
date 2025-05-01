@@ -190,7 +190,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 
       ul,
       ol {
-        padding-left: 24px;
+        padding-left: 20px;
       }
       li::marker,
       dt::marker {
@@ -199,8 +199,16 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       ul {
         list-style: disc;
       }
+      ul ul {
+        list-style: circle;
+      }
       ol {
         list-style: decimal;
+      }
+      /* add padding to clearly separate adjacent lists of the same type */
+      ul + ul,
+      ol + ol {
+        margin-top: var(--primary-spacing);
       }
 
       img {
@@ -243,7 +251,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-right: auto;
       }
 
-      /* @media (min-width: 900px) { */
       .top-level > ul,
       .top-level > ol,
       .top-level > dl > dt,
@@ -266,7 +273,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       section > dl {
         padding-left: 0px;
       }
-      /* } */
 
       h1 {
         font-size: 24px;
@@ -390,6 +396,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-bottom: 0;
       }
       li {
+        margin-top: 8px;
         margin-bottom: 8px;
       }
       .footnotes {
@@ -588,21 +595,18 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .block-categories {
         display: flex;
         flex-wrap: wrap;
-        column-gap: 48px;
+        column-gap: 64px;
         margin-top: -16px; /* negate prev paragraph spacing */
         margin-bottom: 32px;
-      }
-      .block-categories > section {
-        max-width: 320px;
-      }
-      .block-categories li {
-        margin-top: 4px;
       }
       @media (min-width: 950px) {
         .block-categories {
           width: calc(100vw - (100vw - 750px) / 2 - 48px);
           max-width: 960px;
           align-self: flex-start;
+        }
+        .block-categories > section {
+          max-width: 320px;
         }
       }
       .block-small {
