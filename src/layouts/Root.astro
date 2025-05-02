@@ -132,6 +132,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin: 0;
         font-family: var(--font-serif);
         font-variant-ligatures: common-ligatures discretionary-ligatures;
+        container-type: inline-size;
       }
       /* always show scroll bar. Otherwise, transitions might look junky. */
       body {
@@ -347,10 +348,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         display: inline;
       }
 
-      table {
-        margin-bottom: var(--primary-spacing);
-      }
-
       dt {
         float: left;
         display: list-item;
@@ -505,20 +502,26 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       .top-level table {
+        margin-bottom: var(--primary-spacing);
         display: block;
         border-collapse: collapse;
         font-size: 0.9em;
         overflow-x: auto;
       }
+      /* Allow top-level table to grow to full-screen. */
       .top-level > table {
-        /* allow top-level tables to grow */
-        max-width: calc(100vw - 2 * var(--horizontal-spacing));
-        align-self: center;
+        width: 100vw;
+        width: 100cqw;
+        /* The margin/padding below allow wide tables to be scrolled in full screen width, but defaulting to aligning the left side of the table with body text. */
+        margin-left: calc(-1 * (100vw - 100%) / 2);
+        margin-left: calc(-1 * (100cqw - 100%) / 2);
+        padding-left: calc((100vw - 100%) / 2 - var(--horizontal-spacing));
+        padding-left: calc((100cqw - 100%) / 2 - var(--horizontal-spacing));
       }
 
       .top-level th,
       .top-level td {
-        padding: 12px 15px;
+        padding: 8px var(--horizontal-spacing);
       }
       .top-level thead,
       .top-level tbody {
