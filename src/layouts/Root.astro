@@ -2,7 +2,7 @@
 import '@fontsource/source-code-pro/400.css?inline';
 import '@fontsource/source-code-pro/500.css?inline';
 
-import 'katex/dist/katex.css?inline';
+import 'katex/dist/katex.css';
 
 import font400 from '../../Change-Regular-all.woff2';
 import font400italic from '../../Change-RegularItalic-all.woff2';
@@ -593,6 +593,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
           margin-left: 16px;
           margin-right: var(--horizontal-spacing);
         }
+      }
+
+      .katex {
+        font-size: 0.9em !important;
       }
 
       /* front-page */
