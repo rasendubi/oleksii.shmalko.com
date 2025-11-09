@@ -135,7 +135,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         container-type: inline-size;
       }
       /* always show scroll bar. Otherwise, transitions might look junky. */
-      body {
+      html {
         overflow-y: scroll;
       }
 
@@ -190,12 +190,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       ul,
-      ol {
-        padding-left: 20px;
-      }
-      li::marker,
-      dt::marker {
-        font-size: 18px;
+      ol,
+      dl {
+        padding-left: 24px;
       }
       ul {
         list-style: disc;
@@ -254,29 +251,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-      }
-
-      .top-level > ul,
-      .top-level > ol,
-      .top-level > dl > dt,
-      .top-level > dl > dd,
-      .top-level > .block-clearfix > ul,
-      .top-level > .block-clearfix > ol,
-      .top-level > .block-clearfix > dl > dt,
-      .top-level > .block-clearfix > dl > dd,
-      section > ul,
-      section > ol,
-      section > dl > dt,
-      section > dl > dd {
-        margin-left: 0px;
-      }
-      .top-level > ul,
-      .top-level > ol,
-      .top-level > dl,
-      section > ul,
-      section > ol,
-      section > dl {
-        padding-left: 0px;
       }
 
       h1 {
@@ -360,7 +334,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       dt,
       dd {
-        margin-left: 24px;
+        margin-left: 0px;
       }
       dd > p:first-child::before {
         /*
@@ -547,6 +521,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       */
       .top-level > dl:first-child,
       header + dl {
+        padding-left: 0px;
         margin-top: calc(-1 * var(--secondary-spacing));
         margin-bottom: var(--primary-spacing);
         font-size: 20px;
@@ -609,6 +584,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         column-gap: 64px;
         margin-top: -16px; /* negate prev paragraph spacing */
         margin-bottom: 32px;
+      }
+      .block-categories ul {
+        padding-left: 0px;
       }
       @media (min-width: 950px) {
         .block-categories {
