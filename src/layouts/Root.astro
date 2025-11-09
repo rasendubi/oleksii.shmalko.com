@@ -219,8 +219,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       code.inline-code {
-        /*
-          color: var(--cyan-alt-other); */
+        padding: 2px 4px;
+        border: thin solid #ddd;
+        border-radius: 4px;
       }
       code.inline-verbatim {
         /*
@@ -364,7 +365,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       li > table,
       li > blockquote,
       li > .block,
-      li > pre {
+      li > pre,
+      li > pre.verse,
+      li > .src-block,
+      li > pre[class^='language-'] {
         margin-bottom: 8px;
       }
       dd > :last-child {
@@ -399,20 +403,24 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       pre.src-block,
       pre[class^='language-'] {
         border-radius: 4px;
+        outline: thin solid #ddd;
       }
       .top-level > pre.src-block,
       .top-level > pre[class^='language-'] {
         /* make top-level code wider */
         margin-left: calc(-1 * var(--horizontal-spacing));
         margin-right: calc(-1 * var(--horizontal-spacing));
+        padding: 8px var(--horizontal-spacing);
         border-radius: 0;
       }
+      pre.src-block,
+      pre[class^='language-'] {
+        padding: 4px 8px;
+      }
       pre > code {
-        background-color: #f0f0f0;
         width: fit-content;
         min-width: 100%;
         display: block;
-        padding: 8px var(--horizontal-spacing);
       }
 
       .token.comment {
