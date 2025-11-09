@@ -298,13 +298,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .footnote-definition {
         margin: 0 0 var(--secondary-spacing) 0;
       }
-      /* pull top-level lists slightly closer to the preceding
-        paragraph */
-      .top-level > p + ul,
-      .top-level > p + ol,
-      .top-level > p + dl {
-        margin-top: -8px;
-      }
 
       sup {
         font-size: inherit;
@@ -396,8 +389,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       pre.verse,
       .block {
         display: block;
-        padding: 0px 8px;
-        border-left: 2px solid #444;
+        padding: 8px 16px;
+        border-left: 3px solid var(--border);
+        background-color: var(--bg-dim);
       }
       blockquote > :last-child,
       .block > :last-child {
@@ -413,6 +407,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .top-level > pre.src-block,
       .top-level > pre[class^='language-'] {
         border-radius: 0;
+        background-color: var(--bg-dim);
 
         width: 100vw;
         width: 100cqw;
@@ -473,20 +468,18 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         object-fit: scale-down;
       }
 
-      @media (min-width: 950px) {
-        /* allow top-level quotes to be slightly wider on wider screens */
-        .top-level > blockquote,
-        .top-level > pre.verse,
-        .top-level > .block,
-        .top-level > .block-clearfix > blockquote,
-        .top-level > .block-clearfix > pre.verse,
-        .top-level > .block-clearfix > .block {
-          border-left: 2px solid #222;
-          margin-left: -18px; /* -2 for border */
-          margin-right: -16px;
-          padding-left: 16px;
-          padding-right: 16px;
-        }
+      /* allow top-level quotes to be slightly wider */
+      .top-level > blockquote,
+      .top-level > pre.verse,
+      .top-level > .block,
+      .top-level > .block-clearfix > blockquote,
+      .top-level > .block-clearfix > pre.verse,
+      .top-level > .block-clearfix > .block {
+        border-left: 3px solid var(--border);
+        margin-left: -17px; /* -3 for border */
+        margin-right: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
       }
 
       article,
@@ -516,12 +509,11 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .top-level td {
         padding: 8px var(--horizontal-spacing);
       }
-      .top-level thead,
-      .top-level tbody {
-        border-bottom: 2px solid #888888;
+      .top-level thead {
+        border-bottom: 2px solid var(--border);
       }
       .top-level tbody {
-        border-top: 2px solid #888888;
+        border-top: 2px solid var(--border);
       }
       .top-level thead tr {
         /* background-color: #e5e5e5; */
@@ -529,7 +521,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         font-weight: 700;
       }
       .top-level tbody tr {
-        border-bottom: 1px solid var(--border);
+        border-top: thin solid var(--border);
         vertical-align: baseline;
       }
 
@@ -570,14 +562,18 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       @media (min-width: 1280px) {
         .block-clearfix aside {
           background: transparent;
-          color: #444;
+          color: var(--fg-alt);
           position: absolute;
           /* article and .block-clearfix are narrower than
-          * main. Compensate for main's padding.
-          */
-          left: calc(100%);
-          width: calc((100vw - 750px) / 2);
-          max-width: 324px;
+           * main. Compensate for main's padding.
+           *
+           * Some top-level elements are allowed to be as wide as the
+           * main container, so adding extra 16px of margin, so we
+           * don't touch them.
+           */
+          left: calc(100% + 16px);
+          width: calc((100vw - 750px) / 2 - 16px);
+          max-width: 360px;
           padding: 0;
           padding-right: var(--horizontal-spacing);
         }
