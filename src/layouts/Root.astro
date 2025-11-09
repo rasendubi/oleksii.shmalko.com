@@ -600,9 +600,6 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         margin-top: -16px; /* negate prev paragraph spacing */
         margin-bottom: 32px;
       }
-      .block-categories ul {
-        padding-left: 0px;
-      }
       @media (min-width: 950px) {
         .block-categories {
           width: calc(100vw - (100vw - 750px) / 2 - 48px);
@@ -611,6 +608,9 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         }
         .block-categories > section {
           max-width: 320px;
+        }
+        .block-categories ul {
+          padding-left: 0px;
         }
       }
       .block-small {
