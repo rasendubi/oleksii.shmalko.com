@@ -36,6 +36,8 @@ const posts = Object.values(allPosts)
     </noscript>
   </Fragment>
 
-  <Header title="§ Archive" icon="🗄️" />
-  <Archive client:load posts={posts} />
+  <article>
+    <Header title="§ Archive" icon="🗄️" />
+    <Archive client:load posts={posts} />
+  </article>
 </Root>
