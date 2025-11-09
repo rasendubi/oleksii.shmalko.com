@@ -56,25 +56,8 @@ h6 > .link:hover {
 }
 .link:global(.external) {
   color: var(--blue-alt);
-  padding-right: 0.75em;
 }
 .link:global(.external):hover {
   background-color: var(--blue-subtle-bg);
   color: var(--fg-dim);
-}
-.link:global(.external):hover > .fa-external-link-alt {
-  fill: var(--fg-dim);
-}
-.fa-external-link-alt {
-  display: inline-block;
-  vertical-align: super;
-  fill: var(--blue-alt);
-  height: 0.4em;
-  width: 0.4em;
-  margin-left: 0.125em;
-
-  /* Use negative margin to prevent wrapping the icon alone:
-   * https://stackoverflow.com/a/25857961
-   */
-  margin-right: -0.7em;
 }
