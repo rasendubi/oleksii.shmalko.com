@@ -1,7 +1,7 @@
 .link {
   text-decoration: none;
-  color: var(--green-alt);
-  background-color: var(--bg-alt);
+  color: var(--green-warmer);
+  background-color: var(--bg-dim);
 
   transition:
     color 0.05s ease-in-out,
@@ -14,7 +14,7 @@
 }
 .link:hover {
   background-color: var(--green-subtle-bg);
-  color: var(--fg-dim);
+  color: var(--fg-alt);
 }
 
 .link:global(.ghost) {
@@ -23,8 +23,8 @@
 }
 .link:global(.ghost):hover {
   background-color: var(--green-subtle-bg);
-  color: var(--fg-dim);
-  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  background-color: var(--bg-dim);
   color: inherit;
 }
 
@@ -44,7 +44,7 @@ h3 > .link:hover,
 h4 > .link:hover,
 h5 > .link:hover,
 h6 > .link:hover {
-  background-color: var(--bg-alt);
+  background-color: var(--bg-dim);
   color: inherit;
 }
 
@@ -54,12 +54,12 @@ h6 > .link:hover {
 }
 .link:global(.broken):hover {
   background-color: var(--red-subtle-bg);
-  color: var(--fg-dim);
+  color: var(--fg-alt);
 }
 .link:global(.external) {
-  color: var(--blue-alt);
+  color: var(--blue-warmer);
 }
 .link:global(.external):hover {
   background-color: var(--blue-subtle-bg);
-  color: var(--fg-dim);
+  color: var(--fg-alt);
 }

@@ -114,12 +114,17 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         --primary-line-height: 1.454545;
         --font-serif: Change;
         --font-monospace: 'Source Code Pro', monospace;
-        --bg-alt: #f0f0f0;
-        --fg-dim: #282828;
+        --bg-dim: #f2f2f2;
+        --fg-dim: #595959;
+        --fg-alt: #193668;
+
+        --border: #9f9f9f;
         --green-alt: #315b00;
+        --green-warmer: #316500;
         --green-subtle-bg: #aecf90;
+        --blue-warmer: #3548cf;
         --blue-alt: #2544bb;
-        --blue-subtle-bg: #b5d0ff;
+        --blue-subtle-bg: #ccdfff;
         --red-alt: #972500;
         --red-subtle-bg: #f2b0a2;
         --cyan-intense: #005f88;
@@ -220,12 +225,11 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
 
       code.inline-code {
         padding: 2px 4px;
-        border: thin solid #ddd;
+        border: thin solid var(--border);
         border-radius: 4px;
       }
       code.inline-verbatim {
-        /*
-          color: var(--magenta-alt); */
+        /* color: var(--magenta-alt); */
       }
 
       .todo-keyword {
@@ -339,10 +343,10 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
       dd > p:first-child::before {
         /*
-        * Add zero-width space to dd, so that dd always occupies
-        * some vertical space. Otherwise, the next dt will collapse
-        * into the previous one if dd has no text.
-        */
+          * Add zero-width space to dd, so that dd always occupies
+          * some vertical space. Otherwise, the next dt will collapse
+          * into the previous one if dd has no text.
+          */
         content: '${' \u200b'}';
       }
       /* For dd, use larger padding if first child is not the only
@@ -403,7 +407,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       pre.src-block,
       pre[class^='language-'] {
         border-radius: 4px;
-        outline: thin solid #dadada;
+        outline: thin solid var(--border);
       }
       /* Allow top-level code blocks to grow to full-screen. There's similar code for tables */
       .top-level > pre.src-block,
@@ -413,8 +417,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         width: 100vw;
         width: 100cqw;
         /* The margin/padding below allow wide code to be scrolled in
-        full screen width, but defaulting to align the left side of
-        the code with body text. */
+             full screen width, but defaulting to align the left side
+             of the code with body text.  */
         margin-left: calc(-1 * (100vw - 100%) / 2);
         margin-left: calc(-1 * (100cqw - 100%) / 2);
         padding-left: calc((100vw - 100%) / 2);
@@ -525,7 +529,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         font-weight: 700;
       }
       .top-level tbody tr {
-        border-bottom: 1px solid #888888;
+        border-bottom: 1px solid var(--border);
         vertical-align: baseline;
       }
 
@@ -554,7 +558,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
         position: relative;
       }
       aside {
-        background-color: var(--bg-alt);
+        background-color: var(--bg-dim);
         border-radius: 4px;
         margin: 0 -16px var(--secondary-spacing);
         padding: 8px 16px;
@@ -581,8 +585,8 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
           top: 0px;
         }
         .block-clearfix aside,
-       /* needed for specificity */
-       .top-level > .block-clearfix > aside {
+        /* needed for specificity */
+        .top-level > .block-clearfix > aside {
           margin-left: 16px;
           margin-right: var(--horizontal-spacing);
         }
@@ -618,7 +622,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       }
 
       .block-important {
-        background: var(--bg-alt);
+        background: var(--bg-dim);
         margin: -4px;
         padding: 4px;
         border-radius: 4px;
