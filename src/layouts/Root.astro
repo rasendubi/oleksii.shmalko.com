@@ -403,19 +403,26 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       pre.src-block,
       pre[class^='language-'] {
         border-radius: 4px;
-        outline: thin solid #ddd;
+        outline: thin solid #dadada;
       }
+      /* Allow top-level code blocks to grow to full-screen. There's similar code for tables */
       .top-level > pre.src-block,
       .top-level > pre[class^='language-'] {
-        /* make top-level code wider */
-        margin-left: calc(-1 * var(--horizontal-spacing));
-        margin-right: calc(-1 * var(--horizontal-spacing));
-        padding: 8px var(--horizontal-spacing);
         border-radius: 0;
+
+        width: 100vw;
+        width: 100cqw;
+        /* The margin/padding below allow wide code to be scrolled in
+        full screen width, but defaulting to align the left side of
+        the code with body text. */
+        margin-left: calc(-1 * (100vw - 100%) / 2);
+        margin-left: calc(-1 * (100cqw - 100%) / 2);
+        padding-left: calc((100vw - 100%) / 2);
+        padding-left: calc((100cqw - 100%) / 2);
       }
       pre.src-block,
       pre[class^='language-'] {
-        padding: 4px 8px;
+        padding: 8px;
       }
       pre > code {
         width: fit-content;
