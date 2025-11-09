@@ -3,7 +3,9 @@
   color: var(--green-alt);
   background-color: var(--bg-alt);
 
-  transition: color 0.05s ease-in-out, background-color 0.05s ease-in-out;
+  transition:
+    color 0.05s ease-in-out,
+    background-color 0.05s ease-in-out;
 
   padding: 0px 2px;
   margin: 0px -2px;
