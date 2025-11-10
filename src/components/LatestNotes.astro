@@ -6,10 +6,7 @@ import comparePages from '../lib/comparePages.ts';
 
 const allPosts = await allPages;
 const posts = Object.values(allPosts)
-  .filter(
-    (p) =>
-      p.frontmatter.pageType !== 'pulse' && p.frontmatter.pageType !== 'biblio'
-  )
+  .filter((p) => p.frontmatter.pageType !== 'pulse')
   .sort(comparePages({ preferLastmod: true }))
   .map((p) => ({
     title: p.frontmatter.title,
