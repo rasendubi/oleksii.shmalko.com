@@ -10,6 +10,7 @@ import Link from '../components/Link.astro';
 import Image from '../components/Image.astro';
 import Bibtex from '../components/Bibtex.astro';
 import Pulse from '../components/Pulse.astro';
+import LatestNotes from '../components/LatestNotes.astro';
 
 import { allPages, getBacklinks, resources } from '../lib/posts.ts';
 
@@ -86,6 +87,7 @@ const image = await imgs[0]?.();
               components={{
                 a: Link,
                 img: Image,
+                latestnotes: LatestNotes,
               }}
             />
           )}

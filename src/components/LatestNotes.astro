@@ -1,0 +1,29 @@
+---
+import Link from './Link.astro';
+
+import { allPages } from '../lib/posts.ts';
+import comparePages from '../lib/comparePages.ts';
+
+const allPosts = await allPages;
+const posts = Object.values(allPosts)
+  .filter(
+    (p) =>
+      p.frontmatter.pageType !== 'pulse' && p.frontmatter.pageType !== 'biblio'
+  )
+  .sort(comparePages({ preferLastmod: true }))
+  .map((p) => ({
+    title: p.frontmatter.title,
+    path: p.frontmatter.slug,
+    icon: p.frontmatter.icon,
+  }));
+---
+
+<ul>
+  {
+    posts.slice(0, 6).map((p) => (
+      <li>
+        {p.icon} <Link href={p.path}>{p.title}</Link>
+      </li>
+    ))
+  }
+</ul>
