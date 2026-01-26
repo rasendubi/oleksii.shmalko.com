@@ -7,10 +7,23 @@
     color 0.05s ease-in-out,
     background-color 0.05s ease-in-out;
 
-  padding: 0px 2px;
-  margin: 0px -2px;
+  padding-inline: 2px;
+  margin-inline: -2px;
   border-radius: 2px;
   box-decoration-break: clone;
+
+  @supports (-moz-appearance: none) {
+    /* In Firefox, flex-basis doesn't work well with negative margin and
+       made .block-categories sections slightly narrower, causing an
+       overflow where it should have comfortably filled a single
+       line. This is a small hack to cancel that negative margin when
+       link is the last child, so Firefox takes into account these 2px
+       that we need.
+     */
+    &:last-child {
+      margin-inline-end: 0;
+    }
+  }
 }
 .link:hover {
   background-color: var(--green-subtle-bg);
