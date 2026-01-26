@@ -208,6 +208,12 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       ol {
         list-style: decimal;
       }
+      ul::marker,
+      ol::marker,
+      li::marker,
+      dt::marker {
+        font-family: var(--font-serif);
+      }
       /* add padding to clearly separate adjacent lists of the same type */
       ul + ul,
       ol + ol {
