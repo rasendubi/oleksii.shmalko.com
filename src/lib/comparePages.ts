@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 import type { Page } from './posts';
 
 export type Options = {
@@ -12,17 +12,17 @@ export default ({ preferLastmod = true }: Options = {}) =>
     // console.log('cmp', { a: a.frontmatter, b: b.frontmatter });
 
     const isodate = (p: Page) => {
-      const format = (s: string) => moment(s).format('YYYYMMDD');
+      const formatDate = (s: string) => format(new Date(s), 'yyyyMMdd');
 
       if (preferLastmod && p.frontmatter.last_modified) {
-        return format(p.frontmatter.last_modified);
+        return formatDate(p.frontmatter.last_modified);
       }
 
       if (p.frontmatter.date) {
-        return format(p.frontmatter.date);
+        return formatDate(p.frontmatter.date);
       }
       if (p.frontmatter.last_modified) {
-        return format(p.frontmatter.last_modified);
+        return formatDate(p.frontmatter.last_modified);
       }
       return null;
     };

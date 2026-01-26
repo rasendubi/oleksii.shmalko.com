@@ -1,5 +1,5 @@
 ---
-import moment from 'moment';
+import { format } from 'date-fns';
 
 import Link from './Link.astro';
 import HomeIcon from './home-icon.svg?raw';
@@ -7,13 +7,13 @@ import SearchIcon from './search-icon.svg?raw';
 
 const { title, icon, date, lastModified } = Astro.props;
 
-const isodate = date ? moment(date).format('YYYY-MM-DD') : null;
-const dateHuman = date ? moment(date).format('MMMM D, YYYY') : null;
+const isodate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
+const dateHuman = date ? format(new Date(date), 'MMMM d, yyyy') : null;
 const lastModifiedIso = lastModified
-  ? moment(lastModified).format('YYYY-MM-DD')
+  ? format(new Date(lastModified), 'yyyy-MM-dd')
   : null;
 const lastModifiedHuman = lastModified
-  ? moment(lastModified).format('MMMM D, YYYY')
+  ? format(new Date(lastModified), 'MMMM d, yyyy')
   : null;
 ---
 
@@ -29,7 +29,7 @@ const lastModifiedHuman = lastModified
         <Fragment set:html={HomeIcon} />
       </a>
       <a
-        href="/archive"
+        href="/archive/"
         class="icon-link"
         aria-label="Search"
         data-astro-prefetch="hover"

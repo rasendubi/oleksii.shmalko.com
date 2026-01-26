@@ -1,5 +1,5 @@
 ---
-import moment from 'moment';
+import { format } from 'date-fns';
 
 import Link from './Link.astro';
 
@@ -12,8 +12,8 @@ const {
   last_modified: modifiedDate,
 } = Astro.props;
 
-const formatDate = (date) => moment(date).format('MMMM D, YYYY');
-const formatDateTime = (date) => moment(date).format('MMMM D, YYYY HH:mm Z');
+const formatDate = (date: string | Date) => format(new Date(date), 'MMMM d, yyyy');
+const formatDateTime = (date: string | Date) => format(new Date(date), 'MMMM d, yyyy HH:mm XXX');
 ---
 
 <article class="card h-entry">
