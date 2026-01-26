@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "start": "astro build && astro preview",
-    "deploy": "astro build && firebase deploy"
+    "deploy": "astro build && firebase deploy",
+    "test:screenshots": "playwright test",
+    "test:screenshots:update": "playwright test --update-snapshots"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
@@ -45,11 +47,13 @@
   },
   "devDependencies": {
     "@astrojs/react": "^4.4.2",
+    "@playwright/test": "^1.58.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "firebase-tools": "^15.4.0",
+    "playwright": "^1.58.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "rehype-format": "^5.0.1",

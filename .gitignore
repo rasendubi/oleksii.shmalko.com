@@ -11,6 +11,11 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/playwright/.cache/
+# Keep snapshots off git. They are quite large and change frequently.
+**/*-snapshots/
 
 # next.js
 /.next/
