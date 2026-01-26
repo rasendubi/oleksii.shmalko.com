@@ -533,7 +533,7 @@ const ogImage = image ? image : new URL('/gravatar.png', Astro.site);
       .top-level > dl:first-child,
       header + dl {
         padding-left: 0px;
-        margin-top: calc(-1 * var(--secondary-spacing));
+        margin-top: calc(-1 * var(--secondary-spacing) + 4px);
         margin-bottom: var(--primary-spacing);
         font-size: 20px;
       }
