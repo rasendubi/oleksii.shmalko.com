@@ -1,0 +1,41 @@
+---
+import Root from '../layouts/Root.astro';
+import Header from '../components/Header.astro';
+import Archive from '../components/Archive.tsx';
+
+import { Page, allPages } from '../lib/posts';
+import comparePages from '../lib/comparePages.ts';
+
+const allPosts = await allPages;
+const posts = Object.values(allPosts)
+  .filter((p) => p.frontmatter.pageType === 'post')
+  .sort(comparePages({ preferLastmod: true }))
+  .map((p) => ({
+    title: p.frontmatter.title,
+    path: p.frontmatter.slug,
+    icon: p.frontmatter.icon,
+  }));
+---
+
+<Root title="§ Posts">
+  <Fragment slot="head">
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS feed for posts"
+      href="/posts.rss.xml"
+    />
+    <noscript>
+      <style is:inline>
+        .input-wrapper {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </Fragment>
+
+  <article>
+    <Header title="§ Posts" icon="📝" />
+    <Archive client:load posts={posts} />
+  </article>
+</Root>
